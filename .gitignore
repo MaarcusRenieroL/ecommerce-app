@@ -7,7 +7,7 @@ backend/!**/src/test/**/target/
 ### STS ###
 backend/.apt_generated
 backend/.classpath
-backend/factorypath
+backend/.factorypath
 backend/.project
 backend/.settings
 backend/.springBeans
