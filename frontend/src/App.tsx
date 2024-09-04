@@ -1,13 +1,13 @@
-import { Button } from "./components/ui/button";
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import HomePage from "@/pages/home-page.tsx";
 
 export default function App() {
   return (
-    <div>
-      <h1 className="text-red-500 font-bold text-3xl underline">
-        E Commerce Application
-      </h1>
-      <Button>Click Me</Button>
-    </div>
+		<Router>
+			<Routes>
+				<Route path="/" element={<HomePage />} />
+			</Routes>
+		</Router>
   );
 }
 
