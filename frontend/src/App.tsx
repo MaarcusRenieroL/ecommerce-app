@@ -10,6 +10,7 @@ import { CheckoutPage } from "@/pages/checkout-page.tsx";
 import { SignInPage } from "@/pages/auth/sign-in-page.tsx";
 import { SignUpPage } from "@/pages/auth/sign-up-page.tsx";
 import {ResetPasswordPage} from "@/pages/auth/reset-password-page.tsx";
+import {VerifyEmailPage} from "@/pages/auth/verify-email-page.tsx";
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
 				<Route path="/auth/sign-in" element={<SignInPage />} />
 				<Route path="/auth/sign-up" element={<SignUpPage />} />
 				<Route path="/auth/reset-password" element={<ResetPasswordPage />} />
+				<Route path="/auth/verify-email" element={<VerifyEmailPage />} />
 			</Routes>
 		</Router>
   );
