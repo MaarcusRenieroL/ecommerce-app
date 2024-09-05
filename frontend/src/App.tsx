@@ -7,6 +7,7 @@ import { DealsPage } from "@/pages/deals-page.tsx";
 import { ProductPage } from "@/pages/product-page.tsx";
 import { CartPage } from "@/pages/cart-page.tsx";
 import { CheckoutPage } from "@/pages/checkout-page.tsx";
+import {SignInPage} from "@/pages/auth/sign-in-page.tsx";
 
 export default function App() {
   return (
@@ -19,6 +20,8 @@ export default function App() {
 				<Route path="/product" element={<ProductPage />} />
 				<Route path="/cart" element={<CartPage />} />
 				<Route path="/checkout" element={<CheckoutPage />} />
+				
+				<Route path="/auth/sign-in" element={<SignInPage />} />
 			</Routes>
 		</Router>
   );
