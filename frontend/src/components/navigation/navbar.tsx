@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button.tsx";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet.tsx";
 import { useLocation } from "react-router-dom";
 import {clsx} from "clsx";
+import {AccountNav} from "@/components/navigation/account-nav.tsx";
 
 export const Navbar = () => {
 	const location = useLocation();
@@ -31,6 +32,7 @@ export const Navbar = () => {
 					<Button variant="outline" size="icon">
 						<ShoppingCart className="h-4 w-4"/>
 					</Button>
+					<AccountNav />
 				</div>
 			</header>
 			<header
@@ -74,6 +76,7 @@ export const Navbar = () => {
 					<Button variant="outline" size="icon">
 						<ShoppingCart className="h-4 w-4"/>
 					</Button>
+					<AccountNav />
 				</div>
 			</header>
 		</>
