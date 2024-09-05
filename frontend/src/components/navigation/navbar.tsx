@@ -37,9 +37,7 @@ export const Navbar = () => {
 				className="flex lg:hidden items-center justify-between px-6 py-4 border-b sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 gap-5">
 				<Sheet>
 					<SheetTrigger>
-						<Button variant="outline" size="icon">
 							<Menu className="h-4 w-4"/>
-						</Button>
 					</SheetTrigger>
 					<SheetContent side="left">
 						<SheetHeader>
