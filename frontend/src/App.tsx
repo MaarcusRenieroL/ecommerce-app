@@ -9,10 +9,11 @@ import { CartPage } from "@/pages/cart-page.tsx";
 import { CheckoutPage } from "@/pages/checkout-page.tsx";
 import { SignInPage } from "@/pages/auth/sign-in-page.tsx";
 import { SignUpPage } from "@/pages/auth/sign-up-page.tsx";
-import {ResetPasswordPage} from "@/pages/auth/reset-password-page.tsx";
-import {VerifyEmailPage} from "@/pages/auth/verify-email-page.tsx";
-import {BusinessSignUpPage} from "@/pages/auth/business-sign-up-page.tsx";
-import {YourAccountPage} from "@/pages/personalized-content/your-account-page.tsx";
+import { ResetPasswordPage } from "@/pages/auth/reset-password-page.tsx";
+import { VerifyEmailPage } from "@/pages/auth/verify-email-page.tsx";
+import { BusinessSignUpPage } from "@/pages/auth/business-sign-up-page.tsx";
+import { YourAccountPage } from "@/pages/personalized-content/your-account-page.tsx";
+import { YourOrdersPage } from "@/pages/personalized-content/your-orders-page.tsx";
 
 export default function App() {
   return (
@@ -33,6 +34,7 @@ export default function App() {
 				<Route path="/auth/business/sign-up" element={<BusinessSignUpPage />} />
 				
 				<Route path="/account" element={<YourAccountPage />} />
+				<Route path="/account/your-orders" element={<YourOrdersPage />} />
 			</Routes>
 		</Router>
   );

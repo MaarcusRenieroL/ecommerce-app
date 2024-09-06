@@ -16,14 +16,14 @@ export const YourAccountPage = () => {
 	return (
 		<div style={{ height: "100vh" }}>
 			<Navbar />
-			<main className="flex-1 container mx-auto px-4 py-8">
+			<main className="flex-1 container mx-auto p-10">
 				<div>
 					<h1 className="text-2xl font-bold">Your Account</h1>
 					<hr className="mt-5"/>
 				</div>
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
 					{links.map((link) => (
-						<a href={`/account/${link.href}`}>
+						<a href={`/account${link.href}`}>
 							<Card>
 								<CardHeader>
 									<div className="flex items-center gap-5">
