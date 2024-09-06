@@ -13,7 +13,6 @@ import {
 	DropdownMenuContent,
 	DropdownMenuGroup,
 	DropdownMenuItem,
-	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuShortcut,
 	DropdownMenuTrigger,
@@ -32,7 +31,11 @@ export const AccountNav = () => {
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-56">
-				<DropdownMenuLabel>My Account</DropdownMenuLabel>
+				<a href="/account">
+					<DropdownMenuItem className="font-bold">
+						My Account
+					</DropdownMenuItem>
+				</a>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
 					<a href="/profile">
