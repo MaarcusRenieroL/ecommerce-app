@@ -5,15 +5,16 @@ import { CategorySection } from "@/components/pages/home-page/category-section.t
 import { SpecialOffersSection } from "@/components/pages/home-page/special-offers-section.tsx";
 
 export default function HomePage() {
-	return (
-		<div>
-			<Navbar/>
-			<main className="flex-1">
-				<HeroSection />
-				<FeaturedProducts />
-				<CategorySection />
-				<SpecialOffersSection />
-			</main>
-		</div>
-	)
+  return (
+    <div>
+      <Navbar />
+      <main className="flex-1">
+        <HeroSection />
+        <FeaturedProducts />
+        <CategorySection />
+        <SpecialOffersSection />
+      </main>
+    </div>
+  );
 }
+
