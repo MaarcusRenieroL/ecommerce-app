@@ -15,6 +15,7 @@ import { BusinessSignUpPage } from "@/pages/auth/business-sign-up-page.tsx";
 import { YourAccountPage } from "@/pages/personalized-content/your-account-page.tsx";
 import { YourOrdersPage } from "@/pages/personalized-content/your-orders-page.tsx";
 import { LoginAndSecurityPage } from "@/pages/personalized-content/login-and-security-page.tsx";
+import { YourAddressesPage } from "./pages/personalized-content/your-addresses-page";
 
 import { ThemeProvider } from "./components/theme-provider";
 
@@ -42,7 +43,11 @@ export default function App() {
 
           <Route path="/account" element={<YourAccountPage />} />
           <Route path="/account/your-orders" element={<YourOrdersPage />} />
-          <Route path="/account/login-and-security" element={<LoginAndSecurityPage />} />
+          <Route
+            path="/account/login-and-security"
+            element={<LoginAndSecurityPage />}
+          />
+          <Route path="/account/your-address" element={<YourAddressesPage />} />
         </Routes>
       </Router>
     </ThemeProvider>
