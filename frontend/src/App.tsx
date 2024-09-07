@@ -14,6 +14,8 @@ import { VerifyEmailPage } from "@/pages/auth/verify-email-page.tsx";
 import { BusinessSignUpPage } from "@/pages/auth/business-sign-up-page.tsx";
 import { YourAccountPage } from "@/pages/personalized-content/your-account-page.tsx";
 import { YourOrdersPage } from "@/pages/personalized-content/your-orders-page.tsx";
+import { LoginAndSecurityPage } from "@/pages/personalized-content/login-and-security-page.tsx";
+
 import { ThemeProvider } from "./components/theme-provider";
 
 export default function App() {
@@ -40,6 +42,7 @@ export default function App() {
 
           <Route path="/account" element={<YourAccountPage />} />
           <Route path="/account/your-orders" element={<YourOrdersPage />} />
+          <Route path="/account/login-and-security" element={<LoginAndSecurityPage />} />
         </Routes>
       </Router>
     </ThemeProvider>

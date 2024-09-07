@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button.tsx";
 export const OrderCard = () => {
   return (
     <Card className="h-full">
-      <CardHeader className="bg-gray-100">
+      <CardHeader className="bg-gray-100 dark:bg-background">
         <CardTitle>Order Number #1</CardTitle>
         <CardDescription>Arriving tomorrow by 10pm</CardDescription>
       </CardHeader>
