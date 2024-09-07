@@ -111,7 +111,7 @@ export const ProductPage = () => {
                       <img
                         src={image}
                         alt={`${product.name} - View ${index + 1}`}
-                        className="w-full h-auto rounded-lg"
+                        className="w-full h-auto rounded-lg dark:brightness-[0.2] dark:grayscale"
                       />
                     </CarouselItem>
                   ))}
@@ -244,7 +244,7 @@ export const ProductPage = () => {
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-48 object-cover mb-4 rounded"
+                      className="w-full h-48 object-cover mb-4 rounded dark:brightness-[0.2] dark:grayscale"
                     />
                     <h3 className="font-semibold mb-2">{product.name}</h3>
                     <p className="font-bold">${product.price.toFixed(2)}</p>
@@ -258,4 +258,3 @@ export const ProductPage = () => {
     </div>
   );
 };
-

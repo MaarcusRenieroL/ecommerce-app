@@ -129,7 +129,7 @@ export const CheckoutPage = () => {
           </div>
           <div>
             <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
-            <div className="bg-gray-100 p-6 rounded-lg">
+            <div className="bg-gray-100 dark:bg-background dark:border dark:border-white dark:rounded-lg dark:border-opacity-35 p-6 rounded-lg">
               {orderItems.map((item) => (
                 <div key={item.id} className="flex justify-between mb-2">
                   <span>
@@ -170,4 +170,3 @@ export const CheckoutPage = () => {
     </div>
   );
 };
-

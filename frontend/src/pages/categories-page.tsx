@@ -67,7 +67,7 @@ export const CategoriesPage = () => {
                 <img
                   src={category.image}
                   alt={category.name}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-48 object-cover dark:brightness-[0.2] dark:grayscale"
                 />
                 <div className="p-4">
                   <h2 className="text-xl font-semibold mb-2">
@@ -88,4 +88,3 @@ export const CategoriesPage = () => {
     </div>
   );
 };
-

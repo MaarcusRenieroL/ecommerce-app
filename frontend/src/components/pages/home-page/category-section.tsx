@@ -13,7 +13,7 @@ export const CategorySection = () => {
               <Card key={category} className="group cursor-pointer">
                 <img
                   alt={`${category} category`}
-                  className="aspect-square object-cover w-full rounded-lg group-hover:opacity-75 transition-opacity"
+                  className="aspect-square object-cover w-full rounded-lg group-hover:opacity-75 transition-opacity dark:brightness-[0.2] dark:grayscale"
                   src="/assets/placeholder.svg"
                   height="200"
                   width="200"
@@ -31,4 +31,3 @@ export const CategorySection = () => {
     </section>
   );
 };
-

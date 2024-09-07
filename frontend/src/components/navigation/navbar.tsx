@@ -87,7 +87,7 @@ export const Navbar = () => {
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="outline" size="icon">
-                <ShoppingCart className="h-4 w-4 text-black" />
+                <ShoppingCart className="h-4 w-4" />
               </Button>
             </SheetTrigger>
             <SheetContent
@@ -116,7 +116,7 @@ export const Navbar = () => {
                           <img
                             src={item.image}
                             alt={item.name}
-                            className="w-full h-32 object-cover rounded mr-4"
+                            className="w-full h-32 object-cover rounded mr-4 dark:brightness-[0.2] dark:grayscale"
                           />
                           <CardContent className="p-4">
                             <div className="flex flex-col items-center">
@@ -247,7 +247,7 @@ export const Navbar = () => {
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="outline" size="icon">
-                <ShoppingCart className="h-4 w-4 text-black" />
+                <ShoppingCart className="h-4 w-4" />
               </Button>
             </SheetTrigger>
             <SheetContent
@@ -276,7 +276,7 @@ export const Navbar = () => {
                           <img
                             src={item.image}
                             alt={item.name}
-                            className="w-full h-32 object-cover rounded mr-4"
+                            className="w-full h-32 object-cover rounded mr-4 dark:brightness-[0.2] dark:grayscale"
                           />
                           <CardContent className="p-4">
                             <div className="flex flex-col">
@@ -344,4 +344,3 @@ export const Navbar = () => {
     </>
   );
 };
-

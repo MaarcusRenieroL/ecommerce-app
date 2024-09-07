@@ -13,7 +13,7 @@ export const FeaturedProducts = () => {
             <Card key={i}>
               <img
                 alt="Product image"
-                className="aspect-square object-cover w-full rounded-lg"
+                className="aspect-square object-cover w-full rounded-lg dark:brightness-[0.2] dark:grayscale"
                 height="200"
                 src="/assets/placeholder.svg"
                 width="200"
@@ -35,4 +35,3 @@ export const FeaturedProducts = () => {
     </section>
   );
 };
-

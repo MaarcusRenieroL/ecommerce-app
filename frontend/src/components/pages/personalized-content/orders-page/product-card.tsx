@@ -8,7 +8,7 @@ export const ProductCard = () => {
       <img
         src="/assets/placeholder.svg"
         alt="placeholder-image"
-        className="w-full h-48 object-cover rounded-md mb-4"
+        className="w-full h-48 object-cover rounded-md mb-4 dark:brightness-[0.2] dark:grayscale"
       />
       <CardContent className="p-4">
         <h3 className="font-semibold text-lg mb-2">Product</h3>
@@ -38,4 +38,3 @@ export const ProductCard = () => {
     </Card>
   );
 };
-

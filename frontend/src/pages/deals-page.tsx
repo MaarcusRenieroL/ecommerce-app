@@ -74,7 +74,7 @@ export const DealsPage = () => {
                 <img
                   src={deal.image}
                   alt={deal.name}
-                  className="w-full h-48 object-cover rounded-md mb-4"
+                  className="w-full h-48 object-cover rounded-md mb-4 dark:brightness-[0.2] dark:grayscale"
                 />
                 <span className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-md text-sm font-bold">
                   {deal.discount}% OFF
@@ -126,4 +126,3 @@ export const DealsPage = () => {
     </div>
   );
 };
-

@@ -32,7 +32,7 @@ export const ProductsList: FC<Props> = ({ products }) => {
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full h-48 object-cover rounded-md mb-4"
+                className="w-full h-48 object-cover rounded-md mb-4 dark:brightness-[0.2] dark:grayscale"
               />
               <CardContent className="p-4">
                 <h3 className="font-semibold text-lg mb-2">{product.name}</h3>
@@ -107,4 +107,3 @@ export const ProductsList: FC<Props> = ({ products }) => {
     </div>
   );
 };
-

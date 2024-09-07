@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { ShoppingCart, Search, Menu, Trash2, Minus, Plus } from "lucide-react";
+import { Navbar } from "@/components/navigation/navbar";
 
 export const CartPage = () => {
   const initialCartItems = [
@@ -79,39 +80,7 @@ export const CartPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto px-4">
-          <div className="flex h-16 items-center justify-between">
-            <div className="flex items-center">
-              <a href="/" className="flex items-center space-x-2">
-                <ShoppingCart className="h-6 w-6" />
-                <span className="font-bold text-xl">ShopEase</span>
-              </a>
-            </div>
-            <div className="flex items-center space-x-4">
-              <form className="hidden md:block">
-                <div className="relative">
-                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    type="search"
-                    placeholder="Search products..."
-                    className="pl-8 w-[200px] lg:w-[300px]"
-                  />
-                </div>
-              </form>
-              <Button variant="outline" size="icon">
-                <ShoppingCart className="h-4 w-4" />
-                <span className="sr-only">Shopping cart</span>
-              </Button>
-              <Button variant="outline" size="icon" className="md:hidden">
-                <Menu className="h-4 w-4" />
-                <span className="sr-only">Menu</span>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
-
+      <Navbar />
       <main className="flex-grow container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">Your Shopping Cart</h1>
 
@@ -132,7 +101,7 @@ export const CartPage = () => {
                       <img
                         src={item.image}
                         alt={item.name}
-                        className="w-20 h-20 object-cover rounded mr-4"
+                        className="w-20 h-20 object-cover rounded mr-4 dark:brightness-[0.2] dark:grayscale"
                       />
                       <div className="flex-grow">
                         <h3 className="font-semibold">{item.name}</h3>
@@ -216,7 +185,7 @@ export const CartPage = () => {
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-40 object-cover rounded-md mb-4"
+                    className="w-full h-40 object-cover rounded-md mb-4 dark:brightness-[0.2] dark:grayscale"
                   />
                   <h3 className="font-semibold mb-2">{product.name}</h3>
                   <div className="flex justify-between items-center">
@@ -234,4 +203,3 @@ export const CartPage = () => {
     </div>
   );
 };
-
