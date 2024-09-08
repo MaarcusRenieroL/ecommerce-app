@@ -24,6 +24,7 @@ import { ManageYourDataPage } from "./pages/personalized-content/manage-your-dat
 
 import { VendorDashboardPage } from "./pages/vendor/dashboard-page";
 import { VendorProductsPage } from "./pages/vendor/products-page";
+import { VendorCategoriesPage } from "./pages/vendor/categories-page";
 
 import { ThemeProvider } from "./components/theme-provider";
 
@@ -68,6 +69,7 @@ export default function App() {
 
           <Route path="/vendor/dashboard" element={<VendorDashboardPage />} />
           <Route path="/vendor/products" element={<VendorProductsPage />} />
+          <Route path="/vendor/categories" element={<VendorCategoriesPage />} />
         </Routes>
       </Router>
     </ThemeProvider>
