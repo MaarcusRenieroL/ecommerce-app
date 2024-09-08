@@ -69,10 +69,12 @@ export const Navbar = () => {
     <>
       <header className="w-full lg:flex hidden items-center justify-betweean px-6 py-4 border-b sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
         <div className="flex items-center space-x-6">
-          <span className="flex space-x-3 items-center">
-            <ShoppingCart />
-            <h1 className="font-bold">ShopEase</h1>
-          </span>
+          <a href="/">
+            <span className="flex space-x-3 items-center">
+              <ShoppingCart />
+              <h1 className="font-bold">ShopEase</h1>
+            </span>
+          </a>
           <a href="/products">Products</a>
           <a href="/categories">Categories</a>
           <a href="/deals">Deals</a>

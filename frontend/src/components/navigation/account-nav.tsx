@@ -37,26 +37,22 @@ export const AccountNav = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <a href="/account">
-          <DropdownMenuItem className="font-bold">My Account</DropdownMenuItem>
-        </a>
-        <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <a href="/profile">
+          <a href="/account">
             <DropdownMenuItem>
               <User className="mr-2 h-4 w-4" />
               <span>Profile</span>
               <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
             </DropdownMenuItem>
           </a>
-          <a href="/billing">
+          <a href="/account/payment-options">
             <DropdownMenuItem>
               <CreditCard className="mr-2 h-4 w-4" />
               <span>Billing</span>
               <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
             </DropdownMenuItem>
           </a>
-          <a href="/settings">
+          <a href="/account/login-and-security">
             <DropdownMenuItem>
               <Settings className="mr-2 h-4 w-4" />
               <span>Settings</span>
@@ -86,13 +82,13 @@ export const AccountNav = () => {
         </DropdownMenuSub>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <a href="/your-orders">
+          <a href="/account/your-orders">
             <DropdownMenuItem>
               <ShoppingCart className="mr-2 h-4 w-4" />
               <span>Your Orders</span>
             </DropdownMenuItem>
           </a>
-          <a href="/your-wishlist">
+          <a href="/account/your-wishlist">
             <DropdownMenuItem>
               <Heart className="mr-2 h-4 w-4" />
               <span>Your Recommendations</span>
