@@ -28,6 +28,7 @@ import { VendorCategoriesPage } from "./pages/vendor/categories-page";
 
 import { ThemeProvider } from "./components/theme-provider";
 import { VendorSizesPage } from "./pages/vendor/sizes-page";
+import { VendorOrdersPage } from "./pages/vendor/orders-page";
 
 export default function App() {
   return (
@@ -72,6 +73,7 @@ export default function App() {
           <Route path="/vendor/products" element={<VendorProductsPage />} />
           <Route path="/vendor/categories" element={<VendorCategoriesPage />} />
           <Route path="/vendor/sizes" element={<VendorSizesPage />} />
+          <Route path="/vendor/orders" element={<VendorOrdersPage />} />
         </Routes>
       </Router>
     </ThemeProvider>
