@@ -6,7 +6,7 @@ export const AlertsAndNotificationsPage = () => {
   return (
     <div>
       <Navbar />
-      <main className="p-10">
+      <main className="flex-1 container mx-auto p-10">
         <div>
           <h1 className="text-2xl font-bold">Alerts and Notifications</h1>
           <hr className="mt-5" />

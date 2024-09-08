@@ -7,11 +7,13 @@ import { DealsPage } from "@/pages/deals-page.tsx";
 import { ProductPage } from "@/pages/product-page.tsx";
 import { CartPage } from "@/pages/cart-page.tsx";
 import { CheckoutPage } from "@/pages/checkout-page.tsx";
+
 import { SignInPage } from "@/pages/auth/sign-in-page.tsx";
 import { SignUpPage } from "@/pages/auth/sign-up-page.tsx";
 import { ResetPasswordPage } from "@/pages/auth/reset-password-page.tsx";
 import { VerifyEmailPage } from "@/pages/auth/verify-email-page.tsx";
 import { BusinessSignUpPage } from "@/pages/auth/business-sign-up-page.tsx";
+
 import { YourAccountPage } from "@/pages/personalized-content/your-account-page.tsx";
 import { YourOrdersPage } from "@/pages/personalized-content/your-orders-page.tsx";
 import { LoginAndSecurityPage } from "@/pages/personalized-content/login-and-security-page.tsx";
@@ -19,6 +21,8 @@ import { YourAddressesPage } from "./pages/personalized-content/your-addresses-p
 import { PaymentOptions } from "./pages/personalized-content/payment-options";
 import { AlertsAndNotificationsPage } from "./pages/personalized-content/alerts-and-notifications-page";
 import { ManageYourDataPage } from "./pages/personalized-content/manage-your-data-page";
+
+import { DashboardPage } from "./pages/admin/dashboard-page";
 
 import { ThemeProvider } from "./components/theme-provider";
 
@@ -60,6 +64,8 @@ export default function App() {
             path="/account/request-your-data"
             element={<ManageYourDataPage />}
           />
+
+          <Route path="/dashboard" element={<DashboardPage />} />
         </Routes>
       </Router>
     </ThemeProvider>

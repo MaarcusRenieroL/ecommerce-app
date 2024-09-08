@@ -37,6 +37,13 @@ export const AccountNav = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
+        <a href="/dashboard">
+          <DropdownMenuItem>
+            <User className="mr-2 h-4 w-4" />
+            <span>Dashboard</span>
+          </DropdownMenuItem>
+        </a>
+        <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <a href="/account">
             <DropdownMenuItem>

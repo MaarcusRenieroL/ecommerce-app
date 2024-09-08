@@ -14,7 +14,7 @@ export const YourAddressesPage = () => {
   return (
     <div>
       <Navbar />
-      <main className="p-10">
+      <main className="flex-1 container mx-auto p-10">
         <div>
           <div className="w-full flex items-center justify-between">
             <h1 className="text-2xl font-bold">Your Addresses</h1>
