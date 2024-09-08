@@ -37,7 +37,7 @@ export const AccountNav = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <a href="/dashboard">
+        <a href="/vendor/dashboard">
           <DropdownMenuItem>
             <User className="mr-2 h-4 w-4" />
             <span>Dashboard</span>

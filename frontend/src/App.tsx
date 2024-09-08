@@ -22,7 +22,8 @@ import { PaymentOptions } from "./pages/personalized-content/payment-options";
 import { AlertsAndNotificationsPage } from "./pages/personalized-content/alerts-and-notifications-page";
 import { ManageYourDataPage } from "./pages/personalized-content/manage-your-data-page";
 
-import { DashboardPage } from "./pages/admin/dashboard-page";
+import { VendorDashboardPage } from "./pages/vendor/dashboard-page";
+import { VendorProductsPage } from "./pages/vendor/products-page";
 
 import { ThemeProvider } from "./components/theme-provider";
 
@@ -65,7 +66,8 @@ export default function App() {
             element={<ManageYourDataPage />}
           />
 
-          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/vendor/dashboard" element={<VendorDashboardPage />} />
+          <Route path="/vendor/products" element={<VendorProductsPage />} />
         </Routes>
       </Router>
     </ThemeProvider>

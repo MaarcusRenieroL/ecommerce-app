@@ -11,7 +11,7 @@ import { useLocation } from "react-router-dom";
 import { clsx } from "clsx";
 import { AccountNav } from "@/components/navigation/account-nav.tsx";
 
-export const AdminNavbar = () => {
+export const VendorNavbar = () => {
   const location = useLocation();
 
   return (
@@ -24,12 +24,13 @@ export const AdminNavbar = () => {
               <h1 className="font-bold">ShopEase</h1>
             </span>
           </a>
-          <a href="/dashboard">Dashboard</a>
-          <a href="/products">Products</a>
-          <a href="/categories">Categories</a>
-          <a href="/deals">Deals</a>
-          <a href="/sizes">Sizes</a>
-          <a href="/orders">Orders</a>
+          <a href="/vendor/dashboard">Dashboard</a>
+          <a href="/vendor/products">Products</a>
+          <a href="/vendor/categories">Categories</a>
+          <a href="/vendor/deals">Deals</a>
+          <a href="/vendor/sizes">Sizes</a>
+          <a href="/vendor/orders">Orders</a>
+          <a href="/vendor/settings">Settings</a>
         </div>
         <div className="flex items-center space-x-5">
           <a href="/auth/sign-in">
@@ -53,64 +54,74 @@ export const AdminNavbar = () => {
               </SheetTitle>
               <div className="flex flex-col space-y-5">
                 <a
-                  href="/"
+                  href="/vendor/dashboard"
                   className={clsx(
                     "flex justify-start items-center gap-3 hover:bg-secondary border-transparent border py-2 px-4 rounded-md hover:border-border hover:border transition-all duration-200 ease-in-out",
                     location.pathname === "/" &&
                       "text-primary font-semibold border-border bg-secondary",
                   )}
                 >
-                  Home
+                  Dashboard
                 </a>
                 <a
-                  href="/products"
+                  href="/vendor/products"
                   className={clsx(
                     "flex justify-start items-center gap-3 hover:bg-secondary border-transparent border py-2 px-4 rounded-md hover:border-border hover:border transition-all duration-200 ease-in-out",
-                    location.pathname === "/products" &&
+                    location.pathname === "/vendor/products" &&
                       "text-primary font-semibold border-border bg-secondary",
                   )}
                 >
                   Products
                 </a>
                 <a
-                  href="/categories"
+                  href="/vendor/categories"
                   className={clsx(
                     "flex justify-start items-center gap-3 hover:bg-secondary border-transparent border py-2 px-4 rounded-md hover:border-border hover:border transition-all duration-200 ease-in-out",
-                    location.pathname === "/categories" &&
+                    location.pathname === "/vendor/categories" &&
                       "text-primary font-semibold border-border bg-secondary",
                   )}
                 >
                   Categories
                 </a>
                 <a
-                  href="/deals"
+                  href="/vendor/deals"
                   className={clsx(
                     "flex justify-start items-center gap-3 hover:bg-secondary border-transparent border py-2 px-4 rounded-md hover:border-border hover:border transition-all duration-200 ease-in-out",
-                    location.pathname === "/deals" &&
+                    location.pathname === "/vendor/deals" &&
                       "text-primary font-semibold border-border bg-secondary",
                   )}
                 >
                   Deals
                 </a>
                 <a
-                  href="/sizes"
+                  href="/vendor/sizes"
                   className={clsx(
                     "flex justify-start items-center gap-3 hover:bg-secondary border-transparent border py-2 px-4 rounded-md hover:border-border hover:border transition-all duration-200 ease-in-out",
-                    location.pathname === "/sizes" &&
+                    location.pathname === "/vendor/sizes" &&
                       "text-primary font-semibold border-border bg-secondary",
                   )}
                 >
                   Sizes
                 </a>
                 <a
-                  href="/orders"
+                  href="/vendor/orders"
                   className={clsx(
                     "flex justify-start items-center gap-3 hover:bg-secondary border-transparent border py-2 px-4 rounded-md hover:border-border hover:border transition-all duration-200 ease-in-out",
-                    location.pathname === "/orders" &&
+                    location.pathname === "/vendor/orders" &&
                       "text-primary font-semibold border-border bg-secondary",
                   )}
                 >
                   Orders
+                </a>
+                <a
+                  href="/vendor/settings"
+                  className={clsx(
+                    "flex justify-start items-center gap-3 hover:bg-secondary border-transparent border py-2 px-4 rounded-md hover:border-border hover:border transition-all duration-200 ease-in-out",
+                    location.pathname === "/vendor/settings" &&
+                      "text-primary font-semibold border-border bg-secondary",
+                  )}
+                >
+                  Settings
                 </a>
               </div>
             </SheetHeader>
