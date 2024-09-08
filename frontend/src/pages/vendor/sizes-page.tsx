@@ -1,13 +1,13 @@
 import { DataTable } from "@/components/data-table";
 import { VendorNavbar } from "@/components/navigation/vendor-navbar";
 
-export const VendorCategoriesPage = () => {
+export const VendorSizesPage = () => {
   return (
     <div>
       <VendorNavbar />
       <main className="p-10">
         <div>
-          <h1 className="text-2xl font-bold">Categories</h1>
+          <h1 className="text-2xl font-bold">Sizes</h1>
           <hr className="mt-5" />
         </div>
         <div className="mt-5">
