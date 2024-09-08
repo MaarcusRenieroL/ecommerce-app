@@ -18,6 +18,7 @@ import { LoginAndSecurityPage } from "@/pages/personalized-content/login-and-sec
 import { YourAddressesPage } from "./pages/personalized-content/your-addresses-page";
 import { PaymentOptions } from "./pages/personalized-content/payment-options";
 import { AlertsAndNotificationsPage } from "./pages/personalized-content/alerts-and-notifications-page";
+import { ManageYourDataPage } from "./pages/personalized-content/manage-your-data-page";
 
 import { ThemeProvider } from "./components/theme-provider";
 
@@ -54,6 +55,10 @@ export default function App() {
           <Route
             path="/account/alerts-and-notifications"
             element={<AlertsAndNotificationsPage />}
+          />
+          <Route
+            path="/account/request-your-data"
+            element={<ManageYourDataPage />}
           />
         </Routes>
       </Router>

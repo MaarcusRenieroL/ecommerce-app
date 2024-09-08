@@ -11,7 +11,7 @@ export const AlertsAndNotificationsPage = () => {
           <h1 className="text-2xl font-bold">Alerts and Notifications</h1>
           <hr className="mt-5" />
         </div>
-        <div className="space-y-5">
+        <div className="space-y-5 mt-5">
           <EmailPreferencesForm />
           <CommunicationPreferencesForm />
         </div>
