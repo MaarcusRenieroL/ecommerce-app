@@ -17,6 +17,7 @@ import { YourOrdersPage } from "@/pages/personalized-content/your-orders-page.ts
 import { LoginAndSecurityPage } from "@/pages/personalized-content/login-and-security-page.tsx";
 import { YourAddressesPage } from "./pages/personalized-content/your-addresses-page";
 import { PaymentOptions } from "./pages/personalized-content/payment-options";
+import { AlertsAndNotificationsPage } from "./pages/personalized-content/alerts-and-notifications-page";
 
 import { ThemeProvider } from "./components/theme-provider";
 
@@ -50,6 +51,10 @@ export default function App() {
           />
           <Route path="/account/your-address" element={<YourAddressesPage />} />
           <Route path="/account/payment-options" element={<PaymentOptions />} />
+          <Route
+            path="/account/alerts-and-notifications"
+            element={<AlertsAndNotificationsPage />}
+          />
         </Routes>
       </Router>
     </ThemeProvider>
