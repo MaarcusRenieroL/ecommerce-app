@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button.tsx";
 
 export const FeaturedProducts = () => {
   return (
-    <section className="w-full py-7 md:py-14 lg:py-20 bg-gray-100 flex items-center justify-center">
+    <section className="w-full py-7 md:py-14 lg:py-20 bg-gray-100 dark:bg-background flex items-center justify-center">
       <div className="container px-4 md:px-6">
         <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-20">
           Featured Products
