@@ -103,8 +103,10 @@ export function DataTableToolbar<TData>({
                 ),
             )}
         </div>
-        <DateRangePicker />
-        <DataTableViewOptions table={table} />
+        <div className="flex items-center gap-5">
+          <DateRangePicker />
+          <DataTableViewOptions table={table} />
+        </div>
       </div>
       {isFiltered && (
         <Button

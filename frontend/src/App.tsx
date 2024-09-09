@@ -25,10 +25,11 @@ import { ManageYourDataPage } from "./pages/personalized-content/manage-your-dat
 import { VendorDashboardPage } from "./pages/vendor/dashboard-page";
 import { VendorProductsPage } from "./pages/vendor/products-page";
 import { VendorCategoriesPage } from "./pages/vendor/categories-page";
-
-import { ThemeProvider } from "./components/theme-provider";
 import { VendorSizesPage } from "./pages/vendor/sizes-page";
 import { VendorOrdersPage } from "./pages/vendor/orders-page";
+import { VendorSettingsPage } from "./pages/vendor/settings-page";
+
+import { ThemeProvider } from "./components/theme-provider";
 
 export default function App() {
   return (
@@ -74,6 +75,7 @@ export default function App() {
           <Route path="/vendor/categories" element={<VendorCategoriesPage />} />
           <Route path="/vendor/sizes" element={<VendorSizesPage />} />
           <Route path="/vendor/orders" element={<VendorOrdersPage />} />
+          <Route path="/vendor/settings" element={<VendorSettingsPage />} />
         </Routes>
       </Router>
     </ThemeProvider>
