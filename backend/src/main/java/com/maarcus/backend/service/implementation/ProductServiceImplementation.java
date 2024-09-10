@@ -1,9 +1,7 @@
 package com.maarcus.backend.service.implementation;
 
 import com.maarcus.backend.model.Product;
-import com.maarcus.backend.repository.CategoryRepository;
-import com.maarcus.backend.repository.ImageRepository;
-import com.maarcus.backend.repository.ProductRepository;
+import com.maarcus.backend.repository.*;
 import com.maarcus.backend.service.ProductService;
 import java.util.List;
 import java.util.Optional;
@@ -17,20 +15,33 @@ public class ProductServiceImplementation implements ProductService {
   private final ProductRepository productRepository;
   private final ImageRepository imageRepository;
   private final CategoryRepository categoryRepository;
+  private final SizeRepository sizeRepository;
+  private final ColorRepository colorRepository;
 
   public ProductServiceImplementation(
-      ProductRepository productRepository,
-      ImageRepository imageRepository,
-      CategoryRepository categoryRepository) {
+          ProductRepository productRepository,
+          ImageRepository imageRepository,
+          CategoryRepository categoryRepository, SizeRepository sizeRepository, ColorRepository colorRepository) {
     this.productRepository = productRepository;
     this.imageRepository = imageRepository;
     this.categoryRepository = categoryRepository;
+      this.sizeRepository = sizeRepository;
+      this.colorRepository = colorRepository;
   }
 
   @Override
   public Optional<Product> addProduct(Product product) {
     imageRepository.saveAll(product.getProductImages());
     categoryRepository.save(product.getCategory());
+
+    if (product.getSize() != null) {
+      sizeRepository.save(product.getSize());
+    }
+
+    if (product.getColor() != null) {
+      colorRepository.save(product.getColor());
+    }
+
     Product savedProduct = productRepository.save(product);
     return Optional.of(savedProduct);
   }
@@ -56,6 +67,8 @@ public class ProductServiceImplementation implements ProductService {
       existingProduct.setProductDescription(product.getProductDescription());
       existingProduct.setProductImages(product.getProductImages());
       existingProduct.setPrice(product.getPrice());
+      existingProduct.setSize(product.getSize());
+      existingProduct.setColor(product.getColor());
 
       return productRepository.save(existingProduct);
     } else {

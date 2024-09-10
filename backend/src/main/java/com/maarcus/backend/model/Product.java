@@ -35,4 +35,12 @@ public class Product {
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "category_id", nullable = false, referencedColumnName = "category_id")
   private Category category;
+
+  @ManyToOne
+  @JoinColumn(name = "size_id", nullable = true)
+  private Size size;
+
+  @ManyToOne
+  @JoinColumn(name = "color_id", nullable = true)
+  private Color color;
 }
