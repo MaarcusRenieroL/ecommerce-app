@@ -1,8 +1,11 @@
 package com.maarcus.backend.service.implementation;
 
+import com.maarcus.backend.model.Image;
 import com.maarcus.backend.model.Product;
 import com.maarcus.backend.repository.*;
 import com.maarcus.backend.service.ProductService;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
@@ -84,6 +87,19 @@ public class ProductServiceImplementation implements ProductService {
       Product toBeDeletedProduct = product.get();
       productRepository.delete(toBeDeletedProduct);
     }
+  }
+
+  @Override
+  public List<Product> searchAllProductsByName(String name) {
+    List<Product> products = new ArrayList<>();
+
+    for (Product product: getAllProducts()) {
+      if (product.getProductName().toLowerCase().contains(name.toLowerCase())) {
+        products.add(product);
+      }
+    }
+
+    return products;
   }
 }
 
