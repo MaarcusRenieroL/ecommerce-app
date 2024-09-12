@@ -5,10 +5,9 @@ export const getAllProducts = async () => {
 		const response = await fetch(`${BASE_URL}/products/all`);
 		
 		return response.json();
-	} catch (error: unknown) {
+	} catch (error) {
 		console.log("Error fetching products");
-		// @ts-ignore
-		console.log(error.message);
+		console.log(error);
 	}
 };
 
@@ -17,9 +16,8 @@ export const getAllCategories = async () => {
 		const response = await fetch(`${BASE_URL}/categories/all`);
 		
 		return response.json();
-	} catch (error: unknown) {
+	} catch (error) {
 		console.log("Error fetching categories");
-		// @ts-ignore
-		console.log(error.message);
+		console.log(error);
 	}
 }
