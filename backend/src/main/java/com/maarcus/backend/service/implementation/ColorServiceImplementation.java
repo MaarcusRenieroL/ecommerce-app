@@ -3,10 +3,9 @@ package com.maarcus.backend.service.implementation;
 import com.maarcus.backend.model.Color;
 import com.maarcus.backend.repository.ColorRepository;
 import com.maarcus.backend.service.ColorService;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ColorServiceImplementation implements ColorService {
@@ -58,4 +57,3 @@ public class ColorServiceImplementation implements ColorService {
     }
   }
 }
-

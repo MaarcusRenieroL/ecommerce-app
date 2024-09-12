@@ -1,6 +1,6 @@
 import { Table } from "@tanstack/react-table";
 
-export type User =  {
+export type User = {
   firstName: string;
   lastName: string;
   email: string;
@@ -10,7 +10,7 @@ export type User =  {
   addressLine3?: string;
   phoneNumber: string;
   role?: string;
-}
+};
 
 export type Product = {
   id: number;
@@ -28,23 +28,23 @@ export type Color = {
   id: number;
   name: string;
   value: string;
-}
+};
 
 export type Size = {
   id: number;
   name: string;
   value: string;
-}
+};
 
 export type Category = {
   id: number;
   categoryName: string;
-}
+};
 
 export type Image = {
   id: number;
   url: string;
-}
+};
 
 export type Filter = {
   id: number;

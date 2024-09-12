@@ -1,8 +1,6 @@
 package com.maarcus.backend.service;
 
 import com.maarcus.backend.model.User;
-import org.springframework.http.ResponseEntity;
-
 import java.util.List;
 import java.util.Optional;
 

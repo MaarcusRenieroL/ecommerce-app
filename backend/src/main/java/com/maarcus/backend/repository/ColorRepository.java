@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ColorRepository extends JpaRepository<Color, Long> {
-    public boolean findByName(String name);
+  public boolean findByName(String name);
 }

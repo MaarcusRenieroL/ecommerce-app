@@ -89,4 +89,3 @@ export const YourAccountPage = () => {
     </div>
   );
 };
-

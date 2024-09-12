@@ -22,4 +22,3 @@ export const Filter: FC<Props> = ({ name, data }) => {
     </div>
   );
 };
-

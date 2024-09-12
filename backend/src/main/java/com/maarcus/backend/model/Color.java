@@ -13,10 +13,10 @@ import lombok.Setter;
 @Entity
 @Table(name = "color")
 public class Color {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private String name;
-    private String value;
+  private String name;
+  private String value;
 }

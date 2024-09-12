@@ -1,26 +1,26 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Navbar } from "@/components/navigation/navbar.tsx";
-import {useEffect, useState} from "react";
-import {getAllCategories} from "@/lib/spring-boot-api.ts";
-import {Category} from "@/lib/types.ts";
+import { useEffect, useState } from "react";
+import { getAllCategories } from "@/lib/spring-boot-api.ts";
+import { Category } from "@/lib/types.ts";
 
 export const CategoriesPage = () => {
   const [categories, setCategories] = useState<Category[]>([]);
-  
+
   useEffect(() => {
     const getCategories = async () => {
       try {
         const response = await getAllCategories();
-        
+
         setCategories(response);
       } catch (error) {
         console.log(error);
       }
     };
-    
+
     getCategories();
-  }, [])
+  }, []);
   return (
     <div>
       <Navbar />

@@ -8,26 +8,26 @@ import {
   SelectValue,
 } from "@/components/ui/select.tsx";
 import { FilterModal } from "@/components/pages/products-page/filter-modal.tsx";
-import {getAllProducts} from "@/lib/spring-boot-api.ts";
-import {useEffect, useState} from "react";
+import { getAllProducts } from "@/lib/spring-boot-api.ts";
+import { useEffect, useState } from "react";
 
 export const ProductsPage = () => {
   const [products, setProducts] = useState([]);
-  
+
   useEffect(() => {
     const getProducts = async () => {
       try {
         const data = await getAllProducts();
-        
+
         setProducts(data);
       } catch (error) {
         console.log(error);
       }
-    }
-    
+    };
+
     getProducts();
   }, []);
-  
+
   return (
     <div>
       <Navbar />

@@ -115,4 +115,3 @@ export {
   PaginationNext,
   PaginationPrevious,
 };
-

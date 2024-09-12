@@ -3,10 +3,9 @@ package com.maarcus.backend.service.implementation;
 import com.maarcus.backend.model.Size;
 import com.maarcus.backend.repository.SizeRepository;
 import com.maarcus.backend.service.SizeService;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+import org.springframework.stereotype.Service;
 
 @Service
 public class SizeServiceImplementation implements SizeService {
@@ -58,4 +57,3 @@ public class SizeServiceImplementation implements SizeService {
     }
   }
 }
-

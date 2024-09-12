@@ -3,7 +3,6 @@ package com.maarcus.backend.service.implementation;
 import com.maarcus.backend.model.*;
 import com.maarcus.backend.repository.*;
 import com.maarcus.backend.service.ProductService;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,14 +18,16 @@ public class ProductServiceImplementation implements ProductService {
   private final ColorRepository colorRepository;
 
   public ProductServiceImplementation(
-          ProductRepository productRepository,
-          ImageRepository imageRepository,
-          CategoryRepository categoryRepository, SizeRepository sizeRepository, ColorRepository colorRepository) {
+      ProductRepository productRepository,
+      ImageRepository imageRepository,
+      CategoryRepository categoryRepository,
+      SizeRepository sizeRepository,
+      ColorRepository colorRepository) {
     this.productRepository = productRepository;
     this.imageRepository = imageRepository;
     this.categoryRepository = categoryRepository;
-      this.sizeRepository = sizeRepository;
-      this.colorRepository = colorRepository;
+    this.sizeRepository = sizeRepository;
+    this.colorRepository = colorRepository;
   }
 
   @Override
@@ -37,15 +38,15 @@ public class ProductServiceImplementation implements ProductService {
     Color color = product.getColor();
 
     if (!categoryRepository.findByCategoryName(category.getCategoryName())) {
-        categoryRepository.save(category);
+      categoryRepository.save(category);
     }
 
     if (!sizeRepository.findByName(size.getName())) {
-        sizeRepository.save(size);
+      sizeRepository.save(size);
     }
 
     if (!colorRepository.findByName(color.getName())) {
-        colorRepository.save(color);
+      colorRepository.save(color);
     }
 
     Product savedProduct = productRepository.save(product);
@@ -96,7 +97,7 @@ public class ProductServiceImplementation implements ProductService {
   public List<Product> searchAllProductsByName(String name) {
     List<Product> products = new ArrayList<>();
 
-    for (Product product: getAllProducts()) {
+    for (Product product : getAllProducts()) {
       if (product.getProductName().toLowerCase().contains(name.toLowerCase())) {
         products.add(product);
       }
@@ -105,4 +106,3 @@ public class ProductServiceImplementation implements ProductService {
     return products;
   }
 }
-

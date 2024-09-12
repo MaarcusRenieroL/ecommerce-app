@@ -54,17 +54,35 @@ public class User {
 
   @Override
   public String toString() {
-    return "User{" +
-            "id=" + id +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", email='" + email + '\'' +
-            ", password='" + password + '\'' +
-            ", addressLine1='" + addressLine1 + '\'' +
-            ", addressLine2='" + addressLine2 + '\'' +
-            ", addressLine3='" + addressLine3 + '\'' +
-            ", phoneNumber='" + phoneNumber + '\'' +
-            ", role=" + role +
-            '}';
+    return "User{"
+        + "id="
+        + id
+        + ", firstName='"
+        + firstName
+        + '\''
+        + ", lastName='"
+        + lastName
+        + '\''
+        + ", email='"
+        + email
+        + '\''
+        + ", password='"
+        + password
+        + '\''
+        + ", addressLine1='"
+        + addressLine1
+        + '\''
+        + ", addressLine2='"
+        + addressLine2
+        + '\''
+        + ", addressLine3='"
+        + addressLine3
+        + '\''
+        + ", phoneNumber='"
+        + phoneNumber
+        + '\''
+        + ", role="
+        + role
+        + '}';
   }
 }

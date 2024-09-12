@@ -2,11 +2,10 @@ package com.maarcus.backend.controller;
 
 import com.maarcus.backend.model.Color;
 import com.maarcus.backend.service.implementation.ColorServiceImplementation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/colors")
