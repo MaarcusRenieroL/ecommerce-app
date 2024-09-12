@@ -1,3 +1,5 @@
+import {User} from "@/lib/types.ts";
+
 const BASE_URL = "http://localhost:8080/api";
 
 export const getAllProducts = async () => {
@@ -18,6 +20,21 @@ export const getAllCategories = async () => {
 		return response.json();
 	} catch (error) {
 		console.log("Error fetching categories");
+		console.log(error);
+	}
+}
+
+export const addUser = async (data: User) => {
+	try {
+		return await fetch(`${BASE_URL}/users/add`, {
+			headers: {
+				"Content-Type": "application/json",
+			},
+			method: "POST",
+			body: JSON.stringify(data),
+		});
+	} catch (error) {
+		console.log("Error adding user");
 		console.log(error);
 	}
 }

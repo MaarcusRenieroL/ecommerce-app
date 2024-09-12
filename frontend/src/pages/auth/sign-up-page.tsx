@@ -1,6 +1,4 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { SignUpForm } from "@/components/forms/auth/sign-up-form.tsx";
 
 export const SignUpPage = () => {
   return (
@@ -19,69 +17,7 @@ export const SignUpPage = () => {
                 Create an account
               </p>
             </div>
-            <div className="grid gap-4">
-              <div className="flex items-center gap-5 justify-between">
-                <div className="grid gap-2 w-full">
-                  <Label htmlFor="text">First Name</Label>
-                  <Input
-                    id="firstName"
-                    type="text"
-                    placeholder="John"
-                    required
-                    className="w-full"
-                  />
-                </div>
-                <div className="grid gap-2 w-full">
-                  <Label htmlFor="text">Last Name</Label>
-                  <Input
-                    id="lastName"
-                    type="text"
-                    placeholder="Doe"
-                    required
-                    className="w-full"
-                  />
-                </div>
-              </div>
-              <div className="grid gap-2">
-                <div className="flex items-center">
-                  <Label htmlFor="email">Email</Label>
-                </div>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="john.doe@gmail.com"
-                  required
-                />
-              </div>
-              <div className="grid gap-2">
-                <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
-                </div>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="************"
-                  required
-                />
-              </div>
-              <div className="grid gap-2">
-                <div className="flex items-center">
-                  <Label htmlFor="confirmPassword">Confirm Password</Label>
-                </div>
-                <Input
-                  id="confirmPassword"
-                  type="password"
-                  placeholder="************"
-                  required
-                />
-              </div>
-              <Button type="submit" className="w-full">
-                Sign Up
-              </Button>
-              <Button variant="outline" className="w-full">
-                Sign Up with Google
-              </Button>
-            </div>
+            <SignUpForm pathName="/auth/sign-up" />
             <div className="space-y-3 flex flex-col items-center justify-center">
               <div className="mt-4 text-center text-sm">
                 Already have an account?{" "}

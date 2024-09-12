@@ -5,6 +5,9 @@ import com.maarcus.backend.repository.UserRepository;
 import com.maarcus.backend.service.UserService;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -42,7 +45,9 @@ public class UserServiceImplementation implements UserService {
       existingUser.setLastName(user.getLastName());
       existingUser.setEmail(user.getEmail());
       existingUser.setPhoneNumber(user.getPhoneNumber());
-      existingUser.setAddress(user.getAddress());
+      existingUser.setAddressLine1(user.getAddressLine1());
+      existingUser.setAddressLine2(user.getAddressLine2());
+      existingUser.setAddressLine3(user.getAddressLine3());
 
       return userRepository.save(existingUser);
     } else {

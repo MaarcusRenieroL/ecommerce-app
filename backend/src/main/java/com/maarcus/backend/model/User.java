@@ -27,8 +27,17 @@ public class User {
   @Column(nullable = false, unique = true)
   private String email;
 
+  @Column(nullable = false, unique = true)
+  private String password;
+
   @Column(nullable = false)
-  private String address;
+  private String addressLine1;
+
+  @Column(nullable = true)
+  private String addressLine2;
+
+  @Column(nullable = true)
+  private String addressLine3;
 
   @Column(name = "phone_number")
   private String phoneNumber;
@@ -41,5 +50,21 @@ public class User {
     VENDOR,
     CUSTOMER,
     ADMIN
+  }
+
+  @Override
+  public String toString() {
+    return "User{" +
+            "id=" + id +
+            ", firstName='" + firstName + '\'' +
+            ", lastName='" + lastName + '\'' +
+            ", email='" + email + '\'' +
+            ", password='" + password + '\'' +
+            ", addressLine1='" + addressLine1 + '\'' +
+            ", addressLine2='" + addressLine2 + '\'' +
+            ", addressLine3='" + addressLine3 + '\'' +
+            ", phoneNumber='" + phoneNumber + '\'' +
+            ", role=" + role +
+            '}';
   }
 }
