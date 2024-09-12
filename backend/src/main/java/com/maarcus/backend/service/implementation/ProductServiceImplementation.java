@@ -1,17 +1,14 @@
 package com.maarcus.backend.service.implementation;
 
-import com.maarcus.backend.model.Image;
-import com.maarcus.backend.model.Product;
+import com.maarcus.backend.model.*;
 import com.maarcus.backend.repository.*;
 import com.maarcus.backend.service.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-@Slf4j
 @Service
 public class ProductServiceImplementation implements ProductService {
 
@@ -35,14 +32,20 @@ public class ProductServiceImplementation implements ProductService {
   @Override
   public Optional<Product> addProduct(Product product) {
     imageRepository.saveAll(product.getProductImages());
-    categoryRepository.save(product.getCategory());
+    Category category = product.getCategory();
+    Size size = product.getSize();
+    Color color = product.getColor();
 
-    if (product.getSize() != null) {
-      sizeRepository.save(product.getSize());
+    if (!categoryRepository.findByCategoryName(category.getCategoryName())) {
+        categoryRepository.save(category);
     }
 
-    if (product.getColor() != null) {
-      colorRepository.save(product.getColor());
+    if (!sizeRepository.findByName(size.getName())) {
+        sizeRepository.save(size);
+    }
+
+    if (!colorRepository.findByName(color.getName())) {
+        colorRepository.save(color);
     }
 
     Product savedProduct = productRepository.save(product);
