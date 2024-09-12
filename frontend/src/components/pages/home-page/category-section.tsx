@@ -1,6 +1,25 @@
 import { Card, CardContent } from "@/components/ui/card.tsx";
+import {useEffect, useState} from "react";
+import {getAllCategories} from "@/lib/spring-boot-api.ts";
+import {Category} from "@/lib/types.ts";
 
 export const CategorySection = () => {
+  const [categories, setCategories] = useState([]);
+  
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        
+        const response = await getAllCategories();
+        
+        setCategories(response);
+      } catch (error: unknown) {
+        console.error(error);
+      }
+    };
+    
+    getCategories();
+  }, []);
   return (
     <section className="w-full py-7 md:py-14 lg:py-20 flex items-center justify-center">
       <div className="container px-4 md:px-6">
@@ -8,11 +27,11 @@ export const CategorySection = () => {
           Shop by Category
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {["Electronics", "Fashion", "Home & Garden", "Sports"].map(
-            (category) => (
-              <Card key={category} className="group cursor-pointer">
+          {categories.slice(1, 5).map(
+            (category: Category) => (
+              <Card key={category.id} className="group cursor-pointer">
                 <img
-                  alt={`${category} category`}
+                  alt={category.categoryName}
                   className="aspect-square object-cover w-full rounded-lg group-hover:opacity-75 transition-opacity dark:brightness-[0.2] dark:grayscale"
                   src="/assets/placeholder.svg"
                   height="200"
@@ -20,7 +39,7 @@ export const CategorySection = () => {
                 />
                 <CardContent className="p-4">
                   <h3 className="text-lg font-bold mt-2 text-center">
-                    {category}
+                    {category.categoryName}
                   </h3>
                 </CardContent>
               </Card>

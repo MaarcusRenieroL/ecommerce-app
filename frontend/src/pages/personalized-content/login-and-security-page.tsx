@@ -26,7 +26,7 @@ import {
 import { Switch } from "@/components/ui/switch";
 
 export const LoginAndSecurityPage = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated] = useState(false);
   return (
     <div>
       <Navbar />

@@ -9,7 +9,7 @@ import {
   PaginationPrevious,
   PaginationNext,
 } from "@/components/ui/pagination";
-import { Heart, ShoppingCart, Star } from "lucide-react";
+import { Heart, ShoppingCart } from "lucide-react";
 
 import { Product } from "@/lib/types.ts";
 
@@ -30,27 +30,12 @@ export const ProductsList: FC<Props> = ({ products }) => {
           return (
             <Card key={product.id}>
               <img
-                src={product.image}
-                alt={product.name}
+                src={"/assets/placeholder.svg"}
+                alt={product.productName}
                 className="w-full h-48 object-cover rounded-md mb-4 dark:brightness-[0.2] dark:grayscale"
               />
               <CardContent className="p-4">
-                <h3 className="font-semibold text-lg mb-2">{product.name}</h3>
-                <div className="flex items-center mb-2">
-                  {Array.from({ length: 5 }).map((_, index) => (
-                    <Star
-                      key={index}
-                      className={`h-4 w-4 ${
-                        index < Math.floor(product.rating)
-                          ? "text-yellow-400 fill-current"
-                          : "text-gray-300"
-                      }`}
-                    />
-                  ))}
-                  <span className="ml-2 text-sm text-muted-foreground">
-                    ({product.rating})
-                  </span>
-                </div>
+                <h3 className="font-semibold text-lg mb-2">{product.productName}</h3>
                 <p className="font-bold">${product.price.toFixed(2)}</p>
               </CardContent>
               <CardFooter>

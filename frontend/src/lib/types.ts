@@ -2,11 +2,37 @@ import { Table } from "@tanstack/react-table";
 
 export type Product = {
   id: number;
-  name: string;
-  image: string;
-  rating: number;
+  productName: string;
+  description: string;
   price: number;
+  quantityInStock: number;
+  productImages: Array<Image>;
+  category: Category;
+  size: Size;
+  color: Color;
 };
+
+export type Color = {
+  id: number;
+  name: string;
+  value: string;
+}
+
+export type Size = {
+  id: number;
+  name: string;
+  value: string;
+}
+
+export type Category = {
+  id: number;
+  categoryName: string;
+}
+
+export type Image = {
+  id: number;
+  url: string;
+}
 
 export type Filter = {
   id: number;
