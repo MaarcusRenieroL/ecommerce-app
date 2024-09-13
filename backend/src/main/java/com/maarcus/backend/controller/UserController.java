@@ -1,5 +1,6 @@
 package com.maarcus.backend.controller;
 
+import com.maarcus.backend.model.SignIn;
 import com.maarcus.backend.model.User;
 import com.maarcus.backend.service.implementation.UserServiceImplementation;
 import java.util.List;
@@ -40,5 +41,10 @@ public class UserController {
   @DeleteMapping(path = "/delete/{id}")
   public void deleteUser(@PathVariable Long id) {
     userService.deleteUser(id);
+  }
+
+  @PostMapping(path = "/auth/sign-in")
+  public User signInUser(@RequestBody SignIn signInUser) {
+    return userService.signInUser(signInUser.getEmail(), signInUser.getPassword());
   }
 }

@@ -14,7 +14,6 @@ import {
   FormMessage,
 } from "@/components/ui/form.tsx";
 import { addUser } from "@/lib/spring-boot-api.ts";
-import { hash } from "bcryptjs";
 import { User } from "@/lib/types.ts";
 import { FC } from "react";
 import { useToast } from "@/components/ui/use-toast";
@@ -43,7 +42,6 @@ export const SignUpForm: FC<Props> = ({ pathName }) => {
 
   const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
     try {
-      data.password = await hash(data.password, 10);
       const refinedData: User = {
         firstName: data.firstName,
         lastName: data.lastName,
@@ -286,4 +284,3 @@ export const SignUpForm: FC<Props> = ({ pathName }) => {
     </div>
   );
 };
-
