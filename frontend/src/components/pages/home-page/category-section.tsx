@@ -11,7 +11,7 @@ export const CategorySection = () => {
       try {
         const response = await getAllCategories();
 
-        setCategories(response);
+        setCategories(response.data);
       } catch (error: unknown) {
         console.error(error);
       }
@@ -26,7 +26,7 @@ export const CategorySection = () => {
           Shop by Category
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {categories.slice(1, 5).map((category: Category) => (
+          {categories && categories.slice(0, 4).map((category: Category) => (
             <Card key={category.id} className="group cursor-pointer">
               <img
                 alt={category.categoryName}

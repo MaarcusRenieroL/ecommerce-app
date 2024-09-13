@@ -1,4 +1,4 @@
-import { User } from "@/lib/types.ts";
+import { User, Product } from "@/lib/types.ts";
 import { z } from "zod";
 import { signInSchema } from "@/lib/zod-schema.ts";
 
@@ -8,18 +8,36 @@ export const getAllProducts = async () => {
   try {
     const response = await fetch(`${BASE_URL}/products/all`);
 
-    return response.json();
+    return await response.json();
   } catch (error) {
     console.log("Error fetching products");
     console.log(error);
   }
 };
 
+export const getProductById = async (id: string) => {
+  try {
+    const response = await fetch(`${BASE_URL}/products/get/${id}`);
+    
+    return await response.json();
+  } catch (error) {
+    console.log("Error fetching products");
+    console.log(error);
+  }
+};
+
+export const getProductsByCategory = async (categoryName: string) => {
+  const response = await getAllProducts();
+  
+  return response.data.filter((product: Product) => product.category.categoryName === categoryName);
+  
+}
+
 export const getAllCategories = async () => {
   try {
     const response = await fetch(`${BASE_URL}/categories/all`);
 
-    return response.json();
+    return await response.json();
   } catch (error) {
     console.log("Error fetching categories");
     console.log(error);

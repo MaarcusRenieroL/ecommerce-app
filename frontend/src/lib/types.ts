@@ -13,15 +13,24 @@ export type User = {
 };
 
 export type Product = {
-  id: number;
+  reviews: {
+    id: string;
+    author: string;
+    comment: string;
+    rating: number;
+  }[];
+  features: string[];
+  rating: number;
+  reviewCount: number;
+  id: string;
   productName: string;
-  description: string;
+  productDescription: string;
   price: number;
   quantityInStock: number;
   productImages: Array<Image>;
   category: Category;
-  size: Size;
-  color: Color;
+  sizes: Array<Size>;
+  colors: Array<Color>;
 };
 
 export type Color = {

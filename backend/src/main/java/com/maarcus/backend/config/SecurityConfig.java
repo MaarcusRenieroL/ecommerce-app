@@ -11,33 +11,24 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
-
-  @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http.csrf(AbstractHttpConfigurer::disable)
-        .authorizeHttpRequests(
-            auth ->
-                auth.requestMatchers(
-                         "/api/products/all",
-                         "api/products/get/{id}",
-                         "/api/categories/all",
-                         "api/categories/get/{id}",
-                         "/api/sizes/all",
-                         "api/sizes/get/{id}",
-                         "/api/colors/all",
-                         "api/colors/get/{id}",
-                         "api/users/add",
-                         "api/users/auth/sign-in"
-                        )
-                    .permitAll())
-        .httpBasic(AbstractHttpConfigurer::disable)
-        .logout(LogoutConfigurer::permitAll);
-
-    return http.build();
-  }
-
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder(10);
-  }
+	
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http.csrf(AbstractHttpConfigurer::disable)
+			.authorizeHttpRequests(
+				auth ->
+					auth.requestMatchers(
+							"/**"
+						)
+						.permitAll())
+			.httpBasic(AbstractHttpConfigurer::disable)
+			.logout(LogoutConfigurer::permitAll);
+		
+		return http.build();
+	}
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder(10);
+	}
 }

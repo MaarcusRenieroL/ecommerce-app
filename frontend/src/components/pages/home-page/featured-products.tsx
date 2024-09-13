@@ -10,9 +10,9 @@ export const FeaturedProducts = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const data = await getAllProducts();
-
-        setProducts(data);
+        const response = await getAllProducts();
+        
+        setProducts(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -28,7 +28,7 @@ export const FeaturedProducts = () => {
           Featured Products
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {products.slice(0, 4).map((product: Product) => {
+          {products && products.slice(0, 4).map((product: Product) => {
             return (
               <Card key={product.id}>
                 <img

@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UuidGenerator;
+
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -13,10 +16,12 @@ import lombok.Setter;
 @Entity
 @Table(name = "users")
 public class User {
-
+  
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @UuidGenerator
+  @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
+  private UUID id;
 
   @Column(name = "first_name", nullable = false)
   private String firstName;

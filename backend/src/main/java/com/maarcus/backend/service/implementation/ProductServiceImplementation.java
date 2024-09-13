@@ -1,16 +1,15 @@
 package com.maarcus.backend.service.implementation;
 
 import com.maarcus.backend.exception.product.ProductNotFoundException;
-import com.maarcus.backend.model.Category;
-import com.maarcus.backend.model.Color;
-import com.maarcus.backend.model.Product;
-import com.maarcus.backend.model.Size;
+import com.maarcus.backend.model.*;
 import com.maarcus.backend.repository.*;
 import com.maarcus.backend.service.ProductService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ProductServiceImplementation implements ProductService {
@@ -23,6 +22,7 @@ public class ProductServiceImplementation implements ProductService {
 	
 	private void findCategorySizeAndColor(Product product) {
 		try {
+			// Handle Category
 			Category category = product.getCategory();
 			if (category != null) {
 				Category existingCategory = categoryRepository.findByCategoryName(category.getCategoryName())
@@ -30,18 +30,28 @@ public class ProductServiceImplementation implements ProductService {
 				product.setCategory(existingCategory);
 			}
 			
-			Size size = product.getSize();
-			if (size != null) {
-				Size existingSize = sizeRepository.findByName(size.getName())
-					.orElseGet(() -> sizeRepository.save(size));
-				product.setSize(existingSize);
+			// Handle Sizes
+			List<Size> sizes = product.getSizes();
+			if (sizes != null && !sizes.isEmpty()) {
+				List<Size> updatedSizes = new ArrayList<>();
+				for (Size size : sizes) {
+					Size existingSize = sizeRepository.findByName(size.getName())
+						.orElseGet(() -> sizeRepository.save(size));
+					updatedSizes.add(existingSize);
+				}
+				product.setSizes(updatedSizes);
 			}
 			
-			Color color = product.getColor();
-			if (color != null) {
-				Color existingColor = colorRepository.findByName(color.getName())
-					.orElseGet(() -> colorRepository.save(color));
-				product.setColor(existingColor);
+			// Handle Colors
+			List<Color> colors = product.getColors();
+			if (colors != null && !colors.isEmpty()) {
+				List<Color> updatedColors = new ArrayList<>();
+				for (Color color : colors) {
+					Color existingColor = colorRepository.findByName(color.getName())
+						.orElseGet(() -> colorRepository.save(color));
+					updatedColors.add(existingColor);
+				}
+				product.setColors(updatedColors);
 			}
 			
 		} catch (Exception e) {
@@ -49,6 +59,7 @@ public class ProductServiceImplementation implements ProductService {
 			throw new RuntimeException("An error occurred while processing the product attributes.", e);
 		}
 	}
+	
 	
 	public ProductServiceImplementation(
 		ProductRepository productRepository,
@@ -71,7 +82,7 @@ public class ProductServiceImplementation implements ProductService {
 	}
 	
 	@Override
-	public Optional<Product> getProduct(Long id) {
+	public Optional<Product> getProduct(UUID id) {
 		return Optional.ofNullable(productRepository.findById(id)
 			.orElseThrow(() -> new ProductNotFoundException(id)));
 	}
@@ -82,7 +93,7 @@ public class ProductServiceImplementation implements ProductService {
 	}
 	
 	@Override
-	public Product updateProduct(Long id, Product product) {
+	public Product updateProduct(UUID id, Product product) {
 		Product existingProduct = productRepository.findById(id)
 			.orElseThrow(() -> new ProductNotFoundException(id));
 		
@@ -99,7 +110,7 @@ public class ProductServiceImplementation implements ProductService {
 	}
 	
 	@Override
-	public void deleteProduct(Long id) {
+	public void deleteProduct(UUID id) {
 		Product product = productRepository.findById(id)
 			.orElseThrow(() -> new ProductNotFoundException(id));
 		productRepository.delete(product);

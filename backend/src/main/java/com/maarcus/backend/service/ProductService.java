@@ -3,18 +3,19 @@ package com.maarcus.backend.service;
 import com.maarcus.backend.model.Product;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface ProductService {
 
   Optional<Product> addProduct(Product Product);
 
-  Optional<Product> getProduct(Long id);
+  Optional<Product> getProduct(UUID id);
 
   List<Product> getAllProducts();
 
-  Product updateProduct(Long id, Product Product);
+  Product updateProduct(UUID id, Product Product);
 
-  void deleteProduct(Long id);
+  void deleteProduct(UUID id);
 
   List<Product> searchAllProductsByName(String name);
 }

@@ -17,9 +17,9 @@ export const ProductsPage = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const data = await getAllProducts();
+        const response = await getAllProducts();
 
-        setProducts(data);
+        setProducts(response.data);
       } catch (error) {
         console.log(error);
       }
