@@ -4,7 +4,9 @@ import com.maarcus.backend.model.Color;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface ColorRepository extends JpaRepository<Color, Long> {
-  public boolean findByName(String name);
+  Optional<Color> findByName(String name);
 }

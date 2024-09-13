@@ -18,17 +18,16 @@ public class SecurityConfig {
         .authorizeHttpRequests(
             auth ->
                 auth.requestMatchers(
-                        "/**"
-                        // "/api/products/all",
-                        // "api/products/get/{id}",
-                        // "/api/categories/all",
-                        // "api/categories/get/{id}",
-                        // "/api/sizes/all",
-                        // "api/sizes/get/{id}",
-                        // "/api/colors/all",
-                        // "api/colors/get/{id}",
-                        // "api/users/add",
-                        // "api/users/auth/sign-in"
+                         "/api/products/all",
+                         "api/products/get/{id}",
+                         "/api/categories/all",
+                         "api/categories/get/{id}",
+                         "/api/sizes/all",
+                         "api/sizes/get/{id}",
+                         "/api/colors/all",
+                         "api/colors/get/{id}",
+                         "api/users/add",
+                         "api/users/auth/sign-in"
                         )
                     .permitAll())
         .httpBasic(AbstractHttpConfigurer::disable)

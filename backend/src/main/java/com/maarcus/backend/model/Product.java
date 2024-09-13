@@ -31,9 +31,9 @@ public class Product {
 
   @Column(name = "quantity_in_stock", nullable = false)
   private int quantityInStock;
-
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "category_id", nullable = false, referencedColumnName = "category_id")
+  
+  @ManyToOne
+  @JoinColumn(name = "category_id", nullable = false)
   private Category category;
 
   @ManyToOne
