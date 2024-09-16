@@ -5,8 +5,10 @@ import com.maarcus.backend.exception.user.InvalidCredentialsException;
 import com.maarcus.backend.model.User;
 import com.maarcus.backend.repository.UserRepository;
 import com.maarcus.backend.service.UserService;
+
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +17,11 @@ public class UserServiceImplementation implements UserService {
 	
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
-	
+
 	public UserServiceImplementation(UserRepository userRepository, PasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
-	}
+  }
 	
 	@Override
 	public Optional<User> addUser(User user) {
@@ -46,6 +48,7 @@ public class UserServiceImplementation implements UserService {
 			existingUser.get().setFirstName(user.getFirstName());
 			existingUser.get().setLastName(user.getLastName());
 			existingUser.get().setEmail(user.getEmail());
+			existingUser.get().setRole(user.getRole());
 			existingUser.get().setPhoneNumber(user.getPhoneNumber());
 			existingUser.get().setAddressLine1(user.getAddressLine1());
 			existingUser.get().setAddressLine2(user.getAddressLine2());

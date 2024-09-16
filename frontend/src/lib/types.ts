@@ -3,13 +3,14 @@ import { Table } from "@tanstack/react-table";
 export type User = {
   firstName: string;
   lastName: string;
+  username: string;
   email: string;
   password: string;
   addressLine1: string;
   addressLine2?: string;
   addressLine3?: string;
   phoneNumber: string;
-  role?: string;
+  role: string;
 };
 
 export type Product = {

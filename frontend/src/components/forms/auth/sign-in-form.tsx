@@ -14,16 +14,17 @@ import {
   FormMessage,
 } from "@/components/ui/form.tsx";
 import { signInUser } from "@/lib/spring-boot-api.ts";
-import { User } from "@/lib/types.ts";
 import { FC } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   pathName: string;
 };
 
-export const SignInForm: FC<Props> = ({ pathName }) => {
+export const SignInForm: FC<Props> = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
@@ -39,16 +40,27 @@ export const SignInForm: FC<Props> = ({ pathName }) => {
         email: data.email,
         password: data.password,
       };
-      await signInUser(refinedData);
 
+      const response = await signInUser(refinedData);
+
+      if (response.statusCode === "OK") {
+        toast({
+          title: "User Authenticated Successfully",
+        });
+
+        if (response.data.role === "CUSTOMER") {
+          navigate("/");
+        } else if (response.data.role === "VENDOR") {
+          navigate("/vendor/dashboard");
+        }
+      }
+    } catch (error: unknown) {
+      console.error("Error during sign-in:", error);
       toast({
-        title: "User authenticated successfully",
-        description: "",
+        title: "Error during sign in",
+        // @ts-expect-error error
+        description: error.message,
       });
-    } catch (error) {
-      console.error(error);
-      // @ts-expect-error error
-      toast.error("Something went wrong", error.message());
     }
   };
 

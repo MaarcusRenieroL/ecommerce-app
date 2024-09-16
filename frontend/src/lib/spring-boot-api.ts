@@ -18,7 +18,7 @@ export const getAllProducts = async () => {
 export const getProductById = async (id: string) => {
   try {
     const response = await fetch(`${BASE_URL}/products/get/${id}`);
-    
+
     return await response.json();
   } catch (error) {
     console.log("Error fetching products");
@@ -28,10 +28,11 @@ export const getProductById = async (id: string) => {
 
 export const getProductsByCategory = async (categoryName: string) => {
   const response = await getAllProducts();
-  
-  return response.data.filter((product: Product) => product.category.categoryName === categoryName);
-  
-}
+
+  return response.data.filter(
+    (product: Product) => product.category.categoryName === categoryName,
+  );
+};
 
 export const getAllCategories = async () => {
   try {
@@ -46,13 +47,15 @@ export const getAllCategories = async () => {
 
 export const addUser = async (data: User) => {
   try {
-    return await fetch(`${BASE_URL}/users/add`, {
+    const response = await fetch(`${BASE_URL}/users/add`, {
       headers: {
         "Content-Type": "application/json",
       },
       method: "POST",
       body: JSON.stringify(data),
     });
+
+    console.log(response);
   } catch (error) {
     console.log("Error adding user");
     console.log(error);
@@ -61,15 +64,17 @@ export const addUser = async (data: User) => {
 
 export const signInUser = async (data: z.infer<typeof signInSchema>) => {
   try {
-    return await fetch(`${BASE_URL}/users/auth/sign-in`, {
+    const response = await fetch(`${BASE_URL}/auth/sign-in`, {
       headers: {
         "Content-Type": "application/json",
       },
       method: "POST",
       body: JSON.stringify(data),
     });
+
+    return await response.json();
   } catch (error) {
-    console.log("Error authenticating user");
-    console.log(error);
+    console.error("Error authenticating user:", error);
+    return null;
   }
 };

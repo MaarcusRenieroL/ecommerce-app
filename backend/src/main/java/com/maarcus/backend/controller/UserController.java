@@ -34,7 +34,9 @@ public class UserController {
 	}
 	
 	@PostMapping("/add")
-	public HttpEntity<StandardResponse<Optional<User>>> addUser(@RequestBody User user) {
+	public ResponseEntity<StandardResponse<Optional<User>>> addUser(@RequestBody User user) {
+		System.out.println("roles: ");
+		System.out.println(user.getRole());
 		return ResponseEntity.status(HttpStatus.CREATED).body(new StandardResponse<>(HttpStatus.CREATED, "User created successfully", userService.addUser(user)));
 	}
 	
@@ -54,17 +56,6 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new StandardResponse<>(HttpStatus.NO_CONTENT, "User deleted successfully", null));
 		} catch (UserNotFoundException ex) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StandardResponse<>(HttpStatus.NOT_FOUND, ex.getMessage(), null));
-		}
-	}
-	
-	
-	@PostMapping("/auth/sign-in")
-	public ResponseEntity<StandardResponse<User>> signInUser(@RequestBody SignIn signIn) {
-		User user = userService.signInUser(signIn.getEmail(), signIn.getPassword());
-		if (user != null) {
-			return ResponseEntity.ok(new StandardResponse<>(HttpStatus.OK, "Sign-in successful", user));
-		} else {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new StandardResponse<>(HttpStatus.UNAUTHORIZED, "Invalid credentials", null));
 		}
 	}
 }

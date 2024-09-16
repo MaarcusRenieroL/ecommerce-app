@@ -18,7 +18,7 @@ export const signUpSchema = z
       .min(3, {
         message: "Last name must be at least 3 characters long",
       }),
-    email: z
+    username: z
       .string({
         required_error: "Email is required",
       })
@@ -58,6 +58,7 @@ export const signUpSchema = z
       .max(15, {
         message: "Phone number must not be more than 15 characters long",
       }),
+    role: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",

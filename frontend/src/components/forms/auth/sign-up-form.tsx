@@ -30,13 +30,14 @@ export const SignUpForm: FC<Props> = ({ pathName }) => {
     defaultValues: {
       firstName: "",
       lastName: "",
-      email: "",
+      username: "",
       password: "",
       confirmPassword: "",
       addressLine1: "",
       addressLine2: "",
       addressLine3: "",
       phoneNumber: "",
+      role: "VENDOR",
     },
   });
 
@@ -45,7 +46,8 @@ export const SignUpForm: FC<Props> = ({ pathName }) => {
       const refinedData: User = {
         firstName: data.firstName,
         lastName: data.lastName,
-        email: data.email,
+        email: data.username,
+        username: data.username,
         password: data.password,
         addressLine1: data.addressLine1,
         addressLine2: data.addressLine2,
@@ -53,6 +55,8 @@ export const SignUpForm: FC<Props> = ({ pathName }) => {
         phoneNumber: data.phoneNumber,
         role: pathName === "/auth/sign-up" ? "CUSTOMER" : "VENDOR",
       };
+
+      console.log(refinedData);
 
       await addUser(refinedData);
 
@@ -126,7 +130,7 @@ export const SignUpForm: FC<Props> = ({ pathName }) => {
                   </FormLabel>
                   <FormControl>
                     <Input
-                      type="email"
+                      type="username"
                       placeholder="john.doe@gmail.com"
                       required
                       className="w-full"
@@ -136,7 +140,7 @@ export const SignUpForm: FC<Props> = ({ pathName }) => {
                   <FormMessage />
                 </FormItem>
               )}
-              name="email"
+              name="username"
               control={form.control}
             />
 
