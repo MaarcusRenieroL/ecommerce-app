@@ -6,19 +6,18 @@ import com.maarcus.backend.payload.request.LoginRequest;
 import com.maarcus.backend.payload.response.Response;
 import com.maarcus.backend.payload.response.Token;
 import com.maarcus.backend.repository.UserRepository;
-import com.maarcus.backend.service.UserService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 @RestController
@@ -34,7 +33,7 @@ public class AuthController {
 
 
   @PostMapping("/sign-in")
-  public ResponseEntity<?> login(@RequestBody LoginRequest loginData){
+  public ResponseEntity<?> login(@RequestBody LoginRequest loginData, HttpServletResponse response){
     try{
       Authentication authToken = new UsernamePasswordAuthenticationToken(
           loginData.getEmail(),
@@ -48,8 +47,15 @@ public class AuthController {
       String role = "";
 
       if (optionalUser.isPresent()) {
-        role = userRepository.findByEmail(loginData.getEmail()).get().getRole();
+        role = optionalUser.get().getRole();
       }
+      
+      Cookie cookie = new Cookie("jwt", token);
+      cookie.setHttpOnly(true);
+      cookie.setSecure(true);
+      cookie.setPath("/");
+      cookie.setMaxAge(24 * 60 * 60);
+      response.addCookie(cookie);
 
       return ResponseEntity.status(HttpStatus.OK)
           .body(Response.builder()
@@ -71,5 +77,38 @@ public class AuthController {
               .data(null)
               .build());
     }
+  }
+  
+  @GetMapping("/check")
+  public ResponseEntity<String> checkAuthCookie(HttpServletRequest request) {
+    Cookie[] cookies = request.getCookies();
+    
+    if (cookies != null) {
+      for (Cookie cookie : cookies) {
+        if ("jwt".equals(cookie.getName())) {
+          
+          String token = cookie.getValue();
+          boolean isValid = jwtUtils.validateJwtToken(token);
+          if (isValid) {
+            return ResponseEntity.ok("User is authenticated");
+          } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+          }
+        }
+      }
+    }
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication cookie not found");
+  }
+  
+  @PostMapping("/logout")
+  public ResponseEntity<?> logout(HttpServletResponse response) {
+    Cookie cookie = new Cookie("jwt", null);
+    cookie.setHttpOnly(true);
+    cookie.setSecure(true);
+    cookie.setPath("/");
+    cookie.setMaxAge(0);
+    response.addCookie(cookie);
+    
+    return ResponseEntity.ok("Logged out successfully");
   }
 }

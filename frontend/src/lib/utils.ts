@@ -16,3 +16,17 @@ export function formatPrice(
     ...opts,
   }).format(Number(price));
 }
+
+export const isLoggedIn = async () => {
+  try {
+    const response = await fetch("http://localhost:8080/api/auth/check", {
+      method: "GET",
+      credentials: "include"
+    });
+    
+    return response.ok;
+  } catch (error: unknown) {
+    console.log("Error: " + error)
+    return false;
+  }
+}

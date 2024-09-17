@@ -26,6 +26,21 @@ import { useTheme } from "../theme-provider";
 
 export const AccountNav = () => {
   const { setTheme } = useTheme();
+  
+  const onLogoutClick = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/api/auth/logout", {
+        method: "POST",
+        credentials: "include"
+      })
+      
+      console.log("From onlogoutclick function")
+      console.log(response);
+    } catch (error: unknown) {
+      console.log(error);
+    }
+  }
+  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -103,7 +118,7 @@ export const AccountNav = () => {
           </a>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={onLogoutClick}>
           <LogOut className="mr-2 h-4 w-4" />
           <span>Log out</span>
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>

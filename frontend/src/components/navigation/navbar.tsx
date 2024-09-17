@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Menu, Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
 import { Input } from "@/components/ui/input.tsx";
@@ -16,10 +16,22 @@ import { clsx } from "clsx";
 import { AccountNav } from "@/components/navigation/account-nav.tsx";
 import { Card, CardContent } from "@/components/ui/card.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
+import { isLoggedIn } from "@/lib/utils.ts";
 
 export const Navbar = () => {
   const location = useLocation();
-
+  const [authenticated, setAuthenticated] = useState(false);
+  
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      setAuthenticated(await isLoggedIn());
+      
+      return;
+    }
+    
+    checkAuthentication();
+  }, []);
+  
   const initialCartItems = [
     {
       id: 1,
@@ -83,9 +95,9 @@ export const Navbar = () => {
           <Input placeholder="Search products" className="w-1/2" />
         </div>
         <div className="flex items-center space-x-5">
-          <a href="/auth/sign-in">
+          {!authenticated && <a href="/auth/sign-in">
             <Button>Sign In / Sign Up</Button>
-          </a>
+          </a>}
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="outline" size="icon">
@@ -180,7 +192,7 @@ export const Navbar = () => {
               </SheetFooter>
             </SheetContent>
           </Sheet>
-          <AccountNav />
+          {authenticated && <AccountNav />}
         </div>
       </header>
       <header className="flex lg:hidden items-center justify-between px-6 py-4 border-b sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 gap-5">
@@ -243,9 +255,9 @@ export const Navbar = () => {
         </Sheet>
         <Input placeholder="Search products" className="w-full" />
         <div className="flex items-center space-x-5">
-          <a href="/auth/sign-in">
+          {!authenticated && <a href="/auth/sign-in">
             <Button>Sign In</Button>
-          </a>
+          </a>}
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="outline" size="icon">
@@ -340,7 +352,7 @@ export const Navbar = () => {
               </SheetFooter>
             </SheetContent>
           </Sheet>
-          <AccountNav />
+          {authenticated && <AccountNav />}
         </div>
       </header>
     </>
