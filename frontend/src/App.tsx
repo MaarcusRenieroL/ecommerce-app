@@ -42,7 +42,7 @@ export default function App() {
 					<Route path="/categories" element={<CategoriesPage/>}/>
 					<Route path="/deals" element={<DealsPage/>}/>
 					<Route path="/products/:id" element={<ProductPage/>}/>
-					<Route element={<ProtectedRoute/>}>
+					<Route element={<ProtectedRoute requiredRole="CUSTOMER" />}>
 						<Route path="/cart" element={<CartPage/>}/>
 						<Route path="/checkout" element={<CheckoutPage/>}/>
 						<Route path="/account" element={<YourAccountPage/>}/>
@@ -61,7 +61,9 @@ export default function App() {
 							path="/account/request-your-data"
 							element={<ManageYourDataPage/>}
 						/>
+					</Route>
 						
+					<Route element={<ProtectedRoute requiredRole="VENDOR"/>}>
 						<Route path="/vendor/dashboard" element={<VendorDashboardPage/>}/>
 						<Route path="/vendor/products" element={<VendorProductsPage/>}/>
 						<Route path="/vendor/categories" element={<VendorCategoriesPage/>}/>
@@ -69,6 +71,7 @@ export default function App() {
 						<Route path="/vendor/orders" element={<VendorOrdersPage/>}/>
 						<Route path="/vendor/settings" element={<VendorSettingsPage/>}/>
 					</Route>
+					
 					
 					<Route path="/auth/sign-in" element={<SignInPage/>}/>
 					<Route path="/auth/sign-up" element={<SignUpPage/>}/>

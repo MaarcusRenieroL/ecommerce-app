@@ -24,7 +24,7 @@ export const isLoggedIn = async () => {
       credentials: "include"
     });
     
-    return response.ok;
+    return await response.json();
   } catch (error: unknown) {
     console.log("Error: " + error)
     return false;

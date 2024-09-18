@@ -41,8 +41,10 @@ export const SignInForm: FC<Props> = () => {
       };
 
       const response = await signInUser(refinedData);
+      
+      console.log(response)
 
-      if (response.statusCode === "OK") {
+      if (response.status === "OK") {
         toast({
           title: "Success",
           description: response.message

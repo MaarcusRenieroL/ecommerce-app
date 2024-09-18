@@ -17,6 +17,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -49,12 +51,19 @@ public class AuthController {
         role = optionalUser.get().getRole();
       }
       
-      Cookie cookie = new Cookie("jwt", token);
-      cookie.setHttpOnly(true);
-      cookie.setSecure(true);
-      cookie.setPath("/");
-      cookie.setMaxAge(24 * 60 * 60);
-      response.addCookie(cookie);
+      Cookie jwt = new Cookie("jwt", token);
+      Cookie cookieRole = new Cookie("role", role);
+      jwt.setHttpOnly(true);
+      jwt.setSecure(true);
+      jwt.setPath("/");
+      jwt.setMaxAge(24 * 60 * 60);
+      response.addCookie(jwt);
+      
+      cookieRole.setHttpOnly(true);
+      cookieRole.setSecure(true);
+      cookieRole.setPath("/");
+      cookieRole.setMaxAge(24 * 60 * 60);
+      response.addCookie(cookieRole);
       
       return ResponseEntity.ok().body(new StandardResponse<>(HttpStatus.OK, "Login Successful", Token.builder().token(token).role(role).build()));
       
@@ -65,33 +74,50 @@ public class AuthController {
   }
   
   @GetMapping(path = "/check")
-  public ResponseEntity<String> checkAuthCookie(HttpServletRequest request) {
+  public ResponseEntity<StandardResponse<Map<String, String>>> checkAuthCookie(HttpServletRequest request) {
     Cookie[] cookies = request.getCookies();
+    Map<String, String> response = new HashMap<>();
     
     if (cookies != null) {
       for (Cookie cookie : cookies) {
         if ("jwt".equals(cookie.getName())) {
-          
           String token = cookie.getValue();
           if (jwtUtils.validateJwtToken(token)) {
-            return ResponseEntity.ok("User is authenticated");
-          } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+            response.put("message", "User is authenticated");
           }
         }
+        
+        if ("role".equals(cookie.getName())) {
+          String role = cookie.getValue();
+          response.put("role", role);
+        }
+      }
+      System.out.println(response);
+      if (response.containsKey("role")) {
+        return ResponseEntity.ok(new StandardResponse<>(HttpStatus.OK, "User is authenticated", response));
       }
     }
-    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication cookie not found");
+    
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new StandardResponse<>(HttpStatus.UNAUTHORIZED, "User is not authenticated", null));
   }
+  
   
   @PostMapping(path = "/logout")
   public ResponseEntity<StandardResponse<?>> logout(HttpServletResponse response) {
-    Cookie cookie = new Cookie("jwt", null);
-    cookie.setHttpOnly(true);
-    cookie.setSecure(true);
-    cookie.setPath("/");
-    cookie.setMaxAge(0);
-    response.addCookie(cookie);
+    Cookie jwt = new Cookie("jwt", null);
+    Cookie cookieRole = new Cookie("role", null);
+    
+    jwt.setHttpOnly(true);
+    jwt.setSecure(true);
+    jwt.setPath("/");
+    jwt.setMaxAge(24 * 60 * 60);
+    response.addCookie(jwt);
+    
+    cookieRole.setHttpOnly(true);
+    cookieRole.setSecure(true);
+    cookieRole.setPath("/");
+    cookieRole.setMaxAge(24 * 60 * 60);
+    response.addCookie(cookieRole);
     
     return ResponseEntity.ok(new StandardResponse<>(HttpStatus.OK, "Logout Successful", null));
   }

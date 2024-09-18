@@ -21,11 +21,13 @@ import { isLoggedIn } from "@/lib/utils.ts";
 export const Navbar = () => {
   const location = useLocation();
   const [authenticated, setAuthenticated] = useState(false);
+  const [role, setRole] = useState("");
   
   useEffect(() => {
     const checkAuthentication = async () => {
-      setAuthenticated(await isLoggedIn());
-      
+      const response = await isLoggedIn();
+      setAuthenticated(response.status === "OK")
+      setRole(response.data.role);
       return;
     }
     
@@ -192,7 +194,7 @@ export const Navbar = () => {
               </SheetFooter>
             </SheetContent>
           </Sheet>
-          {authenticated && <AccountNav />}
+          {authenticated && <AccountNav role={role} />}
         </div>
       </header>
       <header className="flex lg:hidden items-center justify-between px-6 py-4 border-b sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 gap-5">
@@ -352,7 +354,7 @@ export const Navbar = () => {
               </SheetFooter>
             </SheetContent>
           </Sheet>
-          {authenticated && <AccountNav />}
+          {authenticated && <AccountNav role={role} />}
         </div>
       </header>
     </>

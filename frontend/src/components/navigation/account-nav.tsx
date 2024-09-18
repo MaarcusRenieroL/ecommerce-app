@@ -6,7 +6,7 @@ import {
   ShoppingCart,
   User,
 } from "lucide-react";
-
+import { FC } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -24,7 +24,11 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useTheme } from "../theme-provider";
 
-export const AccountNav = () => {
+type Props = {
+  role: string;
+}
+
+export const AccountNav: FC<Props> = ({ role }) => {
   const { setTheme } = useTheme();
   
   const onLogoutClick = async () => {
@@ -49,17 +53,19 @@ export const AccountNav = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <a href="/vendor/dashboard">
-          <DropdownMenuItem>
-            <User className="mr-2 h-4 w-4" />
-            <span>Dashboard</span>
-          </DropdownMenuItem>
-        </a>
-        <DropdownMenuSeparator />
+        {role !== "CUSTOMER" && <>
+          <a href="/vendor/dashboard">
+            <DropdownMenuItem>
+              <User className="mr-2 h-4 w-4"/>
+              <span>Dashboard</span>
+            </DropdownMenuItem>
+          </a>
+          <DropdownMenuSeparator/>
+        </>}
         <DropdownMenuGroup>
           <a href="/account">
             <DropdownMenuItem>
-              <User className="mr-2 h-4 w-4" />
+              <User className="mr-2 h-4 w-4"/>
               <span>Profile</span>
               <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
             </DropdownMenuItem>
