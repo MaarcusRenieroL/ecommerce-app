@@ -29,13 +29,10 @@ export const AccountNav = () => {
   
   const onLogoutClick = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/auth/logout", {
+      await fetch("http://localhost:8080/api/auth/logout", {
         method: "POST",
         credentials: "include"
       })
-      
-      console.log("From onlogoutclick function")
-      console.log(response);
     } catch (error: unknown) {
       console.log(error);
     }

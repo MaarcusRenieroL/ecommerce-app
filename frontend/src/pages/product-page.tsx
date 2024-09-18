@@ -77,7 +77,7 @@ export const ProductPage = () => {
 											<img
 												src={image.url}
 												alt={`${data.productName} - View ${index + 1}`}
-												className="w-full h-auto rounded-lg dark:brightness-[0.2] dark:grayscale"
+												className="w-full h-auto rounded-lg"
 											/>
 										</CarouselItem>
 									))}
@@ -215,7 +215,7 @@ export const ProductPage = () => {
 												: "/assets/placeholder.svg"
 										}
 										alt={product.productName}
-										className="w-full h-48 object-cover mb-4 rounded dark:brightness-[0.2] dark:grayscale"
+										className="w-full h-48 object-cover mb-4 rounded"
 									/>
 									<CardContent className="p-4">
 										<h3 className="font-semibold mb-2">{product.productName}</h3>

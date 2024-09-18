@@ -13,9 +13,9 @@ export const ProductCard: FC<Props> = ({ product }) => {
 		<a key={product.id} href={`/products/${product.id}`}>
 			<Card>
 				<img
-					src={"/assets/placeholder.svg"}
+					src={product.productImages.length != 0 ? product.productImages[0].url : "/assets/placeholder.svg"}
 					alt={product.productName}
-					className="w-full h-48 object-cover rounded-md mb-4 dark:brightness-[0.2] dark:grayscale"
+					className="w-full h-48 object-cover rounded-md mb-4"
 				/>
 				<CardContent className="p-4">
 					<h3 className="font-semibold text-lg mb-2">

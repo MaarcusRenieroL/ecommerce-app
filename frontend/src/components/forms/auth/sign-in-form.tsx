@@ -35,7 +35,6 @@ export const SignInForm: FC<Props> = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof signInSchema>) => {
-    try {
       const refinedData = {
         email: data.email,
         password: data.password,
@@ -45,7 +44,8 @@ export const SignInForm: FC<Props> = () => {
 
       if (response.statusCode === "OK") {
         toast({
-          title: "User Authenticated Successfully",
+          title: "Success",
+          description: response.message
         });
 
         if (response.data.role === "CUSTOMER") {
@@ -53,15 +53,12 @@ export const SignInForm: FC<Props> = () => {
         } else if (response.data.role === "VENDOR") {
           navigate("/vendor/dashboard");
         }
+      } else {
+        toast({
+          title: "Error",
+          description: response.message
+        })
       }
-    } catch (error: unknown) {
-      console.error("Error during sign-in:", error);
-      toast({
-        title: "Error during sign in",
-        // @ts-expect-error error
-        description: error.message,
-      });
-    }
   };
 
   return (

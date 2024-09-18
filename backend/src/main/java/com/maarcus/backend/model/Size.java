@@ -20,12 +20,12 @@ public class Size {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO) // Ensure UUIDs are generated correctly
   @UuidGenerator
-  @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
+  @Column(name = "size_id", updatable = false, nullable = false, columnDefinition = "UUID")
   private UUID id;
   
-  @Column(name = "name", nullable = false)
+  @Column(name = "size_name", nullable = false)
   private String name;
   
-  @Column(name = "value")
+  @Column(name = "size_value")
   private String value;
 }

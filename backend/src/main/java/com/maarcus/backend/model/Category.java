@@ -19,7 +19,7 @@ public class Category {
   
   @Id
   @UuidGenerator
-  @Column(name = "id", updatable = false, nullable = false)
+  @Column(name = "category_id", updatable = false, nullable = false)
   private UUID id;
 
   @Column(name = "category_name")

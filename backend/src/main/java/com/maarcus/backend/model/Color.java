@@ -19,7 +19,7 @@ public class Color {
   
   @Id
   @UuidGenerator
-  @Column(name = "id", updatable = false, nullable = false)
+  @Column(name = "color_id", updatable = false, nullable = false)
   private UUID id;
 
   private String name;

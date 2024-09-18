@@ -9,6 +9,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
+
 @Service
 public class ColorServiceImplementation implements ColorService {
 	
@@ -19,8 +21,8 @@ public class ColorServiceImplementation implements ColorService {
 	}
 	
 	@Override
-	public Optional<Color> addColor(Color color) {
-		return Optional.of(colorRepository.save(color));
+	public Color addColor(Color color) {
+		return colorRepository.save(color);
 	}
 	
 	@Override

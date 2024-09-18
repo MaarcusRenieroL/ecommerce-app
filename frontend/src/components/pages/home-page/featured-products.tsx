@@ -33,7 +33,7 @@ export const FeaturedProducts = () => {
               <Card key={product.id}>
                 <img
                   alt="Product image"
-                  className="aspect-square object-cover w-full rounded-lg dark:brightness-[0.2] dark:grayscale"
+                  className="aspect-square object-cover w-full rounded-lg"
                   height="200"
                   src={
                     product.productImages

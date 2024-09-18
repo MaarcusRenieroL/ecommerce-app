@@ -87,7 +87,7 @@ export const BusinessSignUpPage = () => {
             alt="Image"
             width="1920"
             height="1080"
-            className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+            className="h-full w-full object-cover"
           />
         </div>
       </div>

@@ -130,7 +130,7 @@ export const Navbar = () => {
                           <img
                             src={item.image}
                             alt={item.name}
-                            className="w-full h-32 object-cover rounded mr-4 dark:brightness-[0.2] dark:grayscale"
+                            className="w-full h-32 object-cover rounded mr-4"
                           />
                           <CardContent className="p-4">
                             <div className="flex flex-col items-center">
@@ -290,7 +290,7 @@ export const Navbar = () => {
                           <img
                             src={item.image}
                             alt={item.name}
-                            className="w-full h-32 object-cover rounded mr-4 dark:brightness-[0.2] dark:grayscale"
+                            className="w-full h-32 object-cover rounded mr-4"
                           />
                           <CardContent className="p-4">
                             <div className="flex flex-col">

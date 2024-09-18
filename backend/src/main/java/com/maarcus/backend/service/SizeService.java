@@ -3,16 +3,17 @@ package com.maarcus.backend.service;
 import com.maarcus.backend.model.Size;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface SizeService {
 
-  Optional<Size> addSize(Size size);
-
-  Optional<Size> getSize(Long id);
+  Size addSize(Size size);
+  
+  Optional<Size> getSize(UUID id);
 
   List<Size> getAllSizes();
 
-  Size updateSize(Long id, Size size);
+  Size updateSize(UUID id, Size size);
 
-  void deleteSize(Long id);
+  void deleteSize(UUID id);
 }

@@ -1,61 +1,86 @@
 package com.maarcus.backend.controller;
 
 import com.maarcus.backend.exception.user.UserNotFoundException;
-import com.maarcus.backend.model.SignIn;
-import com.maarcus.backend.model.StandardResponse;
 import com.maarcus.backend.model.User;
+import com.maarcus.backend.payload.response.StandardResponse;
 import com.maarcus.backend.service.UserService;
-import org.springframework.http.HttpEntity;
+import com.maarcus.backend.utils.ResponseUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping(path = "/api/users")
 public class UserController {
 	
 	private final UserService userService;
+	private final ResponseUtil responseUtil;
 	
-	public UserController(UserService userService) {
+	public UserController(UserService userService, ResponseUtil responseUtil) {
 		this.userService = userService;
+		this.responseUtil = responseUtil;
 	}
 	
 	@GetMapping("/all")
 	public ResponseEntity<StandardResponse<List<User>>> getAllUsers() {
-		return ResponseEntity.ok(new StandardResponse<>(HttpStatus.OK, "Users retrieved successfully", userService.getAllUsers()));
+		List<User> users = userService.getAllUsers();
+		
+		if (users.isEmpty()) {
+			return responseUtil.buildErrorResponse(HttpStatus.NOT_FOUND, "No users found");
+		}
+		
+		return responseUtil.buildSuccessResponse(HttpStatus.OK, "Users retrieved successfully", users);
 	}
 	
 	@GetMapping("/get/{id}")
 	public ResponseEntity<StandardResponse<User>> getUser(@PathVariable Long id) {
-		return userService.getUser(id).map(user -> ResponseEntity.ok(new StandardResponse<>(HttpStatus.OK, "User retrieved successfully", user))).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StandardResponse<>(HttpStatus.NOT_FOUND, "User not found", null)));
+		if (id == null) {
+			return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: id");
+		}
+		
+		User user = userService.getUser(id)
+			.orElseThrow(() -> new UserNotFoundException(id));
+		
+		return responseUtil.buildSuccessResponse(HttpStatus.OK, "User retrieved successfully", user);
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<StandardResponse<Optional<User>>> addUser(@RequestBody User user) {
-		System.out.println("roles: ");
-		System.out.println(user.getRole());
-		return ResponseEntity.status(HttpStatus.CREATED).body(new StandardResponse<>(HttpStatus.CREATED, "User created successfully", userService.addUser(user)));
+	public ResponseEntity<StandardResponse<User>> addUser(@RequestBody User user) {
+		if (user == null) {
+			return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "User data is required");
+		}
+		
+		User createdUser = userService.addUser(user);
+		return responseUtil.buildSuccessResponse(HttpStatus.CREATED, "User created successfully", createdUser);
 	}
 	
 	@PutMapping("/update/{id}")
 	public ResponseEntity<StandardResponse<User>> updateUser(@PathVariable Long id, @RequestBody User user) {
+		if (id == null || user == null) {
+			return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required fields: id or user data");
+		}
+		
 		try {
-			return ResponseEntity.ok(new StandardResponse<>(HttpStatus.OK, "User updated successfully", userService.updateUser(id, user)));
-		} catch (UserNotFoundException ex) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StandardResponse<>(HttpStatus.NOT_FOUND, ex.getMessage(), null));
+			User updatedUser = userService.updateUser(id, user);
+			return responseUtil.buildSuccessResponse(HttpStatus.OK, "User updated successfully", updatedUser);
+		} catch (UserNotFoundException e) {
+			return responseUtil.buildErrorResponse(HttpStatus.NOT_FOUND, e.getMessage());
 		}
 	}
 	
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<StandardResponse<Void>> deleteUser(@PathVariable Long id) {
+		if (id == null) {
+			return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: id");
+		}
+		
 		try {
 			userService.deleteUser(id);
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new StandardResponse<>(HttpStatus.NO_CONTENT, "User deleted successfully", null));
-		} catch (UserNotFoundException ex) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StandardResponse<>(HttpStatus.NOT_FOUND, ex.getMessage(), null));
+			return responseUtil.buildSuccessResponse(HttpStatus.NO_CONTENT, "User deleted successfully", null);
+		} catch (UserNotFoundException e) {
+			return responseUtil.buildErrorResponse(HttpStatus.NOT_FOUND, e.getMessage());
 		}
 	}
 }

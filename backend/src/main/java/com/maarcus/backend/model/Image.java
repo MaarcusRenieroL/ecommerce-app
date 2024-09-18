@@ -18,10 +18,10 @@ import org.hibernate.annotations.UuidGenerator;
 public class Image {
   @Id
   @UuidGenerator
-  @Column(name = "id", updatable = false, nullable = false)
+  @Column(name = "image_id", updatable = false, nullable = false)
   private UUID id;
   
-  @Column(nullable = false, name = "url")
+  @Column(nullable = false, name = "image_url")
   private String url;
   
 }

@@ -1,9 +1,9 @@
 package com.maarcus.backend.controller;
 
 import com.maarcus.backend.jwt.JwtUtils;
+import com.maarcus.backend.payload.response.StandardResponse;
 import com.maarcus.backend.model.User;
 import com.maarcus.backend.payload.request.LoginRequest;
-import com.maarcus.backend.payload.response.Response;
 import com.maarcus.backend.payload.response.Token;
 import com.maarcus.backend.repository.UserRepository;
 import jakarta.servlet.http.Cookie;
@@ -17,11 +17,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping(path = "/api/auth")
 public class AuthController {
 
   @Autowired
@@ -32,8 +31,8 @@ public class AuthController {
   @Autowired private UserRepository userRepository;
 
 
-  @PostMapping("/sign-in")
-  public ResponseEntity<?> login(@RequestBody LoginRequest loginData, HttpServletResponse response){
+  @PostMapping(path = "/sign-in")
+  public ResponseEntity<StandardResponse<?>> login(@RequestBody LoginRequest loginData, HttpServletResponse response){
     try{
       Authentication authToken = new UsernamePasswordAuthenticationToken(
           loginData.getEmail(),
@@ -56,30 +55,16 @@ public class AuthController {
       cookie.setPath("/");
       cookie.setMaxAge(24 * 60 * 60);
       response.addCookie(cookie);
-
-      return ResponseEntity.status(HttpStatus.OK)
-          .body(Response.builder()
-              .statusCode(HttpStatus.OK)
-              .message("Login successful")
-              .data(
-                  Token.builder()
-                      .token(token)
-                      .role(role)
-                      .build()
-              )
-              .build());
+      
+      return ResponseEntity.ok().body(new StandardResponse<>(HttpStatus.OK, "Login Successful", Token.builder().token(token).role(role).build()));
+      
     }
-    catch (Exception e){
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-          .body(Response.builder()
-              .statusCode(HttpStatus.INTERNAL_SERVER_ERROR)
-              .message("Login attempt failed: "+e.getMessage())
-              .data(null)
-              .build());
+    catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new StandardResponse<>(HttpStatus.INTERNAL_SERVER_ERROR, "Login attempt failed: " + e.getMessage(), null));
     }
   }
   
-  @GetMapping("/check")
+  @GetMapping(path = "/check")
   public ResponseEntity<String> checkAuthCookie(HttpServletRequest request) {
     Cookie[] cookies = request.getCookies();
     
@@ -88,8 +73,7 @@ public class AuthController {
         if ("jwt".equals(cookie.getName())) {
           
           String token = cookie.getValue();
-          boolean isValid = jwtUtils.validateJwtToken(token);
-          if (isValid) {
+          if (jwtUtils.validateJwtToken(token)) {
             return ResponseEntity.ok("User is authenticated");
           } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
@@ -100,8 +84,8 @@ public class AuthController {
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication cookie not found");
   }
   
-  @PostMapping("/logout")
-  public ResponseEntity<?> logout(HttpServletResponse response) {
+  @PostMapping(path = "/logout")
+  public ResponseEntity<StandardResponse<?>> logout(HttpServletResponse response) {
     Cookie cookie = new Cookie("jwt", null);
     cookie.setHttpOnly(true);
     cookie.setSecure(true);
@@ -109,6 +93,6 @@ public class AuthController {
     cookie.setMaxAge(0);
     response.addCookie(cookie);
     
-    return ResponseEntity.ok("Logged out successfully");
+    return ResponseEntity.ok(new StandardResponse<>(HttpStatus.OK, "Logout Successful", null));
   }
 }

@@ -30,9 +30,10 @@ public class Product {
   @Column(nullable = false, name = "product_description")
   private String productDescription;
   
+  @Column(nullable = false, name = "product_images")
   @OneToMany private List<Image> productImages;
   
-  @Column(nullable = false, name = "price")
+  @Column(nullable = false, name = "product_price")
   private Double price;
   
   @Column(name = "quantity_in_stock", nullable = false)

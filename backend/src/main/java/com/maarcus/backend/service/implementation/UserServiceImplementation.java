@@ -1,7 +1,6 @@
 package com.maarcus.backend.service.implementation;
 
 import com.maarcus.backend.exception.user.UserNotFoundException;
-import com.maarcus.backend.exception.user.InvalidCredentialsException;
 import com.maarcus.backend.model.User;
 import com.maarcus.backend.repository.UserRepository;
 import com.maarcus.backend.service.UserService;
@@ -24,9 +23,9 @@ public class UserServiceImplementation implements UserService {
   }
 	
 	@Override
-	public Optional<User> addUser(User user) {
+	public User addUser(User user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		return Optional.of(userRepository.save(user));
+		return userRepository.save(user);
 	}
 	
 	@Override
@@ -63,15 +62,6 @@ public class UserServiceImplementation implements UserService {
 	@Override
 	public void deleteUser(Long id) {
 		getUser(id).ifPresent(userRepository::delete);
-	}
-	
-	@Override
-	public User signInUser(String email, String password) {
-		Optional<User> user = userRepository.findByEmail(email);
-		if (user.isPresent() && passwordEncoder.matches(password, user.get().getPassword())) {
-			return user.get();
-		}
-		throw new InvalidCredentialsException();
 	}
 	
 }

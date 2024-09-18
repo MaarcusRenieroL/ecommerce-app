@@ -101,7 +101,7 @@ export const CartPage = () => {
                       <img
                         src={item.image}
                         alt={item.name}
-                        className="w-20 h-20 object-cover rounded mr-4 dark:brightness-[0.2] dark:grayscale"
+                        className="w-20 h-20 object-cover rounded mr-4"
                       />
                       <div className="flex-grow">
                         <h3 className="font-semibold">{item.name}</h3>
@@ -185,7 +185,7 @@ export const CartPage = () => {
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-40 object-cover rounded-md mb-4 dark:brightness-[0.2] dark:grayscale"
+                    className="w-full h-40 object-cover rounded-md mb-4"
                   />
                   <h3 className="font-semibold mb-2">{product.name}</h3>
                   <div className="flex justify-between items-center">

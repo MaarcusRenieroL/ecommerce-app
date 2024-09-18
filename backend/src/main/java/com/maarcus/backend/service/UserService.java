@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface UserService {
 
-  Optional<User> addUser(User user);
+  User addUser(User user);
 
   Optional<User> getUser(Long id);
 
@@ -16,6 +16,4 @@ public interface UserService {
   User updateUser(Long id, User user);
 
   void deleteUser(Long id);
-
-  User signInUser(String email, String password);
 }

@@ -1,4 +1,4 @@
-package com.maarcus.backend.model;
+package com.maarcus.backend.payload.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -34,7 +34,7 @@ export const CategoriesPage = () => {
 								<img
 									src={"/assets/placeholder.svg"}
 									alt={category.categoryName}
-									className="w-full h-48 object-cover dark:brightness-[0.2] dark:grayscale"
+									className="w-full h-48 object-cover"
 								/>
 								<div className="p-4">
 									<h2 className="text-xl font-semibold mb-2">

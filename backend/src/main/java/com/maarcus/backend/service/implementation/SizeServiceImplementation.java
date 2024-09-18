@@ -6,6 +6,7 @@ import com.maarcus.backend.repository.SizeRepository;
 import com.maarcus.backend.service.SizeService;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -19,12 +20,11 @@ public class SizeServiceImplementation implements SizeService {
 	}
 	
 	@Override
-	public Optional<Size> addSize(Size size) {
-		return Optional.of(sizeRepository.save(size));
+	public Size addSize(Size size) {
+		return sizeRepository.save(size);
 	}
 	
-	@Override
-	public Optional<Size> getSize(Long id) {
+	public Optional<Size> getSize(UUID id) {
 		return Optional.ofNullable(sizeRepository.findById(id)
 			.orElseThrow(() -> new SizeNotFoundException(id)));
 	}
@@ -35,7 +35,7 @@ public class SizeServiceImplementation implements SizeService {
 	}
 	
 	@Override
-	public Size updateSize(Long id, Size size) {
+	public Size updateSize(UUID id, Size size) {
 		Optional<Size> existingSize = getSize(id);
 		
 		if (existingSize.isPresent()) {
@@ -49,7 +49,7 @@ public class SizeServiceImplementation implements SizeService {
 	}
 	
 	@Override
-	public void deleteSize(Long id) {
+	public void deleteSize(UUID id) {
 		getSize(id).ifPresent(sizeRepository::delete);
 	}
 }

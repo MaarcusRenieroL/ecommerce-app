@@ -1,62 +1,87 @@
 package com.maarcus.backend.controller;
 
-import com.maarcus.backend.model.Size;
-import com.maarcus.backend.service.implementation.SizeServiceImplementation;
 import com.maarcus.backend.exception.size.SizeNotFoundException;
-import com.maarcus.backend.model.StandardResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.maarcus.backend.model.Size;
+import com.maarcus.backend.payload.response.StandardResponse;
+import com.maarcus.backend.service.SizeService;
+import com.maarcus.backend.utils.ResponseUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/sizes")
+@RequestMapping(path = "/api/sizes")
 public class SizeController {
   
-  private final SizeServiceImplementation sizeService;
+  private final SizeService sizeService;
+  private final ResponseUtil responseUtil;
   
-  @Autowired
-  public SizeController(SizeServiceImplementation sizeService) {
+  public SizeController(SizeService sizeService, ResponseUtil responseUtil) {
     this.sizeService = sizeService;
+    this.responseUtil = responseUtil;
   }
   
   @GetMapping("/all")
   public ResponseEntity<StandardResponse<List<Size>>> getAllSizes() {
-    return ResponseEntity.ok(new StandardResponse<>(HttpStatus.OK, "Sizes retrieved successfully", sizeService.getAllSizes()));
+    List<Size> sizes = sizeService.getAllSizes();
+    
+    if (sizes.isEmpty()) {
+      return responseUtil.buildErrorResponse(HttpStatus.NOT_FOUND, "No sizes found");
+    }
+    
+    return responseUtil.buildSuccessResponse(HttpStatus.OK, "Sizes retrieved successfully", sizes);
   }
   
   @GetMapping("/get/{id}")
-  public ResponseEntity<StandardResponse<Size>> getSize(@PathVariable Long id) {
-    try {
-      return ResponseEntity.ok(new StandardResponse<>(HttpStatus.OK, "Size retrieved successfully", sizeService.getSize(id).orElseThrow(() -> new SizeNotFoundException(id))));
-    } catch (SizeNotFoundException ex) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StandardResponse<>(HttpStatus.NOT_FOUND, ex.getMessage(), null));
+  public ResponseEntity<StandardResponse<Size>> getSize(@PathVariable UUID id) {
+    if (id == null) {
+      return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: id");
     }
+    
+    Size size = sizeService.getSize(id)
+      .orElseThrow(() -> new SizeNotFoundException(id));
+    
+    return responseUtil.buildSuccessResponse(HttpStatus.OK, "Size retrieved successfully", size);
   }
   
   @PostMapping("/add")
   public ResponseEntity<StandardResponse<Size>> addSize(@RequestBody Size size) {
-    return ResponseEntity.status(HttpStatus.CREATED).body(new StandardResponse<>(HttpStatus.CREATED, "Size added successfully", sizeService.addSize(size).orElseThrow(() -> new RuntimeException("Error adding size"))));
+    if (size.getName() == null || size.getValue() == null) {
+      return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required fields: name or value");
+    }
+    
+    Size createdSize = sizeService.addSize(size);
+    return responseUtil.buildSuccessResponse(HttpStatus.CREATED, "Size created successfully", createdSize);
   }
   
   @PutMapping("/update/{id}")
-  public ResponseEntity<StandardResponse<Size>> updateSize(@PathVariable Long id, @RequestBody Size size) {
+  public ResponseEntity<StandardResponse<Size>> updateSize(@PathVariable UUID id, @RequestBody Size size) {
+    if (id == null || size.getName() == null || size.getValue() == null) {
+      return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required fields: id, name, or value");
+    }
+    
     try {
-      return ResponseEntity.ok(new StandardResponse<>(HttpStatus.OK, "Size updated successfully", sizeService.updateSize(id, size)));
-    } catch (SizeNotFoundException ex) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StandardResponse<>(HttpStatus.NOT_FOUND, ex.getMessage(), null));
+      Size updatedSize = sizeService.updateSize(id, size);
+      return responseUtil.buildSuccessResponse(HttpStatus.OK, "Size updated successfully", updatedSize);
+    } catch (SizeNotFoundException e) {
+      return responseUtil.buildErrorResponse(HttpStatus.NOT_FOUND, e.getMessage());
     }
   }
   
   @DeleteMapping("/delete/{id}")
-  public ResponseEntity<StandardResponse<Void>> deleteSize(@PathVariable Long id) {
+  public ResponseEntity<StandardResponse<Void>> deleteSize(@PathVariable UUID id) {
+    if (id == null) {
+      return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: id");
+    }
+    
     try {
       sizeService.deleteSize(id);
-      return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new StandardResponse<>(HttpStatus.NO_CONTENT, "Size deleted successfully", null));
-    } catch (SizeNotFoundException ex) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StandardResponse<>(HttpStatus.NOT_FOUND, ex.getMessage(), null));
+      return responseUtil.buildSuccessResponse(HttpStatus.NO_CONTENT, "Size deleted successfully", null);
+    } catch (SizeNotFoundException e) {
+      return responseUtil.buildErrorResponse(HttpStatus.NOT_FOUND, e.getMessage());
     }
   }
 }

@@ -22,7 +22,7 @@ export const OrderCard = () => {
               <img
                 src="/assets/placeholder.svg"
                 alt="image"
-                className="w-24 h-24 rounded-xl dark:brightness-[0.2] dark:grayscale"
+                className="w-24 h-24 rounded-xl"
               />
               <span>Product 1</span>
             </div>
@@ -30,7 +30,7 @@ export const OrderCard = () => {
               <img
                 src="/assets/placeholder.svg"
                 alt="image"
-                className="w-24 h-24 rounded-xl dark:brightness-[0.2] dark:grayscale"
+                className="w-24 h-24 rounded-xl"
               />
               <span>Product 1</span>
             </div>

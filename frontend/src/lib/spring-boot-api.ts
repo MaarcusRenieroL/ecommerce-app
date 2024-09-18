@@ -55,7 +55,7 @@ export const addUser = async (data: User) => {
       body: JSON.stringify(data),
     });
 
-    console.log(response);
+    return await response.json();
   } catch (error) {
     console.log("Error adding user");
     console.log(error);

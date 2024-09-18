@@ -74,11 +74,11 @@ public class ProductServiceImplementation implements ProductService {
 	}
 	
 	@Override
-	public Optional<Product> addProduct(Product product) {
+	public Product addProduct(Product product) {
 		imageRepository.saveAll(product.getProductImages());
 		findCategorySizeAndColor(product);
-		
-		return Optional.of(productRepository.save(product));
+
+		return productRepository.save(product);
 	}
 	
 	@Override

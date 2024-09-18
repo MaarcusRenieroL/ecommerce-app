@@ -42,7 +42,6 @@ export const SignUpForm: FC<Props> = ({ pathName }) => {
   });
 
   const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
-    try {
       const refinedData: User = {
         firstName: data.firstName,
         lastName: data.lastName,
@@ -58,17 +57,19 @@ export const SignUpForm: FC<Props> = ({ pathName }) => {
 
       console.log(refinedData);
 
-      await addUser(refinedData);
-
-      toast({
-        title: "User created successfully",
-        description: "",
-      });
-    } catch (error) {
-      console.error(error);
-      // @ts-expect-error error
-      toast.error("Something went wrong", error.message());
-    }
+      const response = await addUser(refinedData);
+      
+      if (response.statusCode === 201) {
+        toast({
+          title: "Success",
+          description: response.message
+        })
+      } else {
+        toast({
+          title: "Error",
+          description: response.message
+        })
+      }
   };
 
   return (
