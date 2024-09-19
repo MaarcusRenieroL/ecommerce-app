@@ -24,7 +24,8 @@ export const ProtectedRoute: FC<ProtectedRouteProps> = ({
 				if (response.status === "UNAUTHORIZED") {
 					navigate("/auth/sign-in");
 				} else if (response.status === "OK") {
-					setAuthData({ isAuthenticated: true, role: response.role });
+					console.log(response.role)
+					setAuthData({ isAuthenticated: true, role: response.data.role });
 				}
 			} catch (error) {
 				console.error("Error during authentication check:", error);
@@ -40,10 +41,14 @@ export const ProtectedRoute: FC<ProtectedRouteProps> = ({
 	}
 	
 	if (!authData.isAuthenticated) {
+		console.log("im here in the authdata is authenticated")
 		return <Navigate to={redirectPath} replace />;
 	}
 	
 	if (requiredRole && authData.role !== requiredRole) {
+		console.log("im here in the role check")
+		console.log(authData.role);
+		console.log(requiredRole)
 		return <Navigate to={"/"} replace />;
 	}
 	

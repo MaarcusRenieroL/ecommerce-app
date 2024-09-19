@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useTheme } from "../theme-provider";
+import { useNavigate } from "react-router-dom"
 
 type Props = {
   role: string;
@@ -30,6 +31,7 @@ type Props = {
 
 export const AccountNav: FC<Props> = ({ role }) => {
   const { setTheme } = useTheme();
+  const navigate = useNavigate();
   
   const onLogoutClick = async () => {
     try {
@@ -37,6 +39,8 @@ export const AccountNav: FC<Props> = ({ role }) => {
         method: "POST",
         credentials: "include"
       })
+      
+      navigate(0);
     } catch (error: unknown) {
       console.log(error);
     }

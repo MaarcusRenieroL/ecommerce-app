@@ -23,6 +23,36 @@ export const Navbar = () => {
   const [authenticated, setAuthenticated] = useState(false);
   const [role, setRole] = useState("");
   
+  const customerLinks = [
+    { name: "Home", href: "/" },
+    { name: "Products", href: "/products" },
+    { name: "Categories", href: "/categories" },
+    { name: "Deals", href: "/deals" },
+  ]
+  const vendorLinks = [
+    { name: "Dashboard", href: "/dashboard" },
+    { name: "Products", href: "/products" },
+    { name: "Categories", href: "/categories" },
+    { name: "Deals", href: "/deals" },
+    { name: "Sizes", href: "/sizes" },
+    { name: "Orders", href: "/orders" },
+    { name: "Settings", href: "/settings" },
+  ]
+  const adminLinks = [
+    { name: "Dashboard", href: "/dashboard" },
+    { name: "Users", href: "/users" },
+    { name: "Products", href: "/products" },
+    { name: "Categories", href: "/categories" },
+    { name: "Deals", href: "/deals" },
+    { name: "Sizes", href: "/sizes" },
+    { name: "Colors", href: "/colors" },
+    { name: "Orders", href: "/orders" },
+    { name: "Settings", href: "/settings" },
+    { name: "Reports", href: "/reports" },
+    { name: "Audit Logs", href: "/audit-logs" },
+  ];
+  
+  
   useEffect(() => {
     const checkAuthentication = async () => {
       const response = await isLoggedIn();
@@ -89,13 +119,37 @@ export const Navbar = () => {
               <h1 className="font-bold">ShopEase</h1>
             </span>
           </a>
-          <a href="/products">Products</a>
-          <a href="/categories">Categories</a>
-          <a href="/deals">Deals</a>
+          {role === "CUSTOMER" && (
+            <>
+              {customerLinks.map((link, index) => (
+                <a href={link.href} key={index++}>
+                  {link.name}
+                </a>
+              ))}
+            </>
+          )}
+          {role === "VENDOR" && (
+            <>
+              {vendorLinks.map((link, index) => (
+                <a href={`/vendor/${link.href}`} key={index++}>
+                  {link.name}
+                </a>
+              ))}
+            </>
+          )}
+          {role === "ADMIN" && (
+            <>
+              {adminLinks.map((link, index) => (
+                <a href={`/admin/${link.href}`} key={index++}>
+                  {link.name}
+                </a>
+              ))}
+            </>
+          )}
         </div>
-        <div className="w-full flex items-center justify-center">
-          <Input placeholder="Search products" className="w-1/2" />
-        </div>
+        {role === "CUSTOMER" && <div className="w-full flex items-center justify-center">
+          <Input placeholder="Search products" className="w-1/2"/>
+        </div>}
         <div className="flex items-center space-x-5">
           {!authenticated && <a href="/auth/sign-in">
             <Button>Sign In / Sign Up</Button>
@@ -197,17 +251,18 @@ export const Navbar = () => {
           {authenticated && <AccountNav role={role} />}
         </div>
       </header>
-      <header className="flex lg:hidden items-center justify-between px-6 py-4 border-b sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 gap-5">
+      <header
+        className="flex lg:hidden items-center justify-between px-6 py-4 border-b sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 gap-5">
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="outline" size="icon">
-              <Menu className="h-4 w-4" />
+              <Menu className="h-4 w-4"/>
             </Button>
           </SheetTrigger>
           <SheetContent side="left">
             <SheetHeader>
               <SheetTitle className="space-x-3 flex items-center mb-10">
-                <ShoppingCart className="h-4 w-4" />
+                <ShoppingCart className="h-4 w-4"/>
                 <h1>ShopEase</h1>
               </SheetTitle>
               <div className="flex flex-col space-y-5">
@@ -216,54 +271,68 @@ export const Navbar = () => {
                   className={clsx(
                     "flex justify-start items-center gap-3 hover:bg-secondary border-transparent border py-2 px-4 rounded-md hover:border-border hover:border transition-all duration-200 ease-in-out",
                     location.pathname === "/" &&
-                      "text-primary font-semibold border-border bg-secondary",
+                    "text-primary font-semibold border-border bg-secondary",
                   )}
                 >
                   Home
                 </a>
-                <a
-                  href="/products"
-                  className={clsx(
-                    "flex justify-start items-center gap-3 hover:bg-secondary border-transparent border py-2 px-4 rounded-md hover:border-border hover:border transition-all duration-200 ease-in-out",
-                    location.pathname === "/products" &&
-                      "text-primary font-semibold border-border bg-secondary",
-                  )}
-                >
-                  Products
-                </a>
-                <a
-                  href="/categories"
-                  className={clsx(
-                    "flex justify-start items-center gap-3 hover:bg-secondary border-transparent border py-2 px-4 rounded-md hover:border-border hover:border transition-all duration-200 ease-in-out",
-                    location.pathname === "/categories" &&
-                      "text-primary font-semibold border-border bg-secondary",
-                  )}
-                >
-                  Categories
-                </a>
-                <a
-                  href="/deals"
-                  className={clsx(
-                    "flex justify-start items-center gap-3 hover:bg-secondary border-transparent border py-2 px-4 rounded-md hover:border-border hover:border transition-all duration-200 ease-in-out",
-                    location.pathname === "/deals" &&
-                      "text-primary font-semibold border-border bg-secondary",
-                  )}
-                >
-                  Deals
-                </a>
+                {role === "CUSTOMER" && (
+                  <>
+                    {customerLinks.map((link, index) => (
+                      <a href={link.href} key={index++} className={clsx(
+                        "flex justify-start items-center gap-3 hover:bg-secondary border-transparent border py-2 px-4 rounded-md hover:border-border hover:border transition-all duration-200 ease-in-out",
+                        location.pathname === `/vendor/${link.href}` &&
+                        "text-primary font-semibold border-border bg-secondary",
+                      )}>
+                        {link.name}
+                      </a>
+                    ))}
+                  </>
+                )}
+                {role === "VENDOR" && (
+                  <>
+                    {vendorLinks.map((link, index) => (
+                      <a href={`/vendor${link.href}`} key={index++} className={clsx(
+                        "flex justify-start items-center gap-3 hover:bg-secondary border-transparent border py-2 px-4 rounded-md hover:border-border hover:border transition-all duration-200 ease-in-out",
+                        location.pathname === `/vendor${link.href}` &&
+                        "text-primary font-semibold border-border bg-secondary",
+                      )}>
+                        {link.name}
+                      </a>
+                    ))}
+                  </>
+                )}
+                {role === "ADMIN" && (
+                  <>
+                    {adminLinks.map((link, index) => (
+                      <a href={`/admin${link.href}`} key={index++} className={clsx(
+                        "flex justify-start items-center gap-3 hover:bg-secondary border-transparent border py-2 px-4 rounded-md hover:border-border hover:border transition-all duration-200 ease-in-out",
+                        location.pathname === `/admin${link.href}` &&
+                        "text-primary font-semibold border-border bg-secondary",
+                      )}>
+                        {link.name}
+                      </a>
+                    ))}
+                  </>
+                )}
               </div>
             </SheetHeader>
           </SheetContent>
         </Sheet>
-        <Input placeholder="Search products" className="w-full" />
+        <span className="flex space-x-3 items-center">
+            <ShoppingCart/>
+            <h1 className="font-bold">ShopEase</h1>
+          </span>
+        {role === "CUSTOMER" && <Input placeholder="Search products" className="w-full md:block hidden"/>}
+        
         <div className="flex items-center space-x-5">
           {!authenticated && <a href="/auth/sign-in">
             <Button>Sign In</Button>
           </a>}
-          <Sheet>
+          {role === "CUSTOMER" && <Sheet>
             <SheetTrigger asChild>
               <Button variant="outline" size="icon">
-                <ShoppingCart className="h-4 w-4" />
+                <ShoppingCart className="h-4 w-4"/>
               </Button>
             </SheetTrigger>
             <SheetContent
@@ -272,7 +341,7 @@ export const Navbar = () => {
             >
               <SheetHeader>
                 <SheetTitle className="space-x-3 flex items-center mb-10">
-                  <ShoppingCart className="h-4 w-4" />
+                  <ShoppingCart className="h-4 w-4"/>
                   <h1>Cart</h1>
                 </SheetTitle>
               </SheetHeader>
@@ -311,7 +380,7 @@ export const Navbar = () => {
                                       updateQuantity(item.id, item.quantity - 1)
                                     }
                                   >
-                                    <Minus className="h-4 w-4" />
+                                    <Minus className="h-4 w-4"/>
                                   </Button>
                                   <span className="mx-2 w-8 text-center">
                                     {item.quantity}
@@ -323,7 +392,7 @@ export const Navbar = () => {
                                       updateQuantity(item.id, item.quantity + 1)
                                     }
                                   >
-                                    <Plus className="h-4 w-4" />
+                                    <Plus className="h-4 w-4"/>
                                   </Button>
                                 </div>
                                 <Button
@@ -332,7 +401,7 @@ export const Navbar = () => {
                                   className="ml-4"
                                   onClick={() => removeItem(item.id)}
                                 >
-                                  <Trash2 className="h-4 w-4" />
+                                  <Trash2 className="h-4 w-4"/>
                                 </Button>
                               </div>
                             </div>
@@ -353,8 +422,8 @@ export const Navbar = () => {
                 <Button className="w-full">Proceed to Cart</Button>
               </SheetFooter>
             </SheetContent>
-          </Sheet>
-          {authenticated && <AccountNav role={role} />}
+          </Sheet>}
+          {authenticated && <AccountNav role={role}/>}
         </div>
       </header>
     </>
