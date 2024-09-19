@@ -3,16 +3,17 @@ package com.maarcus.backend.service;
 import com.maarcus.backend.model.Category;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface CategoryService {
 
   Category addCategory(Category Category);
 
-  Optional<Category> getCategory(Long id);
+  Optional<Category> getCategory(UUID id);
 
   List<Category> getAllCategories();
 
-  Category updateCategory(Long id, Category Category);
+  Category updateCategory(UUID id, Category Category);
 
-  void deleteCategory(Long id);
+  void deleteCategory(UUID id);
 }

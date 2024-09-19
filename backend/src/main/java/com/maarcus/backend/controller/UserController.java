@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/api/users")
@@ -35,7 +36,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/get/{id}")
-	public ResponseEntity<StandardResponse<User>> getUser(@PathVariable Long id) {
+	public ResponseEntity<StandardResponse<User>> getUser(@PathVariable UUID id) {
 		if (id == null) {
 			return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: id");
 		}
@@ -57,7 +58,7 @@ public class UserController {
 	}
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<StandardResponse<User>> updateUser(@PathVariable Long id, @RequestBody User user) {
+	public ResponseEntity<StandardResponse<User>> updateUser(@PathVariable UUID id, @RequestBody User user) {
 		if (id == null || user == null) {
 			return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required fields: id or user data");
 		}
@@ -71,7 +72,7 @@ public class UserController {
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<StandardResponse<Void>> deleteUser(@PathVariable Long id) {
+	public ResponseEntity<StandardResponse<Void>> deleteUser(@PathVariable UUID id) {
 		if (id == null) {
 			return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: id");
 		}

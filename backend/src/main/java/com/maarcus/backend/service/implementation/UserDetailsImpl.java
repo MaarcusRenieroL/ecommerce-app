@@ -4,6 +4,7 @@ import java.io.Serial;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +21,7 @@ public class UserDetailsImpl implements UserDetails {
 
   @Getter
   @Setter
-  private Long id;
+  private UUID id;
 
   @Getter
   @Setter
@@ -39,7 +40,7 @@ public class UserDetailsImpl implements UserDetails {
 
   private Collection<? extends GrantedAuthority> authorities;
 
-  public UserDetailsImpl(Long id, String username, String email, String password,
+  public UserDetailsImpl(UUID id, String username, String email, String password,
       String role) {
     this.id = id;
     this.username = username;

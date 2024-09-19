@@ -4,16 +4,17 @@ import com.maarcus.backend.model.User;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface UserService {
 
   User addUser(User user);
 
-  Optional<User> getUser(Long id);
+  Optional<User> getUser(UUID id);
 
   List<User> getAllUsers();
 
-  User updateUser(Long id, User user);
+  User updateUser(UUID id, User user);
 
-  void deleteUser(Long id);
+  void deleteUser(UUID id);
 }

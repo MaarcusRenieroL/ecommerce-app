@@ -6,6 +6,7 @@ import com.maarcus.backend.repository.CategoryRepository;
 import com.maarcus.backend.service.CategoryService;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class CategoryServiceImplementation implements CategoryService {
 	}
 	
 	@Override
-	public Optional<Category> getCategory(Long id) {
+	public Optional<Category> getCategory(UUID id) {
 		return Optional.ofNullable(categoryRepository.findById(id)
 			.orElseThrow(() -> new CategoryNotFoundException(id)));
 	}
@@ -35,7 +36,7 @@ public class CategoryServiceImplementation implements CategoryService {
 	}
 	
 	@Override
-	public Category updateCategory(Long id, Category category) {
+	public Category updateCategory(UUID id, Category category) {
 		Optional<Category> existingCategory = getCategory(id);
 		
 		if (existingCategory.isPresent()) {
@@ -48,7 +49,7 @@ public class CategoryServiceImplementation implements CategoryService {
 	}
 	
 	@Override
-	public void deleteCategory(Long id) {
+	public void deleteCategory(UUID id) {
 		getCategory(id).ifPresent(categoryRepository::delete);
 	}
 }

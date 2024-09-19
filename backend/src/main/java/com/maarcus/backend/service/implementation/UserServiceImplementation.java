@@ -7,6 +7,7 @@ import com.maarcus.backend.service.UserService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class UserServiceImplementation implements UserService {
 	}
 	
 	@Override
-	public Optional<User> getUser(Long id) {
+	public Optional<User> getUser(UUID id) {
 		return Optional.ofNullable(userRepository.findById(id)
 			.orElseThrow(() -> new UserNotFoundException(id)));
 	}
@@ -40,7 +41,7 @@ public class UserServiceImplementation implements UserService {
 	}
 	
 	@Override
-	public User updateUser(Long id, User user) {
+	public User updateUser(UUID id, User user) {
 		Optional<User> existingUser = getUser(id);
 		
 		if (existingUser.isPresent()) {
@@ -60,7 +61,7 @@ public class UserServiceImplementation implements UserService {
 	}
 	
 	@Override
-	public void deleteUser(Long id) {
+	public void deleteUser(UUID id) {
 		getUser(id).ifPresent(userRepository::delete);
 	}
 	

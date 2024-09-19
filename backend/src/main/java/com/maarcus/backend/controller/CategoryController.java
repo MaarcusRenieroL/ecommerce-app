@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/api/categories")
@@ -35,7 +36,7 @@ public class CategoryController {
 	}
 	
 	@GetMapping("/get/{id}")
-	public ResponseEntity<StandardResponse<Category>> getCategory(@PathVariable Long id) {
+	public ResponseEntity<StandardResponse<Category>> getCategory(@PathVariable UUID id) {
 		if (id == null) {
 			return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: id");
 		}
@@ -57,7 +58,7 @@ public class CategoryController {
 	}
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<StandardResponse<Category>> updateCategory(@PathVariable Long id, @RequestBody Category category) {
+	public ResponseEntity<StandardResponse<Category>> updateCategory(@PathVariable UUID id, @RequestBody Category category) {
 		if (id == null) {
 			return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: id");
 		}
@@ -75,7 +76,7 @@ public class CategoryController {
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<StandardResponse<Void>> deleteCategory(@PathVariable Long id) {
+	public ResponseEntity<StandardResponse<Void>> deleteCategory(@PathVariable UUID id) {
 		if (id == null) {
 			return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: id");
 		}

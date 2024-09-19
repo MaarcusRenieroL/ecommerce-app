@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/api/colors")
@@ -38,7 +39,7 @@ public class ColorController {
   }
   
   @GetMapping(path = "/get/{id}")
-  public ResponseEntity<StandardResponse<Color>> getColor(@PathVariable Long id) {
+  public ResponseEntity<StandardResponse<Color>> getColor(@PathVariable UUID id) {
     
     if (id == null) {
       return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: id");
@@ -64,7 +65,7 @@ public class ColorController {
   }
   
   @PutMapping(path = "/update/{id}")
-  public ResponseEntity<StandardResponse<Color>> updateColor(@PathVariable Long id, @RequestBody Color color) {
+  public ResponseEntity<StandardResponse<Color>> updateColor(@PathVariable UUID id, @RequestBody Color color) {
     if (id == null) {
       return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: id");
     }
@@ -86,7 +87,7 @@ public class ColorController {
   }
   
   @DeleteMapping(path = "/delete/{id}")
-  public ResponseEntity<StandardResponse<Void>> deleteColor(@PathVariable Long id) {
+  public ResponseEntity<StandardResponse<Void>> deleteColor(@PathVariable UUID id) {
     if (id == null) {
       return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: id");
     }

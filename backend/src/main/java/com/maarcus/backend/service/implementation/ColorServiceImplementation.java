@@ -6,6 +6,7 @@ import com.maarcus.backend.repository.ColorRepository;
 import com.maarcus.backend.service.ColorService;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class ColorServiceImplementation implements ColorService {
 	}
 	
 	@Override
-	public Optional<Color> getColor(Long id) {
+	public Optional<Color> getColor(UUID id) {
 		return Optional.ofNullable(colorRepository.findById(id)
 			.orElseThrow(() -> new ColorNotFoundException(id)));
 	}
@@ -37,7 +38,7 @@ public class ColorServiceImplementation implements ColorService {
 	}
 	
 	@Override
-	public Color updateColor(Long id, Color color) {
+	public Color updateColor(UUID id, Color color) {
 		Optional<Color> existingColor = getColor(id);
 		
 		if (existingColor.isPresent()) {
@@ -51,7 +52,7 @@ public class ColorServiceImplementation implements ColorService {
 	}
 	
 	@Override
-	public void deleteColor(Long id) {
+	public void deleteColor(UUID id) {
 		getColor(id).ifPresent(colorRepository::delete);
 	}
 }

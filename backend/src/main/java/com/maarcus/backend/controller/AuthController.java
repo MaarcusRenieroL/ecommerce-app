@@ -92,7 +92,6 @@ public class AuthController {
           response.put("role", role);
         }
       }
-      System.out.println(response);
       if (response.containsKey("role")) {
         return ResponseEntity.ok(new StandardResponse<>(HttpStatus.OK, "User is authenticated", response));
       }
@@ -110,13 +109,13 @@ public class AuthController {
     jwt.setHttpOnly(true);
     jwt.setSecure(true);
     jwt.setPath("/");
-    jwt.setMaxAge(24 * 60 * 60);
+    jwt.setMaxAge(0);
     response.addCookie(jwt);
     
     cookieRole.setHttpOnly(true);
     cookieRole.setSecure(true);
     cookieRole.setPath("/");
-    cookieRole.setMaxAge(24 * 60 * 60);
+    cookieRole.setMaxAge(0);
     response.addCookie(cookieRole);
     
     return ResponseEntity.ok(new StandardResponse<>(HttpStatus.OK, "Logout Successful", null));
