@@ -23,29 +23,31 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useTheme } from "../theme-provider";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import { DashboardIcon } from "@radix-ui/react-icons";
 
 type Props = {
   role: string;
-}
+  hasBusiness: boolean;
+};
 
-export const AccountNav: FC<Props> = ({ role }) => {
+export const AccountNav: FC<Props> = ({ role, hasBusiness }) => {
   const { setTheme } = useTheme();
   const navigate = useNavigate();
-  
+
   const onLogoutClick = async () => {
     try {
       await fetch("http://localhost:8080/api/auth/logout", {
         method: "POST",
-        credentials: "include"
-      })
-      
+        credentials: "include",
+      });
+
       navigate(0);
     } catch (error: unknown) {
       console.log(error);
     }
-  }
-  
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -57,15 +59,23 @@ export const AccountNav: FC<Props> = ({ role }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        {role !== "CUSTOMER" && <>
-          <a href="/vendor/dashboard">
+        {(role === "CUSTOMER" && !hasBusiness) && (
+          <a href="/auth/business/sign-up">
             <DropdownMenuItem>
-              <User className="mr-2 h-4 w-4"/>
+              <DashboardIcon className="h-4 w-4 mr-2" />
+              <span>Create a Dashboard</span>
+            </DropdownMenuItem>
+          </a>
+        )}
+        {(role === "VENDOR" || role === "ADMIN") && (
+          <a href={`/${role.toLowerCase()}/dashboard`}>
+            <DropdownMenuItem>
+              <DashboardIcon className="h-4 w-4 mr-2"/>
               <span>Dashboard</span>
             </DropdownMenuItem>
           </a>
-          <DropdownMenuSeparator/>
-        </>}
+        )}
+        <DropdownMenuSeparator/>
         <DropdownMenuGroup>
           <a href="/account">
             <DropdownMenuItem>

@@ -17,7 +17,7 @@ export const SignUpPage = () => {
                 Create an account
               </p>
             </div>
-            <SignUpForm pathName="/auth/sign-up" />
+            <SignUpForm />
             <div className="space-y-3 flex flex-col items-center justify-center">
               <div className="mt-4 text-center text-sm">
                 Already have an account?{" "}

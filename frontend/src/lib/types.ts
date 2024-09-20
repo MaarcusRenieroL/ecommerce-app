@@ -11,6 +11,7 @@ export type User = {
   addressLine3?: string;
   phoneNumber: string;
   role: string;
+  hasBusinessAccount: boolean;
 };
 
 export type Product = {

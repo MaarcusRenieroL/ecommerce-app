@@ -13,7 +13,10 @@ export const ProtectedRoute: FC<ProtectedRouteProps> = ({
 																													requiredRole,
 																													children,
 																												}) => {
-	const [authData, setAuthData] = useState<{ isAuthenticated: boolean | null; role?: string } | null>(null);
+	const [authData, setAuthData] = useState<{
+		isAuthenticated: boolean | null;
+		role?: string;
+	} | null>(null);
 	const navigate = useNavigate();
 	
 	useEffect(() => {
@@ -24,7 +27,6 @@ export const ProtectedRoute: FC<ProtectedRouteProps> = ({
 				if (response.status === "UNAUTHORIZED") {
 					navigate("/auth/sign-in");
 				} else if (response.status === "OK") {
-					console.log(response.role)
 					setAuthData({ isAuthenticated: true, role: response.data.role });
 				}
 			} catch (error) {
@@ -37,19 +39,21 @@ export const ProtectedRoute: FC<ProtectedRouteProps> = ({
 	}, [navigate]);
 	
 	if (authData === null) {
-		return <div>Loading...</div>; // Optionally add a loading state
+		return <div>Loading...</div>;
 	}
 	
 	if (!authData.isAuthenticated) {
-		console.log("im here in the authdata is authenticated")
 		return <Navigate to={redirectPath} replace />;
 	}
 	
+	if (authData.role === "CUSTOMER") {
+		return <Navigate to="/" replace />;
+	}
+	
 	if (requiredRole && authData.role !== requiredRole) {
-		console.log("im here in the role check")
-		console.log(authData.role);
-		console.log(requiredRole)
-		return <Navigate to={"/"} replace />;
+		if (authData.role !== "ADMIN" && authData.role !== "VENDOR") {
+			return <Navigate to="/" replace />;
+		}
 	}
 	
 	return children ? <>{children}</> : <Outlet />;
