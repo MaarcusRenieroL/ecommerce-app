@@ -23,33 +23,33 @@ public class Business {
   @Column(name = "business_id", nullable = false)
   private String id;
 
-  @Column(nullable = false, name = "business_name")
+  @Column(nullable = false)
   private String businessName;
 
-  @Column(nullable = false, name = "business_description")
+  @Column(nullable = false)
   private String businessDescription;
 
-  @Column(nullable = false, name = "business_email")
+  @Column(nullable = false)
   private String businessEmail;
 
-  @Column(nullable = false, name = "business_phone_number")
+  @Column(nullable = false)
   private String businessPhone;
 
-  @Column(nullable = false, name = "business_address_line_1")
-  private String addressline1;
+  @Column(nullable = false)
+  private String addressLine1;
 
-  @Column(nullable = true, name = "business_address_line_2")
-  private String addressline2;
+  @Column(nullable = true)
+  private String addressLine2;
 
-  @Column(nullable = true, name = "business_address_line_3")
-  private String addressline3;
+  @Column(nullable = true)
+  private String addressLine3;
 
-  @Column(nullable = false, name = "business_postal_code")
+  @Column(nullable = false)
   private String postalCode;
 
-  @Column(nullable = true, name = "business_website_url")
+  @Column(nullable = true)
   private String websiteUrl;
 
-  @Column(nullable = true, name = "business_logo_url")
+  @Column(nullable = true)
   private String logoUrl;
 }

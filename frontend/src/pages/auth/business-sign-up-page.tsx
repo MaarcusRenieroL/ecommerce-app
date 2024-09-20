@@ -17,12 +17,6 @@ export const BusinessSignUpPage = () => {
             <div className="grid gap-4">
               <CreateBusinessForm />
             </div>
-            <p className="mt-4 text-center">
-              Already have a vendor account?{" "}
-              <a href="/auth/sign-in" className="text-blue-500 hover:underline">
-                Sign in
-              </a>
-            </p>
           </div>
         </div>
       </div>

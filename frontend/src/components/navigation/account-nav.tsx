@@ -28,9 +28,10 @@ import { DashboardIcon } from "@radix-ui/react-icons";
 
 type Props = {
   role: string;
+  hasBusiness: boolean;
 };
 
-export const AccountNav: FC<Props> = ({ role }) => {
+export const AccountNav: FC<Props> = ({ role, hasBusiness }) => {
   const { setTheme } = useTheme();
   const navigate = useNavigate();
 
@@ -58,35 +59,23 @@ export const AccountNav: FC<Props> = ({ role }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        {role === "CUSTOMER" && (
+        {(role === "CUSTOMER" && !hasBusiness) && (
           <a href="/auth/business/sign-up">
             <DropdownMenuItem>
-              <DashboardIcon className="mr-2 h-4 w-4" />
+              <DashboardIcon className="h-4 w-4 mr-2" />
               <span>Create a Dashboard</span>
             </DropdownMenuItem>
           </a>
         )}
-        {role === "ADMIN" && (
-          <>
-            <a href="/admin/dashboard">
-              <DropdownMenuItem>
-                <User className="mr-2 h-4 w-4" />
-                <span>Dashboard</span>
-              </DropdownMenuItem>
-            </a>
-          </>
+        {(role === "VENDOR" || role === "ADMIN") && (
+          <a href={`/${role.toLowerCase()}/dashboard`}>
+            <DropdownMenuItem>
+              <DashboardIcon className="h-4 w-4 mr-2"/>
+              <span>Dashboard</span>
+            </DropdownMenuItem>
+          </a>
         )}
-        {role === "VENDOR" && (
-          <>
-            <a href="/vendor/dashboard">
-              <DropdownMenuItem>
-                <User className="mr-2 h-4 w-4" />
-                <span>Dashboard</span>
-              </DropdownMenuItem>
-            </a>
-          </>
-        )}
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator/>
         <DropdownMenuGroup>
           <a href="/account">
             <DropdownMenuItem>

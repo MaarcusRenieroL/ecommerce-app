@@ -2,7 +2,9 @@ package com.maarcus.backend.service.implementation;
 
 import com.maarcus.backend.exception.business.BusinessNotFoundException;
 import com.maarcus.backend.model.Business;
+import com.maarcus.backend.model.User;
 import com.maarcus.backend.repository.BusinessRepository;
+import com.maarcus.backend.repository.UserRepository;
 import com.maarcus.backend.service.BusinessService;
 
 import java.util.List;
@@ -14,13 +16,24 @@ import org.springframework.stereotype.Service;
 public class BusinessServiceImplementation implements BusinessService {
 
   private final BusinessRepository businessRepository;
+  private final UserRepository userRepository;
 
-  public BusinessServiceImplementation(BusinessRepository businessRepository) {
+  public BusinessServiceImplementation(BusinessRepository businessRepository, UserRepository userRepository) {
     this.businessRepository = businessRepository;
+	  this.userRepository = userRepository;
   }
 
   @Override
-  public Business addBusiness(Business business) {
+  public Business addBusiness(Business business, UUID uuid) {
+    Optional<User> optionalUser = userRepository.findById(uuid);
+    
+    if (optionalUser.isPresent()) {
+      User user = optionalUser.get();
+      
+      user.setRole("VENDOR");
+      user.setHasBusinessAccount(true);
+
+    }
     return businessRepository.save(business);
   }
 

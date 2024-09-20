@@ -15,9 +15,11 @@ import {
 import { addBusiness } from "@/lib/spring-boot-api.ts";
 import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "../ui/textarea";
+import { useNavigate } from "react-router-dom";
 
 export const CreateBusinessForm = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof businessSchema>>({
     resolver: zodResolver(businessSchema),
@@ -26,9 +28,9 @@ export const CreateBusinessForm = () => {
       businessDescription: "",
       businessEmail: "",
       businessPhone: "",
-      addressline1: "",
-      addressline2: "",
-      addressline3: "",
+      addressLine1: "",
+      addressLine2: "",
+      addressLine3: "",
       postalCode: "",
       websiteUrl: "",
       logoUrl: "",
@@ -38,11 +40,12 @@ export const CreateBusinessForm = () => {
   const onSubmit = async (data: z.infer<typeof businessSchema>) => {
     console.log(data);
     const response = await addBusiness(data);
-    if (response.statusCode === 201) {
+    if (response.status === "CREATED") {
       toast({
         title: "Success",
         description: response.message,
       });
+      navigate("/vendor/dashboard");
     } else {
       toast({
         title: "Error",
@@ -148,7 +151,7 @@ export const CreateBusinessForm = () => {
                     <FormMessage />
                   </FormItem>
                 )}
-                name="addressline1"
+                name="addressLine1"
                 control={form.control}
               />
 
@@ -167,7 +170,7 @@ export const CreateBusinessForm = () => {
                     <FormMessage />
                   </FormItem>
                 )}
-                name="addressline2"
+                name="addressLine2"
                 control={form.control}
               />
 
@@ -186,7 +189,7 @@ export const CreateBusinessForm = () => {
                     <FormMessage />
                   </FormItem>
                 )}
-                name="addressline3"
+                name="addressLine3"
                 control={form.control}
               />
 

@@ -23,7 +23,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-import { Navbar } from "@/components/navigation/navbar";
+import { VendorNavbar } from "@/components/navigation/vendor-navbar";
 import { Separator } from "@/components/ui/separator";
 
 export const VendorSettingsPage = () => {
@@ -31,7 +31,7 @@ export const VendorSettingsPage = () => {
 
   return (
     <div>
-      <Navbar />
+      <VendorNavbar />
       <main className="p-10">
         <div>
           <h1 className="text-2xl font-bold">Settings</h1>
