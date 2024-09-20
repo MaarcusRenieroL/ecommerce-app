@@ -1,6 +1,6 @@
 import { User, Product } from "@/lib/types.ts";
 import { z } from "zod";
-import { signInSchema } from "@/lib/zod-schema.ts";
+import { businessSchema, signInSchema } from "@/lib/zod-schema.ts";
 
 const BASE_URL = "http://localhost:8080/api";
 
@@ -70,12 +70,29 @@ export const signInUser = async (data: z.infer<typeof signInSchema>) => {
       },
       method: "POST",
       body: JSON.stringify(data),
-      credentials: "include"
+      credentials: "include",
     });
 
     return await response.json();
   } catch (error) {
     console.error("Error authenticating user:", error);
     return null;
+  }
+};
+
+export const addBusiness = async (data: z.infer<typeof businessSchema>) => {
+  try {
+    const response = await fetch(`${BASE_URL}/businesses/add`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+
+    return await response.json();
+  } catch (error) {
+    console.log("Error adding business");
+    console.log(error);
   }
 };

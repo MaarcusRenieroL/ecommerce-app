@@ -31,15 +31,13 @@ public class SecurityConfig {
         "/api/sizes/get",
         "/api/colors/all",
         "/api/colors/get",
-          "/api/users/add",
+        "/api/users/add",
         "/api/auth/**"
       };
 
-  @Autowired
-  UserDetailsServiceImpl userDetailsService;
+  @Autowired UserDetailsServiceImpl userDetailsService;
 
-  @Autowired
-  private AuthEntryPointJwt unauthorizedHandler;
+  @Autowired private AuthEntryPointJwt unauthorizedHandler;
 
   @Bean
   public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -47,18 +45,20 @@ public class SecurityConfig {
   }
 
   @Bean
-  public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig)
+      throws Exception {
     return authConfig.getAuthenticationManager();
   }
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.csrf(AbstractHttpConfigurer::disable)
-        .authorizeHttpRequests(auth -> auth.requestMatchers(publicApis).permitAll())
+        .authorizeHttpRequests(auth -> auth.requestMatchers("/**").permitAll())
         .httpBasic(AbstractHttpConfigurer::disable)
         .logout(LogoutConfigurer::permitAll);
 
-    http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+    http.addFilterBefore(
+        authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     return http.build();
   }
 
@@ -66,5 +66,4 @@ public class SecurityConfig {
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder(10);
   }
-
 }

@@ -3,28 +3,28 @@ package com.maarcus.backend.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 
-import java.util.UUID;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table( name = "users",
+@Table(
+    name = "users",
     uniqueConstraints = {
-        @UniqueConstraint(columnNames = "username"),
-        @UniqueConstraint(columnNames = "email")
+      @UniqueConstraint(columnNames = "username"),
+      @UniqueConstraint(columnNames = "email")
     })
 public class User {
   @Id
   @UuidGenerator
-  @Column(name = "product_id", updatable = false, nullable = false)
+  @Column(name = "user_id", updatable = false, nullable = false)
   private UUID id;
 
   @NotBlank
@@ -62,4 +62,7 @@ public class User {
 
   @Column(name = "phone_number", nullable = false)
   private String phoneNumber;
+
+  @Column(name = "hasBusiness", nullable = true)
+  private boolean hasBusinessAccount;
 }

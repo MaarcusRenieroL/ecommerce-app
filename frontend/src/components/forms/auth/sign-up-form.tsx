@@ -15,14 +15,9 @@ import {
 } from "@/components/ui/form.tsx";
 import { addUser } from "@/lib/spring-boot-api.ts";
 import { User } from "@/lib/types.ts";
-import { FC } from "react";
 import { useToast } from "@/components/ui/use-toast";
 
-type Props = {
-  pathName: string;
-};
-
-export const SignUpForm: FC<Props> = ({ pathName }) => {
+export const SignUpForm = () => {
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof signUpSchema>>({
@@ -37,39 +32,41 @@ export const SignUpForm: FC<Props> = ({ pathName }) => {
       addressLine2: "",
       addressLine3: "",
       phoneNumber: "",
-      role: "VENDOR",
+      role: "",
+      hasBusinessAccount: false,
     },
   });
 
   const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
-      const refinedData: User = {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.username,
-        username: data.username,
-        password: data.password,
-        addressLine1: data.addressLine1,
-        addressLine2: data.addressLine2,
-        addressLine3: data.addressLine3,
-        phoneNumber: data.phoneNumber,
-        role: pathName === "/auth/sign-up" ? "CUSTOMER" : "VENDOR",
-      };
+    const refinedData: User = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.username,
+      username: data.username,
+      password: data.password,
+      addressLine1: data.addressLine1,
+      addressLine2: data.addressLine2,
+      addressLine3: data.addressLine3,
+      phoneNumber: data.phoneNumber,
+      role: "CUSTOMER",
+      hasBusinessAccount: false,
+    };
 
-      console.log(refinedData);
+    console.log(refinedData);
 
-      const response = await addUser(refinedData);
-      
-      if (response.statusCode === 201) {
-        toast({
-          title: "Success",
-          description: response.message
-        })
-      } else {
-        toast({
-          title: "Error",
-          description: response.message
-        })
-      }
+    const response = await addUser(refinedData);
+
+    if (response.statusCode === 201) {
+      toast({
+        title: "Success",
+        description: response.message,
+      });
+    } else {
+      toast({
+        title: "Error",
+        description: response.message,
+      });
+    }
   };
 
   return (

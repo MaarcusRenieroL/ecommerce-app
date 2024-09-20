@@ -23,29 +23,30 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useTheme } from "../theme-provider";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import { DashboardIcon } from "@radix-ui/react-icons";
 
 type Props = {
   role: string;
-}
+};
 
 export const AccountNav: FC<Props> = ({ role }) => {
   const { setTheme } = useTheme();
   const navigate = useNavigate();
-  
+
   const onLogoutClick = async () => {
     try {
       await fetch("http://localhost:8080/api/auth/logout", {
         method: "POST",
-        credentials: "include"
-      })
-      
+        credentials: "include",
+      });
+
       navigate(0);
     } catch (error: unknown) {
       console.log(error);
     }
-  }
-  
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -57,19 +58,39 @@ export const AccountNav: FC<Props> = ({ role }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        {role !== "CUSTOMER" && <>
-          <a href="/vendor/dashboard">
+        {role === "CUSTOMER" && (
+          <a href="/auth/business/sign-up">
             <DropdownMenuItem>
-              <User className="mr-2 h-4 w-4"/>
-              <span>Dashboard</span>
+              <DashboardIcon className="mr-2 h-4 w-4" />
+              <span>Create a Dashboard</span>
             </DropdownMenuItem>
           </a>
-          <DropdownMenuSeparator/>
-        </>}
+        )}
+        {role === "ADMIN" && (
+          <>
+            <a href="/admin/dashboard">
+              <DropdownMenuItem>
+                <User className="mr-2 h-4 w-4" />
+                <span>Dashboard</span>
+              </DropdownMenuItem>
+            </a>
+          </>
+        )}
+        {role === "VENDOR" && (
+          <>
+            <a href="/vendor/dashboard">
+              <DropdownMenuItem>
+                <User className="mr-2 h-4 w-4" />
+                <span>Dashboard</span>
+              </DropdownMenuItem>
+            </a>
+          </>
+        )}
+        <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <a href="/account">
             <DropdownMenuItem>
-              <User className="mr-2 h-4 w-4"/>
+              <User className="mr-2 h-4 w-4" />
               <span>Profile</span>
               <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
             </DropdownMenuItem>
