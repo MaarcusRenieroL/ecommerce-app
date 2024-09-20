@@ -92,9 +92,9 @@ export const businessSchema = z.object({
   businessPhone: z
     .string()
     .min(10, { message: "Phone number must be at least 10 digits" }),
-  addressline1: z.string().min(1, { message: "Address line 1 is required" }),
-  addressline2: z.string().optional(),
-  addressline3: z.string().optional(),
+  addressLine1: z.string().min(1, { message: "Address line 1 is required" }),
+  addressLine2: z.string().optional(),
+  addressLine3: z.string().optional(),
   postalCode: z
     .string()
     .min(5, { message: "Postal code must be at least 5 characters" }),

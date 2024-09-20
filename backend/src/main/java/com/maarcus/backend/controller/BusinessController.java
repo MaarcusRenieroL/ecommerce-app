@@ -2,9 +2,12 @@ package com.maarcus.backend.controller;
 
 import com.maarcus.backend.exception.business.BusinessNotFoundException;
 import com.maarcus.backend.model.Business;
+import com.maarcus.backend.payload.BusinessWithUuid;
 import com.maarcus.backend.payload.response.StandardResponse;
 import com.maarcus.backend.service.BusinessService;
 import com.maarcus.backend.utils.ResponseUtil;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,13 +51,30 @@ public class BusinessController {
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<StandardResponse<Business>> addBusiness(@RequestBody Business business) {
+	public ResponseEntity<StandardResponse<BusinessWithUuid>> addBusiness(
+		@RequestBody BusinessWithUuid businessWithUuid, HttpServletResponse response) {
+		
+		UUID uuid = businessWithUuid.getUuid();
+		Business business = businessWithUuid.getBusiness();
+		
+		if (uuid == null) {
+			return responseUtil.buildErrorResponse(HttpStatus.UNAUTHORIZED, "Missing required field: id");
+		}
+		
 		if (business.getBusinessName() == null) {
 			return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: businessName");
 		}
 		
-		Business createdBusiness = businessService.addBusiness(business);
-		return responseUtil.buildSuccessResponse(HttpStatus.CREATED, "Business created successfully", createdBusiness);
+		Business createdBusiness = businessService.addBusiness(business, uuid);
+		
+		Cookie hasBusinessCookie = new Cookie("hasBusiness", "true");
+		hasBusinessCookie.setHttpOnly(true);
+		hasBusinessCookie.setSecure(true);
+		hasBusinessCookie.setPath("/");
+		hasBusinessCookie.setMaxAge(24 * 60 * 60);
+		response.addCookie(hasBusinessCookie);
+		
+		return responseUtil.buildSuccessResponse(HttpStatus.CREATED, "Business created successfully", new BusinessWithUuid(createdBusiness, uuid));
 	}
 	
 	@PutMapping("/update/{id}")

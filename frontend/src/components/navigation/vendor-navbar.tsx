@@ -11,19 +11,21 @@ import { Card, CardContent } from "@/components/ui/card.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { isLoggedIn } from "@/lib/utils.ts";
 
-export const Navbar = () => {
+export const VendorNavbar = () => {
 	const location = useLocation();
 	const [ authenticated, setAuthenticated ] = useState(false);
 	const [ hasBusiness, setHasBusiness ] = useState(false);
 	const [ role, setRole ] = useState("");
 	
-	const customerLinks = [
-		{ name: "Home", href: "/" },
+	const vendorLinks = [
+		{ name: "Dashboard", href: "/dashboard" },
 		{ name: "Products", href: "/products" },
 		{ name: "Categories", href: "/categories" },
 		{ name: "Deals", href: "/deals" },
+		{ name: "Sizes", href: "/sizes" },
+		{ name: "Orders", href: "/orders" },
+		{ name: "Settings", href: "/settings" },
 	]
-	
 	
 	useEffect(() => {
 		const checkAuthentication = async () => {
@@ -85,7 +87,7 @@ export const Navbar = () => {
 	return (
 		<>
 			<header
-				className="w-full lg:flex hidden items-center justify-between px-6 py-4 border-b sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 gap-5">
+				className="w-full lg:flex hidden items-center justify-between px-6 py-4 border-b sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
 				<div className="flex items-center space-x-6">
 					<a href="/">
             <span className="flex space-x-3 items-center">
@@ -94,16 +96,16 @@ export const Navbar = () => {
             </span>
 					</a>
 					
-					{customerLinks.map((link, index) => (
+					{vendorLinks.map((link, index) => (
 						<a href={link.href} key={index++}>
 							{link.name}
 						</a>
 					))}
 				
 				</div>
-				<div className="w-full flex items-center justify-center">
-            <Input placeholder="Search products" className="w-full"/>
-        </div>
+				{role === "CUSTOMER" && <div className="w-full flex items-center justify-center">
+            <Input placeholder="Search products" className="w-1/2"/>
+        </div>}
 				<div className="flex items-center space-x-5">
 					{!authenticated && <a href="/auth/sign-in">
               <Button>Sign In / Sign Up</Button>
@@ -220,7 +222,7 @@ export const Navbar = () => {
 								<h1>ShopEase</h1>
 							</SheetTitle>
 							<div className="flex flex-col space-y-5">
-								{customerLinks.map((link, index) => (
+								{vendorLinks.map((link, index) => (
 									<a href={link.href} key={index++} className={clsx(
 										"flex justify-start items-center gap-3 hover:bg-secondary border-transparent border py-2 px-4 rounded-md hover:border-border hover:border transition-all duration-200 ease-in-out",
 										location.pathname === `/vendor/${link.href}` &&
@@ -237,13 +239,13 @@ export const Navbar = () => {
             <ShoppingCart/>
             <h1 className="font-bold">ShopEase</h1>
           </span>
-				<Input placeholder="Search products" className="w-full md:block hidden"/>
+				{role === "CUSTOMER" && <Input placeholder="Search products" className="w-full md:block hidden"/>}
 				
 				<div className="flex items-center space-x-5">
 					{!authenticated && <a href="/auth/sign-in">
               <Button>Sign In</Button>
           </a>}
-					<Sheet>
+					{role === "CUSTOMER" && <Sheet>
               <SheetTrigger asChild>
                   <Button variant="outline" size="icon">
                       <ShoppingCart className="h-4 w-4"/>
@@ -336,7 +338,7 @@ export const Navbar = () => {
                       <Button className="w-full">Proceed to Cart</Button>
                   </SheetFooter>
               </SheetContent>
-          </Sheet>
+          </Sheet>}
 					{authenticated && <AccountNav role={role} hasBusiness={hasBusiness}/>}
 				</div>
 			</header>

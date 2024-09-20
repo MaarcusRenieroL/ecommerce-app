@@ -20,12 +20,12 @@ import { cn } from "@/lib/utils";
 import { OverviewCard } from "@/components/pages/admin/dashboard/overview-card";
 import { Activity, CreditCard, DollarSign, ShoppingCart } from "lucide-react";
 import { SalesChart } from "@/components/pages/admin/dashboard/sales-chart";
-import { Navbar } from "@/components/navigation/navbar.tsx";
+import { VendorNavbar } from "@/components/navigation/vendor-navbar.tsx";
 
 export const VendorDashboardPage = () => {
   return (
     <div>
-      <Navbar />
+      <VendorNavbar />
       <main className="p-10">
         <div className="flex flex-col md:flex-row md:items-center justify-between w-full text-left">
           <h2 className="text-2xl font-bold">Dashboard</h2>

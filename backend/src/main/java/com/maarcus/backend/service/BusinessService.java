@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface BusinessService {
 
-  Business addBusiness(Business business);
+  Business addBusiness(Business business, UUID uuid);
 
   Optional<Business> getBusiness(UUID id);
 

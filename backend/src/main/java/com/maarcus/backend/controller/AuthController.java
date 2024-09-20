@@ -13,6 +13,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +33,14 @@ public class AuthController {
   @Autowired private JwtUtils jwtUtils;
 
   @Autowired private UserRepository userRepository;
+  
+  private void configureCookie(Cookie cookie, HttpServletResponse response) {
+    cookie.setHttpOnly(true);
+    cookie.setSecure(true);
+    cookie.setPath("/");
+    cookie.setMaxAge(24 * 60 * 60);
+    response.addCookie(cookie);
+  }
 
   @PostMapping(path = "/sign-in")
   public ResponseEntity<StandardResponse<?>> login(
@@ -43,39 +55,36 @@ public class AuthController {
 
       String role = "";
       UUID id = null;
+      String id = "";
+      String hasBusiness = "";
 
       if (optionalUser.isPresent()) {
         role = optionalUser.get().getRole();
         id = optionalUser.get().getId();
+        System.out.println(id);
+        id = String.valueOf(optionalUser.get().getId());
+        hasBusiness = String.valueOf(optionalUser.get().isHasBusinessAccount());
       }
 
+      
+      assert id != null;
+      
       Cookie jwt = new Cookie("jwt", token);
       Cookie cookieRole = new Cookie("role", role);
-      Cookie cookieId = new Cookie("id", id.toString());
-      jwt.setHttpOnly(true);
-      jwt.setSecure(true);
-      jwt.setPath("/");
-      jwt.setMaxAge(24 * 60 * 60);
-      response.addCookie(jwt);
-
-      cookieRole.setHttpOnly(true);
-      cookieRole.setSecure(true);
-      cookieRole.setPath("/");
-      cookieRole.setMaxAge(24 * 60 * 60);
-      response.addCookie(cookieRole);
-
-      cookieId.setHttpOnly(true);
-      cookieId.setSecure(true);
-      cookieId.setPath("/");
-      cookieId.setMaxAge(24 * 60 * 60);
-      response.addCookie(cookieId);
-
+      Cookie cookieId = new Cookie("id", id);
+      Cookie hasBusinessCookie = new Cookie("hasBusiness", hasBusiness);
+      
+      configureCookie(jwt, response);
+      configureCookie(cookieRole, response);
+      configureCookie(cookieId, response);
+      configureCookie(hasBusinessCookie, response);
+      
       return ResponseEntity.ok()
           .body(
               new StandardResponse<>(
                   HttpStatus.OK,
                   "Login Successful",
-                  Token.builder().token(token).role(role).build()));
+                  Token.builder().id(id).token(token).role(role).hasBusiness(hasBusiness).build()));
 
     } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -110,6 +119,10 @@ public class AuthController {
         if ("id".equals(cookie.getName())) {
           String id = cookie.getValue();
           response.put("id", id);
+        }
+        
+        if ("hasBusiness".equals(cookie.getName())) {
+          response.put("hasBusiness", cookie.getValue());
         }
       }
       if (response.containsKey("role")) {

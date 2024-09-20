@@ -82,12 +82,24 @@ export const signInUser = async (data: z.infer<typeof signInSchema>) => {
 
 export const addBusiness = async (data: z.infer<typeof businessSchema>) => {
   try {
+    const check = await fetch(`${BASE_URL}/auth/check`, {
+      method: "GET",
+      credentials: "include"
+    });
+    
+    const refinedData = {
+      business: data,
+      uuid: await check.json().then((id) => id.data.id)
+    }
+    
+    console.log(refinedData)
+    
     const response = await fetch(`${BASE_URL}/businesses/add`, {
       headers: {
         "Content-Type": "application/json",
       },
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify(refinedData),
     });
 
     return await response.json();
