@@ -57,6 +57,8 @@ public class AuthController {
       if (optionalUser.isPresent()) {
         role = optionalUser.get().getRole();
         id = String.valueOf(optionalUser.get().getId());
+        System.out.println(id);
+        id = String.valueOf(optionalUser.get().getId());
         hasBusiness = String.valueOf(optionalUser.get().isHasBusinessAccount());
       }
 
