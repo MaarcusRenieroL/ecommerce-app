@@ -1,7 +1,7 @@
 package com.maarcus.backend.service.implementation;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.maarcus.backend.model.User;
+import com.maarcus.backend.model.user.User;
 import java.io.Serial;
 import java.util.Collection;
 import java.util.List;

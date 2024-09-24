@@ -1,6 +1,6 @@
 package com.maarcus.backend.service.implementation;
 
-import com.maarcus.backend.model.User;
+import com.maarcus.backend.model.user.User;
 import com.maarcus.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,24 +1,26 @@
 package com.maarcus.backend.service.implementation;
 
 import com.maarcus.backend.exception.color.ColorNotFoundException;
-import com.maarcus.backend.model.Color;
+import com.maarcus.backend.model.product.Color;
+import com.maarcus.backend.model.product.Product;
+import com.maarcus.backend.model.product.ProductVariant;
 import com.maarcus.backend.repository.ColorRepository;
+import com.maarcus.backend.repository.ProductRepository;
 import com.maarcus.backend.service.ColorService;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+
+import java.util.*;
 
 import org.springframework.stereotype.Service;
-
-import javax.swing.text.html.Option;
 
 @Service
 public class ColorServiceImplementation implements ColorService {
 	
 	private final ColorRepository colorRepository;
+	private final ProductRepository productRepository;
 	
-	public ColorServiceImplementation(ColorRepository colorRepository) {
+	public ColorServiceImplementation(ColorRepository colorRepository, ProductRepository productRepository) {
 		this.colorRepository = colorRepository;
+		this.productRepository = productRepository;
 	}
 	
 	@Override
@@ -42,8 +44,7 @@ public class ColorServiceImplementation implements ColorService {
 		Optional<Color> existingColor = getColor(id);
 		
 		if (existingColor.isPresent()) {
-			existingColor.get().setName(color.getName());
-			existingColor.get().setValue(color.getValue());
+			existingColor.get().setColorName(color.getColorName());
 			
 			return colorRepository.save(existingColor.get());
 		}
@@ -54,5 +55,28 @@ public class ColorServiceImplementation implements ColorService {
 	@Override
 	public void deleteColor(UUID id) {
 		getColor(id).ifPresent(colorRepository::delete);
+	}
+	
+	@Override
+	public List<Color> getColorsByProductId(UUID productId) {
+		Optional<Product> product = productRepository.findById(productId);
+		
+		if (product.isPresent()) {
+			List<ProductVariant> variants = product.get().getVariants();
+			
+			if (!variants.isEmpty()) {
+				Set<Color> colors = new HashSet<>();
+				
+				for (ProductVariant variant : variants) {
+					if (variant.getColor() != null) {
+						colors.add(variant.getColor());
+					}
+				}
+				
+				return new ArrayList<>(colors);
+			}
+		}
+		
+		return Collections.emptyList();
 	}
 }

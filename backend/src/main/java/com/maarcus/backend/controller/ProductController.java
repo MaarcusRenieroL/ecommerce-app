@@ -1,6 +1,6 @@
 package com.maarcus.backend.controller;
 
-import com.maarcus.backend.model.Product;
+import com.maarcus.backend.model.product.Product;
 import com.maarcus.backend.service.ProductService;
 import com.maarcus.backend.payload.response.StandardResponse;
 import com.maarcus.backend.exception.product.ProductNotFoundException;

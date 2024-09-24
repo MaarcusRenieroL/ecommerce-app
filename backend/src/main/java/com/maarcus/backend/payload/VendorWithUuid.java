@@ -1,6 +1,6 @@
 package com.maarcus.backend.payload;
 
-import com.maarcus.backend.model.Business;
+import com.maarcus.backend.model.user.Vendor;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BusinessWithUuid {
-    private Business business;
+public class VendorWithUuid {
+    private Vendor vendor;
     private UUID uuid;
 }

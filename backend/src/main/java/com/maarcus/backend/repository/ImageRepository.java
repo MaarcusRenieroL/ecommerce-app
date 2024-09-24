@@ -1,6 +1,6 @@
 package com.maarcus.backend.repository;
 
-import com.maarcus.backend.model.Image;
+import com.maarcus.backend.model.product.Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

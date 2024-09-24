@@ -1,6 +1,6 @@
 package com.maarcus.backend.service;
 
-import com.maarcus.backend.model.User;
+import com.maarcus.backend.model.user.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,4 +17,8 @@ public interface UserService {
   User updateUser(UUID id, User user);
 
   void deleteUser(UUID id);
+  
+  Optional<User> getUserByEmail(String email);
+  
+  List<User> getUsersByRole(String role);
 }

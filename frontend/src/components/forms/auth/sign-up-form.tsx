@@ -16,9 +16,11 @@ import {
 import { addUser } from "@/lib/spring-boot-api.ts";
 import { User } from "@/lib/types.ts";
 import { useToast } from "@/components/ui/use-toast";
+import { useNavigate } from "react-router-dom";
 
 export const SignUpForm = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
@@ -28,9 +30,6 @@ export const SignUpForm = () => {
       username: "",
       password: "",
       confirmPassword: "",
-      addressLine1: "",
-      addressLine2: "",
-      addressLine3: "",
       phoneNumber: "",
       role: "",
       hasBusinessAccount: false,
@@ -44,9 +43,6 @@ export const SignUpForm = () => {
       email: data.username,
       username: data.username,
       password: data.password,
-      addressLine1: data.addressLine1,
-      addressLine2: data.addressLine2,
-      addressLine3: data.addressLine3,
       phoneNumber: data.phoneNumber,
       role: "CUSTOMER",
       hasBusinessAccount: false,
@@ -56,11 +52,13 @@ export const SignUpForm = () => {
 
     const response = await addUser(refinedData);
 
-    if (response.statusCode === 201) {
+    if (response.status === "CREATED") {
       toast({
         title: "Success",
         description: response.message,
       });
+      
+      navigate("/auth/sign-in")
     } else {
       toast({
         title: "Error",
@@ -183,72 +181,6 @@ export const SignUpForm = () => {
                 </FormItem>
               )}
               name="confirmPassword"
-              control={form.control}
-            />
-
-            <FormField
-              render={({ field }) => (
-                <FormItem className="grid gap-2 w-full">
-                  <FormLabel>
-                    <Label htmlFor="text">Address Line 1</Label>
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      type="text"
-                      placeholder=""
-                      required
-                      className="w-full"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-              name="addressLine1"
-              control={form.control}
-            />
-
-            <FormField
-              render={({ field }) => (
-                <FormItem className="grid gap-2 w-full">
-                  <FormLabel>
-                    <Label htmlFor="text">Address Line 2</Label>
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      type="text"
-                      placeholder=""
-                      required
-                      className="w-full"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-              name="addressLine2"
-              control={form.control}
-            />
-
-            <FormField
-              render={({ field }) => (
-                <FormItem className="grid gap-2 w-full">
-                  <FormLabel>
-                    <Label htmlFor="text">Address Line 3</Label>
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      type="text"
-                      placeholder=""
-                      required
-                      className="w-full"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-              name="addressLine3"
               control={form.control}
             />
 

@@ -1,7 +1,7 @@
 package com.maarcus.backend.service.implementation;
 
 import com.maarcus.backend.exception.user.UserNotFoundException;
-import com.maarcus.backend.model.User;
+import com.maarcus.backend.model.user.User;
 import com.maarcus.backend.repository.UserRepository;
 import com.maarcus.backend.service.UserService;
 
@@ -50,9 +50,7 @@ public class UserServiceImplementation implements UserService {
 			existingUser.get().setEmail(user.getEmail());
 			existingUser.get().setRole(user.getRole());
 			existingUser.get().setPhoneNumber(user.getPhoneNumber());
-			existingUser.get().setAddressLine1(user.getAddressLine1());
-			existingUser.get().setAddressLine2(user.getAddressLine2());
-			existingUser.get().setAddressLine3(user.getAddressLine3());
+			existingUser.get().setAddresses(user.getAddresses());
 			
 			return userRepository.save(existingUser.get());
 		}
@@ -63,6 +61,16 @@ public class UserServiceImplementation implements UserService {
 	@Override
 	public void deleteUser(UUID id) {
 		getUser(id).ifPresent(userRepository::delete);
+	}
+	
+	@Override
+	public Optional<User> getUserByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
+	
+	@Override
+	public List<User> getUsersByRole(String role) {
+		return userRepository.findByRole(role);
 	}
 	
 }

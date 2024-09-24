@@ -1,7 +1,7 @@
 package com.maarcus.backend.controller;
 
 import com.maarcus.backend.exception.size.SizeNotFoundException;
-import com.maarcus.backend.model.Size;
+import com.maarcus.backend.model.product.Size;
 import com.maarcus.backend.payload.response.StandardResponse;
 import com.maarcus.backend.service.SizeService;
 import com.maarcus.backend.utils.ResponseUtil;
@@ -49,8 +49,8 @@ public class SizeController {
   
   @PostMapping("/add")
   public ResponseEntity<StandardResponse<Size>> addSize(@RequestBody Size size) {
-    if (size.getName() == null || size.getValue() == null) {
-      return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required fields: name or value");
+    if (size.getValue() == null) {
+      return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required fields: value");
     }
     
     Size createdSize = sizeService.addSize(size);
@@ -59,8 +59,12 @@ public class SizeController {
   
   @PutMapping("/update/{id}")
   public ResponseEntity<StandardResponse<Size>> updateSize(@PathVariable UUID id, @RequestBody Size size) {
-    if (id == null || size.getName() == null || size.getValue() == null) {
-      return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required fields: id, name, or value");
+    if (id == null) {
+      return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required fields: id");
+    }
+    
+    if (size.getValue().isEmpty()) {
+      return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required fields: value");
     }
     
     try {

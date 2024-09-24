@@ -46,10 +46,6 @@ export const ProtectedRoute: FC<ProtectedRouteProps> = ({
 		return <Navigate to={redirectPath} replace />;
 	}
 	
-	if (authData.role === "CUSTOMER") {
-		return <Navigate to="/" replace />;
-	}
-	
 	if (requiredRole && authData.role !== requiredRole) {
 		if (authData.role !== "ADMIN" && authData.role !== "VENDOR") {
 			return <Navigate to="/" replace />;

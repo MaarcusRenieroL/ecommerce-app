@@ -1,7 +1,7 @@
 package com.maarcus.backend.controller;
 
 import com.maarcus.backend.exception.category.CategoryNotFoundException;
-import com.maarcus.backend.model.Color;
+import com.maarcus.backend.model.product.Color;
 import com.maarcus.backend.service.ColorService;
 import com.maarcus.backend.payload.response.StandardResponse;
 import com.maarcus.backend.exception.color.ColorNotFoundException;
@@ -52,12 +52,8 @@ public class ColorController {
   
   @PostMapping(path = "/add")
   public ResponseEntity<StandardResponse<Color>> addColor(@RequestBody Color color) {
-    if (color.getName() == null) {
+    if (color.getColorName() == null) {
       return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: name");
-    }
-    
-    if (color.getValue() == null) {
-      return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: value");
     }
     
     Color createdColor = colorService.addColor(color);
@@ -70,12 +66,8 @@ public class ColorController {
       return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: id");
     }
     
-    if (color.getName() == null) {
+    if (color.getColorName() == null) {
       return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: name");
-    }
-    
-    if (color.getValue() == null) {
-      return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: value");
     }
     
     try {

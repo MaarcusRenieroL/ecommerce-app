@@ -1,7 +1,7 @@
 package com.maarcus.backend.controller;
 
 import com.maarcus.backend.jwt.JwtUtils;
-import com.maarcus.backend.model.User;
+import com.maarcus.backend.model.user.User;
 import com.maarcus.backend.payload.request.LoginRequest;
 import com.maarcus.backend.payload.response.StandardResponse;
 import com.maarcus.backend.payload.response.Token;
@@ -12,7 +12,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,14 +51,14 @@ public class AuthController {
 
       String role = "";
       String id = "";
-      String hasBusiness = "";
+      String hasVendor = "";
 
       if (optionalUser.isPresent()) {
         role = optionalUser.get().getRole();
         id = String.valueOf(optionalUser.get().getId());
         System.out.println(id);
         id = String.valueOf(optionalUser.get().getId());
-        hasBusiness = String.valueOf(optionalUser.get().isHasBusinessAccount());
+        hasVendor = String.valueOf(optionalUser.get().isHasVendorAccount());
       }
 
       
@@ -68,19 +67,19 @@ public class AuthController {
       Cookie jwt = new Cookie("jwt", token);
       Cookie cookieRole = new Cookie("role", role);
       Cookie cookieId = new Cookie("id", id);
-      Cookie hasBusinessCookie = new Cookie("hasBusiness", hasBusiness);
+      Cookie hasVendorCookie = new Cookie("hasVendor", hasVendor);
       
       configureCookie(jwt, response);
       configureCookie(cookieRole, response);
       configureCookie(cookieId, response);
-      configureCookie(hasBusinessCookie, response);
+      configureCookie(hasVendorCookie, response);
       
       return ResponseEntity.ok()
           .body(
               new StandardResponse<>(
                   HttpStatus.OK,
                   "Login Successful",
-                  Token.builder().id(id).token(token).role(role).hasBusiness(hasBusiness).build()));
+                  Token.builder().id(id).token(token).role(role).hasVendor(hasVendor).build()));
 
     } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -117,8 +116,8 @@ public class AuthController {
           response.put("id", id);
         }
         
-        if ("hasBusiness".equals(cookie.getName())) {
-          response.put("hasBusiness", cookie.getValue());
+        if ("hasVendor".equals(cookie.getName())) {
+          response.put("hasVendor", cookie.getValue());
         }
       }
       if (response.containsKey("role")) {

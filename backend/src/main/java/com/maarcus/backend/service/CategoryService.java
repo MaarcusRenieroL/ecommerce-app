@@ -1,6 +1,6 @@
 package com.maarcus.backend.service;
 
-import com.maarcus.backend.model.Category;
+import com.maarcus.backend.model.product.Category;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

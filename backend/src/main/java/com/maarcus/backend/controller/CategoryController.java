@@ -1,7 +1,7 @@
 package com.maarcus.backend.controller;
 
 import com.maarcus.backend.exception.category.CategoryNotFoundException;
-import com.maarcus.backend.model.Category;
+import com.maarcus.backend.model.product.Category;
 import com.maarcus.backend.payload.response.StandardResponse;
 import com.maarcus.backend.service.CategoryService;
 import com.maarcus.backend.utils.ResponseUtil;
@@ -49,8 +49,8 @@ public class CategoryController {
 	
 	@PostMapping("/add")
 	public ResponseEntity<StandardResponse<Category>> addCategory(@RequestBody Category category) {
-		if (category.getCategoryName() == null) {
-			return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: categoryName");
+		if (category.getName() == null) {
+			return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: name");
 		}
 		
 		Category createdCategory = categoryService.addCategory(category);
@@ -63,8 +63,8 @@ public class CategoryController {
 			return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: id");
 		}
 		
-		if (category.getCategoryName() == null) {
-			return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: categoryName");
+		if (category.getName() == null) {
+			return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: name");
 		}
 		
 		try {

@@ -1,7 +1,7 @@
 package com.maarcus.backend.controller;
 
 import com.maarcus.backend.exception.user.UserNotFoundException;
-import com.maarcus.backend.model.User;
+import com.maarcus.backend.model.user.User;
 import com.maarcus.backend.payload.response.StandardResponse;
 import com.maarcus.backend.service.UserService;
 import com.maarcus.backend.utils.ResponseUtil;

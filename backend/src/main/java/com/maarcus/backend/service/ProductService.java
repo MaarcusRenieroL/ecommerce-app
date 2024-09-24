@@ -1,6 +1,6 @@
 package com.maarcus.backend.service;
 
-import com.maarcus.backend.model.Product;
+import com.maarcus.backend.model.product.Product;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -18,4 +18,10 @@ public interface ProductService {
   void deleteProduct(UUID id);
 
   List<Product> searchAllProductsByName(String name);
+  
+  List<Product> getProductsByCategory(UUID categoryId);
+  
+  List<Product> getProductsByVendor(UUID vendorId);
+  
+  List<Product> searchProductsByPriceRange(double minPrice, double maxPrice);
 }

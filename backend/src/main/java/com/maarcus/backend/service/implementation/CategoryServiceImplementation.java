@@ -1,7 +1,7 @@
 package com.maarcus.backend.service.implementation;
 
 import com.maarcus.backend.exception.category.CategoryNotFoundException;
-import com.maarcus.backend.model.Category;
+import com.maarcus.backend.model.product.Category;
 import com.maarcus.backend.repository.CategoryRepository;
 import com.maarcus.backend.service.CategoryService;
 import java.util.List;
@@ -40,7 +40,7 @@ public class CategoryServiceImplementation implements CategoryService {
 		Optional<Category> existingCategory = getCategory(id);
 		
 		if (existingCategory.isPresent()) {
-			existingCategory.get().setCategoryName(category.getCategoryName());
+			existingCategory.get().setName(category.getName());
 			
 			return categoryRepository.save(existingCategory.get());
 		}

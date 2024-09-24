@@ -39,15 +39,6 @@ export const signUpSchema = z
       .min(6, {
         message: "Confirm Password must be at least 6 characters long",
       }),
-    addressLine1: z
-      .string({
-        required_error: "Address Line 1 is required",
-      })
-      .min(4, {
-        message: "Address Line 1 must be at least 3 characters long",
-      }),
-    addressLine2: z.string().optional(),
-    addressLine3: z.string().optional(),
     phoneNumber: z
       .string({
         required_error: "Phone number is required",

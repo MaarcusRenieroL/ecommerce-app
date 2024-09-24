@@ -11,6 +11,6 @@ public class Token {
   private String token;
   private String role;
   private String id;
-  private String hasBusiness;
+  private String hasVendor;
 }
 

@@ -1,7 +1,7 @@
 package com.maarcus.backend.service.implementation;
 
 import com.maarcus.backend.exception.size.SizeNotFoundException;
-import com.maarcus.backend.model.Size;
+import com.maarcus.backend.model.product.Size;
 import com.maarcus.backend.repository.SizeRepository;
 import com.maarcus.backend.service.SizeService;
 import java.util.List;
@@ -38,7 +38,6 @@ public class SizeServiceImplementation implements SizeService {
     Optional<Size> existingSize = getSize(id);
 
     if (existingSize.isPresent()) {
-      existingSize.get().setName(size.getName());
       existingSize.get().setValue(size.getValue());
 
       return sizeRepository.save(existingSize.get());
@@ -50,5 +49,10 @@ public class SizeServiceImplementation implements SizeService {
   @Override
   public void deleteSize(UUID id) {
     getSize(id).ifPresent(sizeRepository::delete);
+  }
+  
+  @Override
+  public List<Size> getSizesByProductId(UUID productId) {
+    return List.of();
   }
 }
