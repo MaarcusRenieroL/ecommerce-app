@@ -31,8 +31,28 @@ import { VendorSettingsPage } from "./pages/vendor/settings-page";
 
 import { ThemeProvider } from "./components/theme-provider";
 import { ProtectedRoute } from "@/components/protected-route.tsx";
+import { useState, useEffect } from "react";
+import { getCategoriesByVendorId } from "@/lib/spring-boot-api.ts";
+import { isLoggedIn } from "@/lib/utils.ts";
+import { getVendorId } from "@/lib/spring-boot-api.ts";
 
 export default function App() {
+	const [categories, setCategories] = useState([]);
+	
+	useEffect(() => {
+		const fetchData = async () => {
+			const user = await isLoggedIn();
+			const vendorId = await getVendorId(user.data.id);
+			console.log("Vendor ID:", vendorId.data);
+			const categoriesByVendor = await getCategoriesByVendorId(vendorId.data);
+			console.log("Categories:", categoriesByVendor.data);
+			
+			setCategories(categoriesByVendor.data);
+		};
+		
+		fetchData();
+	}, []);
+
 	return (
 		<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
 			<Router>
@@ -66,7 +86,7 @@ export default function App() {
 					<Route element={<ProtectedRoute requiredRole="VENDOR"/>}>
 						<Route path="/vendor/dashboard" element={<VendorDashboardPage/>}/>
 						<Route path="/vendor/products" element={<VendorProductsPage/>}/>
-						<Route path="/vendor/categories" element={<VendorCategoriesPage/>}/>
+						<Route path="/vendor/categories" element={<VendorCategoriesPage categories={categories} />}/>
 						<Route path="/vendor/sizes" element={<VendorSizesPage/>}/>
 						<Route path="/vendor/orders" element={<VendorOrdersPage/>}/>
 						<Route path="/vendor/settings" element={<VendorSettingsPage/>}/>

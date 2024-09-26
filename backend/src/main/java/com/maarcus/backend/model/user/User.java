@@ -59,6 +59,10 @@ public class User {
 	@Column(name = "phone_number", nullable = false)
 	private String phoneNumber;
 	
+	// Add the One-to-One relationship with Vendor
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Vendor vendorAccount;
+	
 	@Column(name = "hasVendor", nullable = true)
 	private boolean hasVendorAccount;
 	

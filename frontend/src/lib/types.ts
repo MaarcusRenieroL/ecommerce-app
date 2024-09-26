@@ -49,6 +49,13 @@ export type Category = {
   categoryName: string;
 };
 
+export type CategoryWithId = {
+  category: {
+    name: string;
+  },
+  vendorId: string;
+}
+
 export type Image = {
   id: number;
   url: string;

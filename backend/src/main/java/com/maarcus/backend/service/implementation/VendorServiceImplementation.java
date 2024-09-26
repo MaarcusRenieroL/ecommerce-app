@@ -32,6 +32,8 @@ public class VendorServiceImplementation implements VendorService {
       
       user.setRole("VENDOR");
       user.setHasVendorAccount(true);
+      
+      vendor.setUser(user);
 
     }
     return vendorRepository.save(vendor);
@@ -68,5 +70,13 @@ public class VendorServiceImplementation implements VendorService {
   @Override
   public List<Vendor> searchVendorsByName(String name) {
     return vendorRepository.findByName(name);
+  }
+  
+  @Override
+  public Optional<Vendor> getVendorByUserId(UUID userId) {
+    
+    Optional<User> optionalUser = userRepository.findById(userId);
+    
+    return optionalUser.map(vendorRepository::findByUser);
   }
 }

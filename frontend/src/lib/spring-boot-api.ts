@@ -1,6 +1,6 @@
-import { User, Product } from "@/lib/types.ts";
+import { User, Product, CategoryWithId } from "@/lib/types.ts";
 import { z } from "zod";
-import { businessSchema, signInSchema } from "@/lib/zod-schema.ts";
+import { vendorSchema, signInSchema } from "@/lib/zod-schema.ts";
 
 const BASE_URL = "http://localhost:8080/api";
 
@@ -80,21 +80,22 @@ export const signInUser = async (data: z.infer<typeof signInSchema>) => {
   }
 };
 
-export const addBusiness = async (data: z.infer<typeof businessSchema>) => {
+export const addBusiness = async (data: z.infer<typeof vendorSchema>) => {
   try {
     const check = await fetch(`${BASE_URL}/auth/check`, {
       method: "GET",
       credentials: "include"
     });
     
+    const checkData = await check.json();
+    const uuid = checkData.data.id;
+    
     const refinedData = {
-      business: data,
-      uuid: await check.json().then((id) => id.data.id)
+      vendor: data,
+      uuid: uuid
     }
     
-    console.log(refinedData)
-    
-    const response = await fetch(`${BASE_URL}/businesses/add`, {
+    const response = await fetch(`${BASE_URL}/vendor/add`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -108,3 +109,41 @@ export const addBusiness = async (data: z.infer<typeof businessSchema>) => {
     console.log(error);
   }
 };
+
+export const addNewCategory = async (data: CategoryWithId) => {
+  try {
+    console.log(data)
+    const response = await fetch(`${BASE_URL}/categories/add`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+    
+    return await response.json();
+  } catch (error: unknown) {
+    console.log("Error adding category");
+    console.log(error)
+  }
+}
+
+export const getVendorId = async (userId: string) => {
+  try {
+    const response = await fetch(`${BASE_URL}/vendor/users/get/${userId}`);
+    
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getCategoriesByVendorId = async (vendorId: string) => {
+  try {
+    const response = await fetch(`${BASE_URL}/categories/get/vendor/${vendorId}`);
+    
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+}

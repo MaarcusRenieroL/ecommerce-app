@@ -86,7 +86,8 @@ export const addressSchema = z.object({
 	}).min(2, {
 		message: "Country is required"
 	}),
-	instructions: z.string().min(2, { message:
+	instructions: z.string().min(2, {
+		message:
 			"Instructions is required"
 	}).optional(),
 	landmark: z.string().min(2, {
@@ -114,21 +115,23 @@ export const signInSchema = z.object({
 		}),
 });
 
-export const businessSchema = z.object({
-	businessName: z.string().min(1, { message: "Business name is required" }),
-	businessDescription: z
+export const vendorSchema = z.object({
+	name: z.string().min(1, { message: "Business name is required" }),
+	description: z
 		.string()
 		.min(1, { message: "Business description is required" }),
-	businessEmail: z.string().email({ message: "Invalid email address" }),
-	businessPhone: z
+	email: z.string().email({ message: "Invalid email address" }),
+	phone: z
 		.string()
 		.min(10, { message: "Phone number must be at least 10 digits" }),
-	addressLine1: z.string().min(1, { message: "Address line 1 is required" }),
-	addressLine2: z.string().optional(),
-	addressLine3: z.string().optional(),
-	postalCode: z
-		.string()
-		.min(5, { message: "Postal code must be at least 5 characters" }),
 	websiteUrl: z.string().url({ message: "Invalid website URL" }).optional(),
 	logoUrl: z.string().url({ message: "Invalid logo URL" }).optional(),
 });
+
+export const addNewCategorySchema = z.object({
+	name: z.string({
+		required_error: "Category name is required"
+	}).min(3, {
+		message: "Category name must be at least 3 characters long"
+	})
+})

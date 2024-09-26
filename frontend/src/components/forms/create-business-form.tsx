@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { businessSchema } from "@/lib/zod-schema.ts";
+import { vendorSchema } from "@/lib/zod-schema.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -21,23 +21,19 @@ export const CreateBusinessForm = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const form = useForm<z.infer<typeof businessSchema>>({
-    resolver: zodResolver(businessSchema),
+  const form = useForm<z.infer<typeof vendorSchema>>({
+    resolver: zodResolver(vendorSchema),
     defaultValues: {
-      businessName: "",
-      businessDescription: "",
-      businessEmail: "",
-      businessPhone: "",
-      addressLine1: "",
-      addressLine2: "",
-      addressLine3: "",
-      postalCode: "",
+      name: "",
+      description: "",
+      email: "",
+      phone: "",
       websiteUrl: "",
       logoUrl: "",
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof businessSchema>) => {
+  const onSubmit = async (data: z.infer<typeof vendorSchema>) => {
     console.log(data);
     const response = await addBusiness(data);
     if (response.status === "CREATED") {
@@ -74,7 +70,7 @@ export const CreateBusinessForm = () => {
                   <FormMessage />
                 </FormItem>
               )}
-              name="businessName"
+              name="name"
               control={form.control}
             />
 
@@ -92,10 +88,11 @@ export const CreateBusinessForm = () => {
                   <FormMessage />
                 </FormItem>
               )}
-              name="businessDescription"
+              name="description"
               control={form.control}
             />
-            <div className="flex items-center justify-between w-full gap-5">
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <FormField
                 render={({ field }) => (
                   <FormItem className="grid gap-2 w-full">
@@ -111,10 +108,10 @@ export const CreateBusinessForm = () => {
                     <FormMessage />
                   </FormItem>
                 )}
-                name="businessEmail"
+                name="email"
                 control={form.control}
               />
-
+              
               <FormField
                 render={({ field }) => (
                   <FormItem className="grid gap-2 w-full">
@@ -130,90 +127,10 @@ export const CreateBusinessForm = () => {
                     <FormMessage />
                   </FormItem>
                 )}
-                name="businessPhone"
+                name="phone"
                 control={form.control}
               />
-            </div>
-
-            <div className="grid gird-cols-1 md:grid-cols-2 gap-5">
-              <FormField
-                render={({ field }) => (
-                  <FormItem className="grid gap-2 w-full">
-                    <FormLabel>Address Line 1</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="text"
-                        placeholder="123 Main Street"
-                        className="w-full"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-                name="addressLine1"
-                control={form.control}
-              />
-
-              <FormField
-                render={({ field }) => (
-                  <FormItem className="grid gap-2 w-full">
-                    <FormLabel>Address Line 2</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="text"
-                        placeholder="Suite 100"
-                        className="w-full"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-                name="addressLine2"
-                control={form.control}
-              />
-
-              <FormField
-                render={({ field }) => (
-                  <FormItem className="grid gap-2 w-full">
-                    <FormLabel>Address Line 3</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="text"
-                        placeholder="Building B"
-                        className="w-full"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-                name="addressLine3"
-                control={form.control}
-              />
-
-              <FormField
-                render={({ field }) => (
-                  <FormItem className="grid gap-2 w-full">
-                    <FormLabel>Postal Code</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="text"
-                        placeholder="12345"
-                        className="w-full"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-                name="postalCode"
-                control={form.control}
-              />
-            </div>
-
-            <div className="flex items-center justify-between w-full gap-5">
+              
               <FormField
                 render={({ field }) => (
                   <FormItem className="grid gap-2 w-full">
@@ -232,7 +149,7 @@ export const CreateBusinessForm = () => {
                 name="websiteUrl"
                 control={form.control}
               />
-
+              
               <FormField
                 render={({ field }) => (
                   <FormItem className="grid gap-2 w-full">
@@ -251,7 +168,9 @@ export const CreateBusinessForm = () => {
                 name="logoUrl"
                 control={form.control}
               />
+            
             </div>
+            
           </div>
           <Button type="submit" className="w-full mt-5">
             Submit

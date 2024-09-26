@@ -1,9 +1,11 @@
 package com.maarcus.backend.controller;
 
 import com.maarcus.backend.exception.category.CategoryNotFoundException;
+import com.maarcus.backend.model.misc.CategoryWithVendorId;
+import com.maarcus.backend.model.misc.CategoryWithName;
 import com.maarcus.backend.model.product.Category;
 import com.maarcus.backend.payload.response.StandardResponse;
-import com.maarcus.backend.service.CategoryService;
+import com.maarcus.backend.service.implementation.CategoryServiceImplementation;
 import com.maarcus.backend.utils.ResponseUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +18,10 @@ import java.util.UUID;
 @RequestMapping(path = "/api/categories")
 public class CategoryController {
 	
-	private final CategoryService categoryService;
+	private final CategoryServiceImplementation categoryService;
 	private final ResponseUtil responseUtil;
 	
-	public CategoryController(CategoryService categoryService, ResponseUtil responseUtil) {
+	public CategoryController(CategoryServiceImplementation categoryService, ResponseUtil responseUtil) {
 		this.categoryService = categoryService;
 		this.responseUtil = responseUtil;
 	}
@@ -47,14 +49,31 @@ public class CategoryController {
 		return responseUtil.buildSuccessResponse(HttpStatus.OK, "Category retrieved successfully", category);
 	}
 	
-	@PostMapping("/add")
-	public ResponseEntity<StandardResponse<Category>> addCategory(@RequestBody Category category) {
-		if (category.getName() == null) {
-			return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: name");
+	@GetMapping("/get/vendor/{id}")
+	public ResponseEntity<StandardResponse<List<CategoryWithName>>> getVendorCategories(@PathVariable String id) {
+		if (id == null) {
+			return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: id");
 		}
 		
-		Category createdCategory = categoryService.addCategory(category);
-		return responseUtil.buildSuccessResponse(HttpStatus.CREATED, "Category created successfully", createdCategory);
+		return responseUtil.buildSuccessResponse(HttpStatus.OK, "Categories retrieved successfully", categoryService.findCategoriesByVendor(UUID.fromString(id)));
+	}
+	
+	@PostMapping("/add")
+	public ResponseEntity<StandardResponse<CategoryWithName>> addCategory(@RequestBody CategoryWithVendorId categoryWithVendorId) {
+		System.out.println("Inside add category api");
+		System.out.println(categoryWithVendorId.getCategory().toString());
+		System.out.println(categoryWithVendorId.getVendorId());
+		if (categoryWithVendorId.getVendorId() == null) {
+			return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: vendorId");
+		}
+
+		if (categoryWithVendorId.getCategory().getName() == null) {
+			return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: categoryName");
+		}
+		
+		Category category = categoryService.addCategory(categoryWithVendorId.getCategory(), UUID.fromString(categoryWithVendorId.getVendorId()));
+
+		return responseUtil.buildSuccessResponse(HttpStatus.CREATED, "Category created successfully", new CategoryWithName(category.getId(), category.getName()));
 	}
 	
 	@PutMapping("/update/{id}")

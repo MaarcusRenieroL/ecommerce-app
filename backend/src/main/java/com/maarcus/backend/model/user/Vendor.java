@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.UUID;
 
 @Getter
@@ -67,4 +68,26 @@ public class Vendor {
   
   @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<Product> products;
+  
+  @OneToOne
+  @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+  private User user;
+  
+  @Override
+  public String toString() {
+    return new StringJoiner(", ", Vendor.class.getSimpleName() + "[", "]")
+      .add("id=" + id)
+      .add("name='" + name + "'")
+      .add("description='" + description + "'")
+      .add("email='" + email + "'")
+      .add("phone='" + phone + "'")
+      .add("addresses=" + addresses)
+      .add("websiteUrl='" + websiteUrl + "'")
+      .add("logoUrl='" + logoUrl + "'")
+      .add("rating=" + rating)
+      .add("createdAt=" + createdAt)
+      .add("updatedAt=" + updatedAt)
+      .add("products=" + products)
+      .toString();
+  }
 }

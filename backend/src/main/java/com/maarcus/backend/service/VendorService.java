@@ -18,4 +18,6 @@ public interface VendorService {
   void deleteVendor(UUID id);
   
   List<Vendor> searchVendorsByName(String name);
+  
+  Optional<Vendor> getVendorByUserId(UUID userId);
 }
