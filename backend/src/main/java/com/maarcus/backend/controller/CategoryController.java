@@ -77,7 +77,7 @@ public class CategoryController {
 	}
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<StandardResponse<Category>> updateCategory(@PathVariable UUID id, @RequestBody Category category) {
+	public ResponseEntity<StandardResponse<CategoryWithName>> updateCategory(@PathVariable UUID id, @RequestBody Category category) {
 		if (id == null) {
 			return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: id");
 		}
@@ -88,7 +88,7 @@ public class CategoryController {
 		
 		try {
 			Category updatedCategory = categoryService.updateCategory(id, category);
-			return responseUtil.buildSuccessResponse(HttpStatus.OK, "Category updated successfully", updatedCategory);
+			return responseUtil.buildSuccessResponse(HttpStatus.OK, "Category updated successfully", new CategoryWithName(updatedCategory.getId(), updatedCategory.getName()));
 		} catch (CategoryNotFoundException e) {
 			return responseUtil.buildErrorResponse(HttpStatus.NOT_FOUND, e.getMessage());
 		}

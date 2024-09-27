@@ -1,11 +1,11 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
-import { Edit, Trash } from "lucide-react";
+
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import React, { FC } from "react";
 import { DataTable } from "@/components/data-table";
+import { UpdateCategoryModal } from "@/components/pages/vendor/categories/update-category-modal.tsx";
 
 type Props = {
 	data: {
@@ -51,12 +51,7 @@ export const CategoriesTableShell: FC<Props> = ({ data }) => {
 				header: () => <div className="flex min-w-max items-center justify-center">Actions</div>,
 				cell: ({ row }) => (
 					<div className="min-w-max space-x-5 flex items-center justify-center">
-						<Button size="icon">
-							<Edit className="h-4 w-4" />
-						</Button>
-						<Button variant="destructive" size="icon">
-							<Trash className="h-4 w-4" />
-						</Button>
+						<UpdateCategoryModal category={row.original} />
 					</div>
 				),
 			},

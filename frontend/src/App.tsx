@@ -43,9 +43,7 @@ export default function App() {
 		const fetchData = async () => {
 			const user = await isLoggedIn();
 			const vendorId = await getVendorId(user.data.id);
-			console.log("Vendor ID:", vendorId.data);
 			const categoriesByVendor = await getCategoriesByVendorId(vendorId.data);
-			console.log("Categories:", categoriesByVendor.data);
 			
 			setCategories(categoriesByVendor.data);
 		};

@@ -45,7 +45,7 @@ export type Size = {
 };
 
 export type Category = {
-  id: number;
+  id: string;
   categoryName: string;
 };
 

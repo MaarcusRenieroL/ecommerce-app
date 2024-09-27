@@ -147,3 +147,20 @@ export const getCategoriesByVendorId = async (vendorId: string) => {
     console.log(error);
   }
 }
+
+export const updateCategory = async (categoryId: string, category: { name: string }) => {
+  try {
+    const response = await fetch(`${BASE_URL}/categories/update/${categoryId}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "PUT",
+      body: JSON.stringify(category),
+    });
+
+    return await response.json();
+  } catch (error) {
+    console.log("Error updating category");
+    console.log(error);
+  }
+}

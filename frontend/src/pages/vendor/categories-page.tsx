@@ -11,7 +11,6 @@ type Props = {
 }
 
 export const VendorCategoriesPage: FC<Props> = ({ categories }) => {
-  console.log(categories)
   return (
     <div>
       <VendorNavbar />
