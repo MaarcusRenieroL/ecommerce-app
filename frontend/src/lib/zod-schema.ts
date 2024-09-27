@@ -135,3 +135,7 @@ export const addNewCategorySchema = z.object({
 		message: "Category name must be at least 3 characters long"
 	})
 })
+
+export const deleteCategorySchema = z.object({
+	id: z.string()
+})

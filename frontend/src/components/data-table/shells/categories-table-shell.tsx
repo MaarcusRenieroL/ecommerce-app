@@ -6,6 +6,7 @@ import { DataTableColumnHeader } from "@/components/data-table/data-table-column
 import React, { FC } from "react";
 import { DataTable } from "@/components/data-table";
 import { UpdateCategoryModal } from "@/components/pages/vendor/categories/update-category-modal.tsx";
+import { DeleteCategoryModal } from "@/components/pages/vendor/categories/delete-category-modal.tsx";
 
 type Props = {
 	data: {
@@ -52,6 +53,7 @@ export const CategoriesTableShell: FC<Props> = ({ data }) => {
 				cell: ({ row }) => (
 					<div className="min-w-max space-x-5 flex items-center justify-center">
 						<UpdateCategoryModal category={row.original} />
+						<DeleteCategoryModal category={row.original} />
 					</div>
 				),
 			},

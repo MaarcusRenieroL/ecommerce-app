@@ -29,6 +29,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { addNewCategory, getVendorId } from "@/lib/spring-boot-api"
 import { useToast } from "@/components/ui/use-toast.tsx"
 import { isLoggedIn } from "@/lib/utils.ts";
+import { useNavigate } from "react-router-dom";
 
 export const AddNewCategoryModal = () => {
 	const [open, setOpen] = React.useState(false)
@@ -79,6 +80,7 @@ export const AddNewCategoryModal = () => {
 function AddNewCategoryForm() {
 
 	const { toast } = useToast();
+	const navigate = useNavigate();
 
 	const form = useForm<z.infer<typeof addNewCategorySchema>>({
 		resolver: zodResolver(addNewCategorySchema),
@@ -105,6 +107,9 @@ function AddNewCategoryForm() {
 					title: "Success",
 					description: response.message
 				})
+				
+				navigate(0);
+				
 			}
 		} catch (error) {
 			console.log(error);

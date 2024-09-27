@@ -1,8 +1,8 @@
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { Button } from "@/components/ui/button"
-import { Edit } from "lucide-react";
+import { Trash } from "lucide-react";
 import {
-	Dialog,
+	Dialog, DialogClose,
 	DialogContent,
 	DialogDescription,
 	DialogHeader,
@@ -22,10 +22,10 @@ import {
 import { Input } from "@/components/ui/input"
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { addNewCategorySchema } from "@/lib/zod-schema.ts";
+import { deleteCategorySchema } from "@/lib/zod-schema.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form.tsx";
-import { updateCategory } from "@/lib/spring-boot-api"
+import { deleteCategory } from "@/lib/spring-boot-api"
 import { useToast } from "@/components/ui/use-toast.tsx"
 import { useState, FC } from "react";
 import { useNavigate } from "react-router-dom"
@@ -34,7 +34,7 @@ type Props = {
 	category: any
 }
 
-export const UpdateCategoryModal: FC<Props> = ({ category }) => {
+export const DeleteCategoryModal: FC<Props> = ({ category }) => {
 	const [open, setOpen] = useState(false)
 	const isDesktop = useMediaQuery("(min-width: 768px)")
 	
@@ -42,18 +42,18 @@ export const UpdateCategoryModal: FC<Props> = ({ category }) => {
 		return (
 			<Dialog open={open} onOpenChange={setOpen}>
 				<DialogTrigger asChild>
-					<Button size="icon">
-						<Edit className="h-4 w-4" />
+					<Button size="icon" variant="destructive">
+						<Trash className="h-4 w-4" />
 					</Button>
 				</DialogTrigger>
 				<DialogContent className="sm:max-w-[425px]">
 					<DialogHeader>
-						<DialogTitle>Update Category</DialogTitle>
+						<DialogTitle>Delete Category</DialogTitle>
 						<DialogDescription>
-							Fill the form to update category
+							Are you sure you want to delete this category from the database? (id: {category.id}))
 						</DialogDescription>
 					</DialogHeader>
-					<UpdateCategoryForm category={category} />
+					<DeleteCategoryForm category={category} />
 				</DialogContent>
 			</Dialog>
 		)
@@ -62,18 +62,18 @@ export const UpdateCategoryModal: FC<Props> = ({ category }) => {
 	return (
 		<Drawer open={open} onOpenChange={setOpen}>
 			<DrawerTrigger asChild>
-				<Button size="icon">
-					<Edit className="h-4 w-4" />
+				<Button size="icon" variant="destructive">
+					<Trash className="h-4 w-4" />
 				</Button>
 			</DrawerTrigger>
 			<DrawerContent>
 				<DrawerHeader className="text-left">
-					<DrawerTitle>Update Category</DrawerTitle>
+					<DrawerTitle>Delete Category</DrawerTitle>
 					<DrawerDescription>
-						Fill the form to update category
+						Are you sure you want to delete this category from the database? (id: {category.id}))
 					</DrawerDescription>
 				</DrawerHeader>
-				<UpdateCategoryForm category={category} />
+				<DeleteCategoryForm category={category} />
 				<DrawerFooter className="pt-2">
 					<DrawerClose asChild>
 						<Button variant="outline">Cancel</Button>
@@ -84,23 +84,28 @@ export const UpdateCategoryModal: FC<Props> = ({ category }) => {
 	)
 }
 
-function UpdateCategoryForm({ category }: Props) {
-	
-	const { toast } = useToast();
+function DeleteCategoryForm({ category }: Props) {
+	const isDesktop = useMediaQuery("(min-width: 768px)")
 	const navigate = useNavigate();
 	
-	const form = useForm<z.infer<typeof addNewCategorySchema>>({
-		resolver: zodResolver(addNewCategorySchema),
+	const { toast } = useToast();
+	
+	const form = useForm<z.infer<typeof deleteCategorySchema>>({
+		resolver: zodResolver(deleteCategorySchema),
 		defaultValues: {
-			name: category.name,
+			id: category.id
 		}
 	});
 	
-	const onSubmit = async (data: z.infer<typeof addNewCategorySchema>) => {
-		console.log(data);
+	const onSubmit = async (data: z.infer<typeof deleteCategorySchema>) => {
 		try {
-			const response = await updateCategory(category.id, data);
 			
+			console.log(data);
+			
+			const response = await deleteCategory(data);
+			
+			console.log(response)
+
 			if (response.status === "OK") {
 				toast({
 					title: "Success",
@@ -123,17 +128,22 @@ function UpdateCategoryForm({ category }: Props) {
 			<form onSubmit={form.handleSubmit(onSubmit)}>
 				<div>
 					<FormField render={({ field }) => (
-						<FormItem>
-							<FormLabel>Category Name</FormLabel>
+						<FormItem className="hidden">
+							<FormLabel>Category Id</FormLabel>
 							<FormControl>
 								<Input type="text" placeholder="Enter a category name" {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
-					)} name="name" control={form.control} />
+					)} name="id" control={form.control} />
 				</div>
-				<div className="flex items-center justify-end w-full mt-5">
-					<Button>Save Changes</Button>
+				<div className="w-full mt-5">
+					<Button className="w-full" variant="destructive">Delete Category</Button>
+					{isDesktop && (
+						<DialogClose className="w-full mt-5">
+							Cancel
+						</DialogClose>
+					)}
 				</div>
 			</form>
 		</Form>

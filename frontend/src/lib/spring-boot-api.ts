@@ -1,6 +1,6 @@
 import { User, Product, CategoryWithId } from "@/lib/types.ts";
 import { z } from "zod";
-import { vendorSchema, signInSchema } from "@/lib/zod-schema.ts";
+import { vendorSchema, signInSchema, deleteCategorySchema } from "@/lib/zod-schema.ts";
 
 const BASE_URL = "http://localhost:8080/api";
 
@@ -161,6 +161,19 @@ export const updateCategory = async (categoryId: string, category: { name: strin
     return await response.json();
   } catch (error) {
     console.log("Error updating category");
+    console.log(error);
+  }
+}
+
+export const deleteCategory = async (data: z.infer<typeof deleteCategorySchema>) => {
+  try {
+    const response = await fetch(`${BASE_URL}/categories/delete/${data.id}`, {
+      method: "DELETE",
+    });
+
+    return await response.json();
+  } catch (error) {
+    console.log("Error deleting category");
     console.log(error);
   }
 }

@@ -60,9 +60,6 @@ public class CategoryController {
 	
 	@PostMapping("/add")
 	public ResponseEntity<StandardResponse<CategoryWithName>> addCategory(@RequestBody CategoryWithVendorId categoryWithVendorId) {
-		System.out.println("Inside add category api");
-		System.out.println(categoryWithVendorId.getCategory().toString());
-		System.out.println(categoryWithVendorId.getVendorId());
 		if (categoryWithVendorId.getVendorId() == null) {
 			return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: vendorId");
 		}
@@ -95,14 +92,14 @@ public class CategoryController {
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<StandardResponse<Void>> deleteCategory(@PathVariable UUID id) {
+	public ResponseEntity<StandardResponse<Void>> deleteCategory(@PathVariable String id) {
 		if (id == null) {
 			return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, "Missing required field: id");
 		}
 		
 		try {
-			categoryService.deleteCategory(id);
-			return responseUtil.buildSuccessResponse(HttpStatus.NO_CONTENT, "Category deleted successfully", null);
+			categoryService.deleteCategory(UUID.fromString(id));
+			return responseUtil.buildSuccessResponse(HttpStatus.OK, "Category deleted successfully", null);
 		} catch (CategoryNotFoundException e) {
 			return responseUtil.buildErrorResponse(HttpStatus.NOT_FOUND, e.getMessage());
 		}
